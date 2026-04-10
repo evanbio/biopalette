@@ -1,17 +1,30 @@
 Package: biopalette
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
-Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+Title: Image-Inspired Color Palettes for Biomedical Visualization
+Version: 0.1.0
+Authors@R:
+    person("Yibin", "Zhou", email = "evanzhou.bio@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0009-0009-4600-8175"))
+Description: Provides a curated collection of color palettes for biomedical
+    visualization, each inspired by a reference image such as a film still,
+    artwork, or scientific figure. The package includes tools to create,
+    compile, retrieve, preview, and organize palettes for more distinctive and
+    context-aware data graphics.
+License: MIT + file LICENSE
+URL: https://github.com/evanbio/biopalette, https://evanbio.github.io/biopalette/
+BugReports: https://github.com/evanbio/biopalette/issues
+Depends:
+    R (>= 4.1)
+Imports:
+    cli,
+    ggplot2,
+    jsonlite
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
-Suggests: 
+Suggests:
+    knitr,
+    rmarkdown,
     testthat (>= 3.0.0)
+VignetteBuilder: knitr, rmarkdown
 Config/testthat/edition: 3
-Depends: 
-    R (>= 4.1)
 LazyData: true
