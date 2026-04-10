@@ -1,0 +1,24 @@
+# Authors and Citation
+
+## Authors
+
+- **[![Yibin Zhou](https://github.com/evanbio.png) Yibin
+  Zhou](https://github.com/evanbio)**. Author, maintainer.
+  [](https://orcid.org/0009-0009-4600-8175)
+
+## Citation
+
+Source:
+[`DESCRIPTION`](https://github.com/evanbio/biopalette/blob/main/DESCRIPTION)
+
+Zhou Y (2026). *biopalette: Image-Inspired Color Palettes for Biomedical
+Visualization*. R package version 0.1.0,
+<https://github.com/evanbio/biopalette>.
+
+    @Manual{,
+      title = {biopalette: Image-Inspired Color Palettes for Biomedical Visualization},
+      author = {Yibin Zhou},
+      year = {2026},
+      note = {R package version 0.1.0},
+      url = {https://github.com/evanbio/biopalette},
+    }
