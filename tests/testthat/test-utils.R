@@ -519,7 +519,6 @@ test_that(".assert_logical() errors on non-logical input", {
 
 test_that("public functions propagate .assert_scalar_string errors correctly", {
   expect_error(get_palette(123),          "single non-empty string")
-  expect_error(pkg_functions(""),         "single non-empty string")
 })
 
 test_that("public functions propagate .assert_character_vector errors correctly", {

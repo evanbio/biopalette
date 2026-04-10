@@ -7,7 +7,7 @@
 #===============================================================================
 
 .test_palettes_path <- function() {
-  p <- system.file("data", "palettes.rda", package = "evanverse")
+  p <- system.file("data", "palettes.rda", package = "biopalette")
   if (nzchar(p) && file.exists(p)) return(p)
   NULL
 }
@@ -177,7 +177,7 @@ test_that("rgb2hex() validates data.frame columns", {
 test_that("get_palette() returns full color vector with explicit type", {
   skip_if_not(palette_data_available(), "Package palette dataset not available")
 
-  result <- get_palette("qual_vivid", type = "qualitative", palettes_path = .test_palettes_path())
+  result <- get_palette("gene_red", type = "qualitative", palettes_path = .test_palettes_path())
   expect_type(result, "character")
   expect_true(length(result) >= 1L)
   expect_true(all(grepl("^#[0-9A-Fa-f]{6,8}$", result)))
@@ -186,15 +186,15 @@ test_that("get_palette() returns full color vector with explicit type", {
 test_that("get_palette() returns correct subset with n", {
   skip_if_not(palette_data_available(), "Package palette dataset not available")
 
-  result <- get_palette("qual_vivid", type = "qualitative", n = 3, palettes_path = .test_palettes_path())
-  expect_length(result, 3L)
+  result <- get_palette("gene_red", type = "qualitative", n = 2, palettes_path = .test_palettes_path())
+  expect_length(result, 2L)
   expect_type(result, "character")
 })
 
 test_that("get_palette() auto-detects type when type = NULL", {
   skip_if_not(palette_data_available(), "Package palette dataset not available")
 
-  result <- get_palette("seq_blues", palettes_path = .test_palettes_path())
+  result <- get_palette("walter_white", palettes_path = .test_palettes_path())
   expect_type(result, "character")
   expect_true(length(result) >= 1L)
 })
@@ -202,9 +202,9 @@ test_that("get_palette() auto-detects type when type = NULL", {
 test_that("get_palette() errors when name is found under a different type", {
   skip_if_not(palette_data_available(), "Package palette dataset not available")
 
-  # seq_blues is sequential, not diverging
+  # walter_white is diverging, not qualitative
   expect_error(
-    get_palette("seq_blues", type = "diverging", palettes_path = .test_palettes_path()),
+    get_palette("walter_white", type = "qualitative", palettes_path = .test_palettes_path()),
     "not found under"
   )
 })
@@ -222,7 +222,7 @@ test_that("get_palette() errors when n exceeds palette size", {
   skip_if_not(palette_data_available(), "Package palette dataset not available")
 
   expect_error(
-    get_palette("qual_softtrio", type = "qualitative", n = 9999, palettes_path = .test_palettes_path()),
+    get_palette("walter_white2", type = "qualitative", n = 9999, palettes_path = .test_palettes_path()),
     "only has .* colors, but requested"
   )
 })
@@ -237,16 +237,16 @@ test_that("get_palette() validates name parameter", {
 test_that("get_palette() validates type parameter", {
   skip_if_not(palette_data_available(), "Package palette dataset not available")
 
-  expect_error(get_palette("qual_vivid", type = "invalid"), "should be one of")
+  expect_error(get_palette("gene_red", type = "invalid"), "should be one of")
 })
 
 test_that("get_palette() validates n parameter", {
   skip_if_not(palette_data_available(), "Package palette dataset not available")
 
-  expect_error(get_palette("qual_vivid", type = "qualitative", n = 0),   "single positive integer")
-  expect_error(get_palette("qual_vivid", type = "qualitative", n = -1),  "single positive integer")
-  expect_error(get_palette("qual_vivid", type = "qualitative", n = 1.5), "single positive integer")
-  expect_error(get_palette("qual_vivid", type = "qualitative", n = Inf), "single positive integer")
+  expect_error(get_palette("gene_red", type = "qualitative", n = 0),   "single positive integer")
+  expect_error(get_palette("gene_red", type = "qualitative", n = -1),  "single positive integer")
+  expect_error(get_palette("gene_red", type = "qualitative", n = 1.5), "single positive integer")
+  expect_error(get_palette("gene_red", type = "qualitative", n = Inf), "single positive integer")
 })
 
 #==============================================================================
@@ -488,7 +488,7 @@ test_that("preview_palette() returns NULL invisibly", {
   pdf(file = tempfile(fileext = ".pdf"))
   on.exit(grDevices::dev.off(), add = TRUE)
 
-  result <- preview_palette("seq_blues", type = "sequential", plot_type = "bar",
+  result <- preview_palette("walter_white", type = "diverging", plot_type = "bar",
                             palettes_path = .test_palettes_path())
   expect_null(result)
 })
@@ -499,7 +499,7 @@ test_that("preview_palette() works with all plot_type options", {
   for (pt in c("bar", "pie", "point", "rect", "circle")) {
     pdf(file = tempfile(fileext = ".pdf"))
     expect_no_error(
-      preview_palette("qual_vivid", type = "qualitative", plot_type = pt,
+      preview_palette("gene_red", type = "qualitative", plot_type = pt,
                       palettes_path = .test_palettes_path())
     )
     grDevices::dev.off()
@@ -513,7 +513,7 @@ test_that("preview_palette() respects n argument", {
   on.exit(grDevices::dev.off(), add = TRUE)
 
   expect_no_error(
-    preview_palette("qual_vivid", type = "qualitative", n = 3, plot_type = "bar",
+    preview_palette("gene_red", type = "qualitative", n = 2, plot_type = "bar",
                     palettes_path = .test_palettes_path())
   )
 })
@@ -525,7 +525,7 @@ test_that("preview_palette() accepts custom title", {
   on.exit(grDevices::dev.off(), add = TRUE)
 
   expect_no_error(
-    preview_palette("seq_blues", type = "sequential", title = "My Custom Title",
+    preview_palette("walter_white", type = "diverging", title = "My Custom Title",
                     palettes_path = .test_palettes_path())
   )
 })
@@ -559,7 +559,7 @@ test_that("palette_gallery() paginates correctly", {
   skip_if_not(palette_data_available(), "Package palette dataset not available")
   skip_if_not_installed("ggplot2")
 
-  result <- palette_gallery(type = "qualitative", max_palettes = 5, verbose = FALSE,
+  result <- palette_gallery(type = "qualitative", max_palettes = 1, verbose = FALSE,
                             palettes_path = .test_palettes_path())
   expect_true(length(result) > 1L)
 })
