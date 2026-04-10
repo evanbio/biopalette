@@ -1,0 +1,124 @@
+# Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
+# Triggers: weekly schedule — Saturday 21:00 CST (13:00 UTC)
+#   Full CRAN-like check, same as release
+on:
+  schedule:
+    - cron: '0 13 * * 6'
+  workflow_dispatch:
+
+name: R-CMD-check-weekly
+
+permissions: read-all
+
+jobs:
+  R-CMD-check:
+    runs-on: ${{ matrix.config.os }}
+
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {os: ubuntu-latest,  r: 'release'}
+          - {os: windows-latest, r: 'release'}
+          - {os: macOS-latest,   r: 'release'}
+          - {os: ubuntu-latest,  r: 'devel'}
+          - {os: ubuntu-latest,  r: 'oldrel'}
+
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_KEEP_PKG_SOURCE: yes
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-pandoc@v2
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ matrix.config.r }}
+          http-user-agent: ${{ matrix.config.http-user-agent }}
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::rcmdcheck
+          needs: check
+
+      - uses: r-lib/actions/check-r-package@v2
+        with:
+          upload-snapshots: true
+          args: 'c("--as-cran", "--no-manual")'
+          build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
+
+  R-CMD-check-depends-only:
+    runs-on: ${{ matrix.config.os }}
+
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }}, DEPENDS_ONLY)
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {os: ubuntu-latest,  r: 'release'}
+          - {os: windows-latest, r: 'release'}
+          - {os: macOS-latest,   r: 'release'}
+
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_KEEP_PKG_SOURCE: yes
+      _R_CHECK_DEPENDS_ONLY_: true
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-pandoc@v2
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ matrix.config.r }}
+          http-user-agent: ${{ matrix.config.http-user-agent }}
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::rcmdcheck
+          needs: check
+
+      - uses: r-lib/actions/check-r-package@v2
+        with:
+          upload-snapshots: true
+          args: 'c("--as-cran", "--no-manual")'
+          build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
+
+  R-CMD-check-rhub:
+    runs-on: ubuntu-latest
+    container:
+      image: ${{ matrix.config.image }}
+
+    name: ${{ matrix.config.label }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {image: 'ghcr.io/r-hub/containers/clang-asan:latest', label: 'r-hub / clang-asan'}
+          - {image: 'ghcr.io/r-hub/containers/gcc-asan:latest',   label: 'r-hub / gcc-asan'}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          pak::pak(c("rcmdcheck", "remotes"))
+          pak::local_install_dev_deps()
+        shell: Rscript {0}
+
+      - name: Check
+        run: |
+          rcmdcheck::rcmdcheck(
+            args     = c("--no-manual", "--as-cran"),
+            error_on = "error"
+          )
+        shell: Rscript {0}

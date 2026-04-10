@@ -1,0 +1,305 @@
+# ==============================================================================
+# pkgdown Configuration for biopalette
+# ==============================================================================
+
+url: https://evanbio.github.io/biopalette/
+
+# ==============================================================================
+# Template & Theme Configuration
+# ==============================================================================
+
+template:
+  bootstrap: 5
+
+  bslib:
+    # Color Palette
+    primary: "#0D47A1"
+    secondary: "#E3F2FD"
+    success: "#2E7D32"
+    info: "#0288D1"
+    warning: "#F57C00"
+    danger: "#C62828"
+    light: "#FAFAFA"
+    dark: "#1A237E"
+    bg-light: "#F8F9FA"
+    bg-dark: "#121212"
+
+    # Border Radius
+    border-radius: "0.5rem"
+    btn-border-radius: "0.375rem"
+    card-border-radius: "0.5rem"
+
+    # Typography
+    base_font: {google: "Inter"}
+    heading_font: {google: "Inter"}
+    code_font: {google: "JetBrains Mono"}
+
+    # Navbar Colors
+    navbar-bg: "#FFFFFF"
+    navbar-light-color: "#424242"
+    navbar-light-hover-color: "#0D47A1"
+
+    # Link Colors
+    link-color: "#0D47A1"
+    link-hover-color: "#1976D2"
+
+  opengraph:
+    image:
+      src: man/figures/logo.png
+      alt: "biopalette: Image-Inspired Color Palettes for Biomedical Visualization"
+    twitter:
+      creator: "@evanbio"
+      card: summary_large_image
+      site: "@evanbio"
+
+  includes:
+    in_header: |
+      <meta name="keywords" content="R package, color palette, biomedical visualization, ggplot2, single cell, UMAP">
+      <meta name="description" content="biopalette: Image-inspired color palettes for biomedical visualization in R">
+      <meta name="author" content="Yibin Zhou">
+
+      <link rel="icon" type="image/png" sizes="32x32" href="/biopalette/man/figures/logo.png">
+      <link rel="icon" type="image/png" sizes="16x16" href="/biopalette/man/figures/logo.png">
+      <link rel="apple-touch-icon" sizes="180x180" href="/biopalette/man/figures/logo.png">
+
+      <style>
+        /* Navigation styling */
+        .navbar-brand { font-size: 1.5rem; font-weight: 600; }
+        .navbar-brand img { height: 36px; margin-right: 10px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
+        .navbar { box-shadow: 0 2px 12px rgba(0,0,0,0.08); backdrop-filter: blur(10px); }
+        .navbar-nav .nav-link { color: #424242 !important; font-weight: 500; font-size: 1.05rem; transition: all 0.3s ease; }
+        .navbar-nav .nav-link:hover { color: #0D47A1 !important; transform: translateY(-1px); }
+        .navbar-nav .dropdown-item { font-size: 1rem; }
+
+        /* Card and content styling */
+        .card {
+          box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+          border: none;
+          border-radius: 0.75rem;
+          transition: all 0.3s ease;
+        }
+        .card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.12); transform: translateY(-2px); }
+
+        /* Button enhancements */
+        .btn-primary {
+          background: linear-gradient(135deg, #0D47A1, #1976D2);
+          border: none;
+          box-shadow: 0 2px 8px rgba(13,71,161,0.3);
+          transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+          background: linear-gradient(135deg, #1976D2, #2196F3);
+          box-shadow: 0 4px 16px rgba(13,71,161,0.4);
+          transform: translateY(-1px);
+        }
+
+        /* Typography improvements */
+        h1, h2, h3 { color: #0D47A1; font-weight: 600; }
+        h1 { font-size: 2.5rem; margin-bottom: 1.5rem; }
+        h2 { font-size: 2rem; margin: 2rem 0 1rem 0; }
+        h3 { font-size: 1.5rem; margin: 1.5rem 0 1rem 0; }
+
+        /* Code blocks */
+        pre, code { border-radius: 0.5rem; }
+        pre { box-shadow: inset 0 2px 8px rgba(0,0,0,0.1); }
+
+        /* Reference page styling */
+        .ref-index h2 { border-bottom: 3px solid #E3F2FD; padding-bottom: 0.5rem; }
+        .ref-index .icon { color: #0D47A1; margin-right: 0.5rem; }
+
+        /* Footer */
+        .footer { background: linear-gradient(135deg, #F8F9FA, #E3F2FD); }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+          .navbar-brand { font-size: 1.25rem; }
+          .navbar-brand img { height: 32px; }
+          .navbar-nav .nav-link { font-size: 1rem; }
+          h1 { font-size: 2rem; }
+          .card { margin-bottom: 1rem; }
+        }
+      </style>
+
+# ==============================================================================
+# Home Page Configuration
+# ==============================================================================
+
+home:
+  title: biopalette
+  subtitle: "Image-Inspired Color Palettes for Biomedical Visualization"
+  description: >
+    An R package providing story-driven color palettes for biomedical
+    visualization. Every palette begins with a real image — a film still,
+    a scientific figure, an artwork — and is translated into a reproducible
+    color system with documented source, style, and recommended use.
+  strip_header: false
+
+  sidebar:
+    structure: [links, toc, license, community, citation, authors, dev]
+
+  links:
+  - text: "Get Started"
+    href: articles/get-started.html
+    desc: "Core workflow: browse, retrieve, preview, and use palettes"
+  - text: "Installation Guide"
+    href: articles/install.html
+    desc: "Install biopalette and verify your setup"
+  - text: "Color Palette Management"
+    href: articles/palette.html
+    desc: "Full function reference with examples"
+  - text: "Function Reference"
+    href: reference/
+    desc: "Complete documentation for all functions"
+  - text: "GitHub"
+    href: https://github.com/evanbio/biopalette
+    desc: "Source code and issue tracker"
+
+# ==============================================================================
+# Authors Configuration
+# ==============================================================================
+
+authors:
+  Yibin Zhou:
+    href: https://github.com/evanbio
+    html: >
+      <img src="https://github.com/evanbio.png" height="32" style="border-radius: 50%;" alt="Yibin Zhou" />
+      Yibin Zhou
+    roles: [aut, cre]
+    email: evanzhou.bio@gmail.com
+
+# ==============================================================================
+# Navigation Bar Configuration
+# ==============================================================================
+
+navbar:
+  title:
+    text: "biopalette"
+    icon: "man/figures/logo.png"
+  type: light
+  bg: light
+
+  structure:
+    left:
+      - home
+      - install
+      - intro
+      - vignettes
+      - reference
+      - news
+    right:
+      - github
+
+  components:
+    version:
+      text: "0.1.0"
+      href: news/index.html
+
+    install:
+      text: "Install"
+      href: articles/install.html
+
+    intro:
+      text: "Get Started"
+      href: articles/get-started.html
+
+    vignettes:
+      text: "Vignettes"
+      menu:
+      - text: "Get Started"
+        href: articles/get-started.html
+      - text: "Color Palette Management"
+        href: articles/palette.html
+      - text: "--------"
+      - text: "All Articles"
+        href: articles/
+
+    reference:
+      text: "Reference"
+      href: reference/index.html
+
+    news:
+      text: "News"
+      href: news/index.html
+
+    github:
+      icon: "fab fa-github"
+      href: https://github.com/evanbio/biopalette
+      aria-label: "GitHub"
+
+# ==============================================================================
+# Function Reference Organization
+# ==============================================================================
+
+reference:
+- title: "Palette Access"
+  desc: >
+    Retrieve and browse available palettes.
+  contents:
+  - get_palette
+  - list_palettes
+  - palette_gallery
+
+- title: "Palette Management"
+  desc: >
+    Create, compile, preview, and remove palettes.
+  contents:
+  - create_palette
+  - compile_palettes
+  - preview_palette
+  - remove_palette
+
+- title: "Color Utilities"
+  desc: >
+    Convert between HEX and RGB color formats.
+  contents:
+  - hex2rgb
+  - rgb2hex
+
+- title: "Data"
+  desc: >
+    Built-in palette dataset.
+  contents:
+  - palettes
+
+# ==============================================================================
+# News & Release Configuration
+# ==============================================================================
+
+news:
+  releases:
+  - text: "Version 0.1.0 — Initial Release (April 2026)"
+    href: https://github.com/evanbio/biopalette/releases/tag/v0.1.0
+  - text: "View All Releases"
+    href: https://github.com/evanbio/biopalette/releases
+
+# ==============================================================================
+# Footer Configuration
+# ==============================================================================
+
+footer:
+  structure:
+    left: [developed_by, built_with, license]
+    right: [package_info, social_links]
+
+  components:
+    package_info: |
+      <div class="text-muted">
+        <strong>biopalette v0.1.0</strong><br>
+        <small>Last updated: April 2026</small>
+      </div>
+
+    social_links: |
+      <div class="footer-links">
+        <a href="https://github.com/evanbio/biopalette" class="text-muted me-3" aria-label="GitHub">
+          <i class="fab fa-github fa-lg"></i>
+        </a>
+        <a href="https://blog.evanzhou.org" class="text-muted" aria-label="Blog">
+          <i class="fas fa-blog fa-lg"></i>
+        </a>
+      </div>
+
+    license: |
+      <div class="text-muted">
+        <i class="fas fa-balance-scale me-1"></i>
+        <a href="https://opensource.org/licenses/MIT" class="text-muted">MIT License</a>
+      </div>
