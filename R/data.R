@@ -23,5 +23,5 @@
 #' @examples
 #' names(palettes)
 #' names(palettes$qualitative)
-#' palettes$qualitative$qual_vivid
+#' palettes$qualitative$gene_red
 "palettes"

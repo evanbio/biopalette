@@ -275,26 +275,6 @@
 }
 
 
-#' Choose readable text color for a given background HEX
-#'
-#' Uses perceived luminance (BT.601) to decide between white and black.
-#' Dark backgrounds get white text; light backgrounds get black text.
-#'
-#' @param hex Character. A single HEX color code (e.g. "#B11522").
-#' @return "white" or "black".
-#'
-#' @keywords internal
-#' @noRd
-.auto_text_color <- function(hex) {
-  hex_clean <- gsub("^#", "", hex)
-  r <- strtoi(substr(hex_clean, 1, 2), 16L) / 255
-  g <- strtoi(substr(hex_clean, 3, 4), 16L) / 255
-  b <- strtoi(substr(hex_clean, 5, 6), 16L) / 255
-  luminance <- 0.299 * r + 0.587 * g + 0.114 * b
-  if (luminance < 0.5) "white" else "black"
-}
-
-
 #' Assert that a numeric vector is a valid RGB triplet
 #'
 #' @param x Numeric vector of length 3 with values in [0, 255].
@@ -374,30 +354,6 @@
     colors  = I(list()),
     stringsAsFactors = FALSE
   )
-}
-
-
-#' Print a palette metadata data.frame to console
-#'
-#' @param palette_df data.frame. Output of list_palettes().
-#'
-#' @keywords internal
-#' @noRd
-.print_palette_list <- function(palette_df) {
-  cli::cli_h1("Available Color Palettes")
-  cli::cli_alert_info("Total: {nrow(palette_df)} palettes")
-
-  type_counts <- table(palette_df$type)
-  for (t in names(type_counts)) {
-    cli::cli_alert_info("{.strong {t}}: {type_counts[t]} palettes")
-  }
-
-  cli::cli_text("")
-  cli::cli_ul()
-  for (i in seq_len(nrow(palette_df))) {
-    cli::cli_li("{.strong {palette_df$name[i]}} ({palette_df$type[i]}) - {palette_df$n_color[i]} colors")
-  }
-  cli::cli_end()
 }
 
 
