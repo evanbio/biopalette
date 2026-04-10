@@ -39,3 +39,12 @@ Built-in palette dataset.
 
 - [`palettes`](https://evanbio.github.io/biopalette/reference/palettes.md)
   : Built-in color palettes
+
+## Package
+
+Package-level documentation.
+
+- [`biopalette-package`](https://evanbio.github.io/biopalette/reference/biopalette.md)
+  [`biopalette`](https://evanbio.github.io/biopalette/reference/biopalette.md)
+  : biopalette: Image-Inspired Color Palettes for Biomedical
+  Visualization
