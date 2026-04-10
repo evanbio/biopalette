@@ -205,8 +205,6 @@ navbar:
     vignettes:
       text: "Vignettes"
       menu:
-      - text: "Get Started"
-        href: articles/get-started.html
       - text: "Color Palette Management"
         href: articles/palette.html
       - text: "--------"
