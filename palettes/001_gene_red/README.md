@@ -21,7 +21,7 @@ And yet — one red coat. The only signal in an otherwise black-and-white world.
 
 ## Type
 
-Highlight palette
+Qualitative
 
 ## Use cases
 

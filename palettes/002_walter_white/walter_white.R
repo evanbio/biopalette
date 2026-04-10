@@ -1,4 +1,4 @@
-library(evanverse)
+devtools::load_all()
 
 # =============================================================================
 # 002 — walter_white
@@ -17,7 +17,8 @@ create_palette(
   name      = id,
   type      = "diverging",
   colors    = colors,
-  color_dir = color_dir
+  color_dir = color_dir,
+  overwrite = TRUE
 )
 
 # 2. Compile ------------------------------------------------------------------
@@ -46,7 +47,8 @@ create_palette(
   name      = id,
   type      = "qualitative",
   colors    = colors,
-  color_dir = color_dir
+  color_dir = color_dir,
+  overwrite = TRUE
 )
 
 # 2. Compile ------------------------------------------------------------------
@@ -74,7 +76,8 @@ create_palette(
   name      = id,
   type      = "diverging",
   colors    = colors,
-  color_dir = color_dir
+  color_dir = color_dir,
+  overwrite = TRUE
 )
 
 # 2. Compile ------------------------------------------------------------------

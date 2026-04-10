@@ -1,4 +1,4 @@
-library(evanverse)
+devtools::load_all()
 
 # =============================================================================
 # 001 — gene_red
@@ -17,7 +17,8 @@ create_palette(
   name      = id,
   type      = "qualitative",
   colors    = colors,
-  color_dir = color_dir
+  color_dir = color_dir,
+  overwrite = TRUE
 )
 
 # 2. Compile ------------------------------------------------------------------

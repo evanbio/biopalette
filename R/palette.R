@@ -15,10 +15,9 @@
 #' @return Character vector of HEX color codes.
 #'
 #' @examples
-#' get_palette("qual_vivid", type = "qualitative")
-#' get_palette("qual_softtrio", type = "qualitative", n = 2)
-#' get_palette("seq_blues", type = "sequential", n = 3)
-#' get_palette("div_contrast", type = "diverging")
+#' get_palette("gene_red", type = "qualitative")
+#' get_palette("walter_white2", type = "qualitative", n = 2)
+#' get_palette("walter_white", type = "diverging")
 #'
 #' @export
 get_palette <- function(name,
@@ -211,9 +210,9 @@ create_palette <- function(name,
 #'
 #' @examples
 #' \donttest{
-#' preview_palette("seq_blues", plot_type = "bar")
-#' preview_palette("div_fireice", plot_type = "pie")
-#' preview_palette("qual_vivid", n = 4, plot_type = "circle")
+#' preview_palette("gene_red", plot_type = "bar")
+#' preview_palette("walter_white", plot_type = "pie")
+#' preview_palette("walter_white2", n = 2, plot_type = "circle")
 #' }
 preview_palette <- function(name,
                             type = NULL,
@@ -321,7 +320,7 @@ palette_gallery <- function(type = NULL,
 #' @examples
 #' \donttest{
 #' compile_palettes(
-#'   palettes_dir = system.file("extdata", "palettes", package = "evanverse")
+#'   palettes_dir = system.file("extdata", "palettes", package = "biopalette")
 #' )
 #' }
 #'
@@ -377,8 +376,8 @@ compile_palettes <- function(palettes_dir) {
 #'
 #' @examples
 #' \dontrun{
-#' remove_palette("seq_blues", color_dir = "path/to/palettes")
-#' remove_palette("qual_vivid", type = "qualitative", color_dir = "path/to/palettes")
+#' remove_palette("walter_white", color_dir = "path/to/palettes")
+#' remove_palette("gene_red", type = "qualitative", color_dir = "path/to/palettes")
 #' }
 remove_palette <- function(name,
                             type = NULL,
