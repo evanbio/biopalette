@@ -259,6 +259,12 @@ reference:
   contents:
   - palettes
 
+- title: "Package"
+  desc: >
+    Package-level documentation.
+  contents:
+  - biopalette
+
 # ==============================================================================
 # News & Release Configuration
 # ==============================================================================
