@@ -40,6 +40,6 @@ names(palettes)
 #> [1] "sequential"  "diverging"   "qualitative"
 names(palettes$qualitative)
 #> [1] "babel"         "gene_red"      "three_body"    "walter_white2"
-palettes$qualitative$qual_vivid
-#> NULL
+palettes$qualitative$gene_red
+#> [1] "#000000" "#B11522"
 ```
