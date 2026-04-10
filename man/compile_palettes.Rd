@@ -20,7 +20,7 @@ the package dataset via \code{usethis::use_data()}.
 \examples{
 \donttest{
 compile_palettes(
-  palettes_dir = system.file("extdata", "palettes", package = "evanverse")
+  palettes_dir = system.file("extdata", "palettes", package = "biopalette")
 )
 }
 

@@ -34,8 +34,8 @@ Visualize a palette using various plot styles.
 }
 \examples{
 \donttest{
-preview_palette("seq_blues", plot_type = "bar")
-preview_palette("div_fireice", plot_type = "pie")
-preview_palette("qual_vivid", n = 4, plot_type = "circle")
+preview_palette("gene_red", plot_type = "bar")
+preview_palette("walter_white", plot_type = "pie")
+preview_palette("walter_white2", n = 2, plot_type = "circle")
 }
 }

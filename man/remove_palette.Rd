@@ -21,7 +21,7 @@ Remove a palette JSON file by name, searching across types if needed.
 }
 \examples{
 \dontrun{
-remove_palette("seq_blues", color_dir = "path/to/palettes")
-remove_palette("qual_vivid", type = "qualitative", color_dir = "path/to/palettes")
+remove_palette("walter_white", color_dir = "path/to/palettes")
+remove_palette("gene_red", type = "qualitative", color_dir = "path/to/palettes")
 }
 }

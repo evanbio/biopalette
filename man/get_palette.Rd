@@ -23,9 +23,8 @@ Retrieve a named palette by name and type, returning a vector of HEX colors.
 Automatically checks for type mismatch and provides smart suggestions.
 }
 \examples{
-get_palette("qual_vivid", type = "qualitative")
-get_palette("qual_softtrio", type = "qualitative", n = 2)
-get_palette("seq_blues", type = "sequential", n = 3)
-get_palette("div_contrast", type = "diverging")
+get_palette("gene_red", type = "qualitative")
+get_palette("walter_white2", type = "qualitative", n = 2)
+get_palette("walter_white", type = "diverging")
 
 }
