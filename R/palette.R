@@ -282,6 +282,8 @@ palette_gallery <- function(type = NULL,
   for (type_val in selected_types) {
     pal_data <- palettes[[type_val]]
 
+    if (is.null(pal_data) || length(pal_data) == 0) next
+
     pal_info <- data.frame(name = names(pal_data), n = lengths(pal_data))
     pal_info <- pal_info[order(-pal_info$n, pal_info$name), ]
 
