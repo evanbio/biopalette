@@ -8,6 +8,7 @@ Open an [issue](https://github.com/evanbio/biopalette/issues) with a
 minimal reproducible example:
 
 ``` r
+
 reprex::reprex()
 sessionInfo()
 packageVersion("biopalette")
@@ -27,6 +28,7 @@ Open an issue describing the use case and proposed API.
 ## Development setup
 
 ``` r
+
 devtools::load_all()
 devtools::test()
 devtools::document()

@@ -3,6 +3,7 @@
 ## Quick Install
 
 ``` r
+
 # Using pak (recommended)
 install.packages("pak")
 pak::pkg_install("evanbio/biopalette")
@@ -29,6 +30,7 @@ All dependencies are installed automatically with the package.
 ## Verify Installation
 
 ``` r
+
 library(biopalette)
 
 packageVersion("biopalette")
@@ -40,6 +42,7 @@ list_palettes()
 ## Update
 
 ``` r
+
 pak::pkg_install("evanbio/biopalette")
 ```
 
@@ -55,6 +58,7 @@ packages that require compilation, then retry.
 ### Network / Firewall issues
 
 ``` r
+
 Sys.setenv(http_proxy  = "http://your-proxy:port")
 Sys.setenv(https_proxy = "https://your-proxy:port")
 ```
@@ -64,6 +68,7 @@ Sys.setenv(https_proxy = "https://your-proxy:port")
 ## Uninstall
 
 ``` r
+
 remove.packages("biopalette")
 ```
 

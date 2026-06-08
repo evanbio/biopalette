@@ -4,14 +4,15 @@
 
 The palette module provides nine functions covering four areas:
 
-| Area              | Functions                                                                                                                                                                                                                                                                  |
-|-------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Querying palettes | [`get_palette()`](https://evanbio.github.io/biopalette/reference/get_palette.md), [`list_palettes()`](https://evanbio.github.io/biopalette/reference/list_palettes.md)                                                                                                     |
-| Visualization     | [`preview_palette()`](https://evanbio.github.io/biopalette/reference/preview_palette.md), [`palette_gallery()`](https://evanbio.github.io/biopalette/reference/palette_gallery.md)                                                                                         |
+| Area | Functions |
+|----|----|
+| Querying palettes | [`get_palette()`](https://evanbio.github.io/biopalette/reference/get_palette.md), [`list_palettes()`](https://evanbio.github.io/biopalette/reference/list_palettes.md) |
+| Visualization | [`preview_palette()`](https://evanbio.github.io/biopalette/reference/preview_palette.md), [`palette_gallery()`](https://evanbio.github.io/biopalette/reference/palette_gallery.md) |
 | Managing palettes | [`create_palette()`](https://evanbio.github.io/biopalette/reference/create_palette.md), [`remove_palette()`](https://evanbio.github.io/biopalette/reference/remove_palette.md), [`compile_palettes()`](https://evanbio.github.io/biopalette/reference/compile_palettes.md) |
-| Color conversion  | [`hex2rgb()`](https://evanbio.github.io/biopalette/reference/hex2rgb.md), [`rgb2hex()`](https://evanbio.github.io/biopalette/reference/rgb2hex.md)                                                                                                                         |
+| Color conversion | [`hex2rgb()`](https://evanbio.github.io/biopalette/reference/hex2rgb.md), [`rgb2hex()`](https://evanbio.github.io/biopalette/reference/rgb2hex.md) |
 
 ``` r
+
 library(biopalette)
 ```
 
@@ -36,6 +37,7 @@ palette type is auto-detected. Use `n` to take the first N colors from a
 larger palette.
 
 ``` r
+
 # Auto-detect type
 get_palette("babel")
 #> [1] "#1688A7" "#7673AE" "#B3DE69" "#D195F6" "#7E285E" ...
@@ -53,6 +55,7 @@ When `type` is wrong, the error message tells you where the palette
 actually lives:
 
 ``` r
+
 get_palette("walter_white", type = "qualitative")
 #> Error in `get_palette()`:
 #> ! Palette "walter_white" not found under "qualitative", but exists under "diverging".
@@ -63,6 +66,7 @@ Requesting more colors than the palette contains raises an informative
 error rather than silently recycling:
 
 ``` r
+
 get_palette("gene_red", type = "qualitative", n = 5)
 #> Error in `get_palette()`:
 #> ! Palette "gene_red" only has 2 colors, but requested 5.
@@ -76,6 +80,7 @@ Returns a data frame with columns `name`, `type`, `n_color`, and
 `colors`. Filter by one or more types with the `type` argument.
 
 ``` r
+
 list_palettes()
 #>           name       type n_color                               colors
 #> 1     gene_red qualitative       2                    #000000, #B11522
@@ -86,6 +91,7 @@ list_palettes()
 ```
 
 ``` r
+
 # Single type
 list_palettes(type = "qualitative")
 
@@ -107,6 +113,7 @@ Plots a single palette using one of five styles: `"bar"` (default),
 called for the plotting side effect.
 
 ``` r
+
 preview_palette("gene_red")
 preview_palette("walter_white", type = "diverging", plot_type = "pie")
 preview_palette("three_body", n = 3, plot_type = "circle")
@@ -116,6 +123,7 @@ Supply `title` to override the default title (which is the palette
 name):
 
 ``` r
+
 preview_palette("babel", title = "Pan-cancer myeloid cell types")
 ```
 
@@ -127,6 +135,7 @@ Renders a paged gallery of all palettes and returns a named list of
 ggplot objects (one per page). Useful for picking colors interactively.
 
 ``` r
+
 plots <- palette_gallery()
 #> i Type diverging: 2 palettes -> 1 page(s)
 #> v Built "diverging_page1"
@@ -137,6 +146,7 @@ plots <- palette_gallery()
 Filter by type and control how many palettes appear per page:
 
 ``` r
+
 plots <- palette_gallery(type = "qualitative")
 plots <- palette_gallery(type = c("qualitative", "diverging"), max_palettes = 3)
 ```
@@ -144,6 +154,7 @@ plots <- palette_gallery(type = c("qualitative", "diverging"), max_palettes = 3)
 Access individual pages from the returned list:
 
 ``` r
+
 plots[["qualitative_page1"]]
 ```
 
@@ -162,6 +173,7 @@ Writes a named palette as a JSON file under
 if it does not exist.
 
 ``` r
+
 temp_dir <- file.path(tempdir(), "palettes")
 
 create_palette("my_blues", "sequential", c("#deebf7", "#9ecae1", "#3182bd"),
@@ -178,6 +190,7 @@ By default, saving over an existing name raises an error. Pass
 `overwrite = TRUE` to replace it:
 
 ``` r
+
 create_palette("my_blues", "sequential", c("#c6dbef", "#6baed6", "#2171b5"),
                color_dir = temp_dir, overwrite = TRUE)
 #> i Overwriting existing palette: "my_blues"
@@ -185,6 +198,7 @@ create_palette("my_blues", "sequential", c("#c6dbef", "#6baed6", "#2171b5"),
 ```
 
 ``` r
+
 # Without overwrite = TRUE
 create_palette("my_blues", "sequential", c("#deebf7", "#9ecae1", "#3182bd"),
                color_dir = temp_dir)
@@ -203,6 +217,7 @@ Removes a palette JSON file by name. If `type` is omitted, all three
 type directories are searched in order.
 
 ``` r
+
 remove_palette("my_blues", color_dir = temp_dir)
 #> v Removed "my_blues" from sequential
 
@@ -215,6 +230,7 @@ If the palette is not found in any directory, a warning is issued and
 the function returns `FALSE` invisibly:
 
 ``` r
+
 remove_palette("nonexistent", color_dir = temp_dir)
 #> ! Palette "nonexistent" not found in any type.
 ```
@@ -230,6 +246,7 @@ them, and returns a structured list. This is the function used in
 `usethis::use_data()`.
 
 ``` r
+
 compiled <- compile_palettes(
   palettes_dir = system.file("extdata", "palettes", package = "biopalette")
 )
@@ -241,6 +258,7 @@ The return value is a named list with three elements — `sequential`,
 vectors:
 
 ``` r
+
 compiled$qualitative[["babel"]]
 #> [1] "#1688A7" "#7673AE" "#B3DE69" "#D195F6" "#7E285E" ...
 ```
@@ -260,6 +278,7 @@ Converts a character vector of HEX codes to a data frame with columns
 codes are accepted; the alpha channel is silently ignored.
 
 ``` r
+
 hex2rgb("#1688A7")
 #>       hex   r   g   b
 #> 1 #1688A7  22 136 167
@@ -275,6 +294,7 @@ The `#` prefix is required; codes that fail the pattern and `NA` values
 are both reported as invalid:
 
 ``` r
+
 # Missing '#' prefix
 hex2rgb("1688A7")
 #> Error in `hex2rgb()`:
@@ -298,18 +318,21 @@ by
 Non-integer values are rounded before conversion.
 
 ``` r
+
 # Single color as a length-3 vector
 rgb2hex(c(22, 136, 167))
 #> [1] "#1688A7"
 ```
 
 ``` r
+
 # Round-trip: HEX -> RGB -> HEX
 rgb2hex(hex2rgb(c("#1688A7", "#FF4500")))
 #> [1] "#1688A7" "#FF4500"
 ```
 
 ``` r
+
 # Non-integer values are rounded
 rgb2hex(c(21.7, 136.2, 167.4))
 #> [1] "#1688A7"
@@ -318,6 +341,7 @@ rgb2hex(c(21.7, 136.2, 167.4))
 Typical failure cases for the vector form:
 
 ``` r
+
 # Wrong length
 rgb2hex(c(22, 136))
 #> Error in `rgb2hex()`:
@@ -332,6 +356,7 @@ rgb2hex(c(22, 136, 300))
 And for the data frame form:
 
 ``` r
+
 # Missing column
 rgb2hex(data.frame(r = 22, g = 136))
 #> Error in `rgb2hex()`:
@@ -353,6 +378,7 @@ downstream processing, then round-trips back to HEX to verify no
 information was lost.
 
 ``` r
+
 library(biopalette)
 
 # 1. Retrieve a qualitative palette
