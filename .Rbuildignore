@@ -13,3 +13,7 @@
 ^CONTRIBUTING\.md$
 ^LICENSE\.md$
 ^data-raw$
+^BIOPALETTE\.md$
+^AGENTS\.md$
+^\.codex$
+^\.claude$

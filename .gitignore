@@ -5,3 +5,7 @@
 docs/
 dev/
 CLAUDE.md
+BIOPALETTE.md
+AGENTS.md
+.codex/
+.claude/
