@@ -1,6 +1,6 @@
 ^biopalette\.Rproj$
 ^\.Rproj\.user$
-^dev$
+^_dev$
 ^CLAUDE\.md$
 ^palettes$
 ^index\.md$
@@ -17,3 +17,6 @@
 ^AGENTS\.md$
 ^\.codex$
 ^\.claude$
+^\.agents$
+^skills-lock\.json$
+^PLANNING\.md$

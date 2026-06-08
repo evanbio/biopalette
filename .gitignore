@@ -3,9 +3,12 @@
 .RData
 .DS_Store
 docs/
-dev/
+_dev/
 CLAUDE.md
 BIOPALETTE.md
 AGENTS.md
 .codex/
 .claude/
+.agents/
+skills-lock.json
+PLANNING.md
