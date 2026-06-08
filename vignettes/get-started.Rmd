@@ -49,7 +49,7 @@ get_palette("babel", n = 5)
 get_palette("walter_white", type = "diverging")
 ```
 
-The returned value is a named character vector of HEX codes, ready to pass to any plotting function.
+The returned value is a character vector of HEX codes, ready to pass to any plotting function.
 
 ## Preview a Palette
 
@@ -85,7 +85,7 @@ ggplot(faithfuld, aes(waiting, eruptions, fill = density)) +
 
 ```{r utils}
 hex2rgb("#1688A7")
-rgb2hex(22, 136, 167)
+rgb2hex(c(22, 136, 167))
 ```
 
 ## Function Reference
