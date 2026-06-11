@@ -363,6 +363,14 @@ test_that("create_palette() validates name parameter", {
                "single non-empty string")
   expect_error(create_palette("", "sequential",  c("#FF0000"), color_dir = tmp),
                "single non-empty string")
+  expect_error(create_palette("GeneRed", "sequential", c("#FF0000"), color_dir = tmp),
+               "snake_case palette name")
+  expect_error(create_palette("gene-red", "sequential", c("#FF0000"), color_dir = tmp),
+               "snake_case palette name")
+  expect_error(create_palette("gene_red.json", "sequential", c("#FF0000"), color_dir = tmp),
+               "snake_case palette name")
+  expect_error(create_palette("../gene_red", "sequential", c("#FF0000"), color_dir = tmp),
+               "snake_case palette name")
 })
 
 test_that("create_palette() validates colors are valid HEX", {
@@ -414,6 +422,19 @@ test_that("remove_palette() finds palette without specifying type", {
   expect_false(file.exists(json_path))
 })
 
+test_that("remove_palette() does not search other types when type is specified", {
+  tmp <- file.path(tempdir(), paste0("rm_type_", Sys.getpid()))
+  on.exit(unlink(tmp, recursive = TRUE), add = TRUE)
+
+  create_palette("typed_only", "diverging", c("#d73027", "#f7f7f7", "#4575b4"), color_dir = tmp)
+  json_path <- file.path(tmp, "diverging", "typed_only.json")
+  expect_true(file.exists(json_path))
+
+  result <- suppressMessages(remove_palette("typed_only", type = "qualitative", color_dir = tmp))
+  expect_false(isTRUE(result))
+  expect_true(file.exists(json_path))
+})
+
 test_that("remove_palette() validates name parameter", {
   tmp <- file.path(tempdir(), paste0("rm_val_", Sys.getpid()))
   dir.create(tmp, recursive = TRUE, showWarnings = FALSE)
@@ -421,6 +442,10 @@ test_that("remove_palette() validates name parameter", {
 
   expect_error(remove_palette(123, color_dir = tmp),       "single non-empty string")
   expect_error(remove_palette("",  color_dir = tmp),       "single non-empty string")
+  expect_error(remove_palette("GeneRed", color_dir = tmp), "snake_case palette name")
+  expect_error(remove_palette("gene-red", color_dir = tmp), "snake_case palette name")
+  expect_error(remove_palette("gene_red.json", color_dir = tmp), "snake_case palette name")
+  expect_error(remove_palette("../gene_red", color_dir = tmp), "snake_case palette name")
 })
 
 #==============================================================================

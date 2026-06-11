@@ -158,7 +158,7 @@ create_palette <- function(name,
                            overwrite = FALSE) {
 
   # Validate inputs
-  .assert_scalar_string(name)
+  .assert_palette_name(name)
   type <- match.arg(type)
   .assert_hex_colors(colors)
   .assert_dir_path(color_dir)
@@ -385,13 +385,13 @@ remove_palette <- function(name,
                             color_dir) {
 
   # Validate inputs
-  .assert_scalar_string(name)
+  .assert_palette_name(name)
   .assert_dir_path(color_dir)
   if (!is.null(type)) type <- match.arg(type, c("sequential", "diverging", "qualitative"))
 
-  # Search specified type first, then others
+  # Search only the requested type when specified; otherwise search all types.
   valid_types <- c("sequential", "diverging", "qualitative")
-  types_to_try <- if (is.null(type)) valid_types else c(type, setdiff(valid_types, type))
+  types_to_try <- if (is.null(type)) valid_types else type
 
   for (current_type in types_to_try) {
     json_file <- file.path(color_dir, current_type, paste0(name, ".json"))

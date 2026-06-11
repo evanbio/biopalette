@@ -350,6 +350,29 @@
 }
 
 
+#' Assert that a palette name is safe for JSON file naming
+#'
+#' Palette names are also used as JSON file stems under type directories.
+#'
+#' @param x Character. Palette name.
+#' @param arg Name of the argument (for error messages).
+#'
+#' @keywords internal
+#' @noRd
+.assert_palette_name <- function(x, arg = deparse(substitute(x))) {
+  .assert_scalar_string(x, arg = arg)
+
+  if (!grepl("^[a-z][a-z0-9_]*$", x)) {
+    cli::cli_abort(
+      "{.arg {arg}} must be a snake_case palette name, e.g. {.val gene_red}.",
+      call = NULL
+    )
+  }
+
+  invisible(x)
+}
+
+
 #' Return an empty palette metadata data.frame
 #'
 #' @return Empty data.frame with columns: name, type, n_color, colors.
