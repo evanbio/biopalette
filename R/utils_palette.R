@@ -148,41 +148,51 @@
 #' Read and validate a single palette JSON file
 #'
 #' Parses the file, checks required fields, type validity, and HEX codes.
-#' Returns NULL (with a warning) on any failure so the caller can skip.
+#' Aborts on any invalid file so palette compilation fails fast.
 #'
 #' @param json_file Character. Path to the JSON file.
-#' @return Named list with `name`, `type`, `colors`, or NULL on failure.
+#' @return Named list with `name`, `type`, `colors`.
 #'
 #' @keywords internal
 #' @noRd
 .read_palette_json <- function(json_file) {
-  palette_info <- tryCatch(jsonlite::fromJSON(json_file), error = function(e) NULL)
-
-  if (is.null(palette_info)) {
-    cli::cli_alert_warning("Failed to parse JSON: {.file {json_file}}")
-    return(NULL)
-  }
+  palette_info <- tryCatch(
+    jsonlite::fromJSON(json_file),
+    error = function(e) {
+      cli::cli_abort(
+        "Failed to parse JSON: {.file {json_file}}",
+        parent = e,
+        call = NULL
+      )
+    }
+  )
 
   missing_fields <- setdiff(c("name", "type", "colors"), names(palette_info))
   if (length(missing_fields) > 0) {
-    cli::cli_alert_warning("Missing fields ({.val {missing_fields}}) in: {.file {json_file}}")
-    return(NULL)
+    cli::cli_abort(
+      "Missing fields ({.val {missing_fields}}) in: {.file {json_file}}",
+      call = NULL
+    )
   }
 
   valid_types <- c("sequential", "diverging", "qualitative")
   if (!palette_info$type %in% valid_types) {
-    cli::cli_alert_warning("Unknown type {.val {palette_info$type}}, skipping: {.file {json_file}}")
-    return(NULL)
+    cli::cli_abort(
+      "Unknown type {.val {palette_info$type}} in: {.file {json_file}}",
+      call = NULL
+    )
   }
 
-  ok <- tryCatch(
-    { .assert_hex_colors(palette_info$colors); TRUE },
+  tryCatch(
+    .assert_hex_colors(palette_info$colors),
     error = function(e) {
-      cli::cli_alert_warning("Invalid HEX codes in: {.file {json_file}}")
-      FALSE
+      cli::cli_abort(
+        "Invalid HEX codes in: {.file {json_file}}",
+        parent = e,
+        call = NULL
+      )
     }
   )
-  if (!ok) return(NULL)
 
   palette_info[c("name", "type", "colors")]
 }

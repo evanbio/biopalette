@@ -457,14 +457,16 @@ test_that("compile_palettes() returns invisibly", {
   expect_invisible(compile_palettes(palettes_dir = src))
 })
 
-test_that("compile_palettes() skips invalid JSON files gracefully", {
+test_that("compile_palettes() aborts on invalid JSON files", {
   src <- make_temp_palette_dir()
   on.exit(unlink(src, recursive = TRUE), add = TRUE)
 
   writeLines("{not valid json", file.path(src, "sequential", "broken.json"))
 
-  result <- expect_no_error(compile_palettes(palettes_dir = src))
-  expect_false("broken" %in% names(result$sequential))
+  expect_error(
+    compile_palettes(palettes_dir = src),
+    "Failed to parse JSON"
+  )
 })
 
 test_that("compile_palettes() errors when palettes_dir does not exist", {

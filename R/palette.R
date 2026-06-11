@@ -349,7 +349,6 @@ compile_palettes <- function(palettes_dir) {
 
   for (json_file in json_files) {
     p <- .read_palette_json(json_file)
-    if (is.null(p)) next
 
     if (p$name %in% names(palettes[[p$type]])) {
       cli::cli_alert_warning("Duplicate palette {.val {p$name}} in {.val {p$type}}, overwriting.")
