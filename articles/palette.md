@@ -206,12 +206,12 @@ temp_dir <- file.path(tempdir(), "palettes")
 
 create_palette("my_blues", "sequential", c("#deebf7", "#9ecae1", "#3182bd"),
                color_dir = temp_dir)
-#> ✔ Palette saved: /tmp/RtmpuEwwyK/palettes/sequential/my_blues.json
+#> ✔ Palette saved: /tmp/RtmpHa5sTD/palettes/sequential/my_blues.json
 
 create_palette("my_trio", "qualitative",
                c("#E64B35", "#4DBBD5", "#00A087"),
                color_dir = temp_dir)
-#> ✔ Palette saved: /tmp/RtmpuEwwyK/palettes/qualitative/my_trio.json
+#> ✔ Palette saved: /tmp/RtmpHa5sTD/palettes/qualitative/my_trio.json
 ```
 
 Note that this writes a **file**; it does not register the palette with
@@ -232,7 +232,7 @@ By default, saving over an existing name raises an error. Pass
 create_palette("my_blues", "sequential", c("#c6dbef", "#6baed6", "#2171b5"),
                color_dir = temp_dir, overwrite = TRUE)
 #> ℹ Overwriting existing palette: "my_blues"
-#> ✔ Palette saved: /tmp/RtmpuEwwyK/palettes/sequential/my_blues.json
+#> ✔ Palette saved: /tmp/RtmpHa5sTD/palettes/sequential/my_blues.json
 ```
 
 ``` r
@@ -446,7 +446,7 @@ light_hex
 # 5. Save the derived palette to your own directory
 create_palette("three_body_light", "qualitative", light_hex,
                color_dir = temp_dir)
-#> ✔ Palette saved: /tmp/RtmpuEwwyK/palettes/qualitative/three_body_light.json
+#> ✔ Palette saved: /tmp/RtmpHa5sTD/palettes/qualitative/three_body_light.json
 
 # 6. Compile that directory to make the palette usable.
 #    create_palette() wrote a file; compile_palettes() is what turns a

@@ -8,7 +8,8 @@
 [![Lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 
 [📚 文档](https://evanbio.github.io/biopalette/) • [💬
-问题反馈](https://github.com/evanbio/biopalette/issues)
+问题反馈](https://github.com/evanbio/biopalette/issues) • [🎨
+Tessera](https://folio.evanzhou.org/tessera)
 
 ------------------------------------------------------------------------
 
