@@ -1,8 +1,17 @@
-# 004 — three_body
+---
+name: three_body
+index: 6
+type: qualitative
+source: paper
+image: three_body
+date: 2026-04-10
+---
+
+# three_body
 
 ## Source
 
-![source](three_body.jpg)
+![source](../_source/three_body.jpg)
 
 Figure 4A from *A pan-cancer single-cell transcriptional atlas of tumor infiltrating myeloid cells* (Cell, 2021). A trajectory analysis of three dendritic cell subtypes — cDC1, cDC2, and cDC3 — each following a distinct differentiation path within the tumor microenvironment.
 
@@ -10,7 +19,7 @@ Three bodies. Three orbits. No stable solution.
 
 ## Palette
 
-![preview](three_body_preview.png)
+![preview](preview.png)
 
 | # | HEX | Reference label |
 |---|---|---|
@@ -20,10 +29,6 @@ Three bodies. Three orbits. No stable solution.
 
 The "Reference label" column is included only to document the source context.
 Users may freely remap the colors to their own cell types or categories.
-
-## Type
-
-Qualitative
 
 ## Use cases
 

@@ -52,14 +52,16 @@ devtools::install_github("evanbio/biopalette")
 
 ## Palettes
 
+Each name links to its story page — source image, color table, and when to use it.
+
 | Name | Type | Colors | Source |
 |---|---|---|---|
-| `gene_red` | Qualitative | 2 | *Better Call Saul* — Gene Takavic's red coat |
-| `walter_white` | Diverging | 5 | *Breaking Bad* — desert to sky |
-| `walter_white2` | Qualitative | 5 | *Breaking Bad* — muted earth tones |
-| `walter_white3` | Diverging | 5 | *Breaking Bad* — warm counterpart |
-| `babel` | Qualitative | 21 | Pan-cancer myeloid atlas (Cell, 2021) — 22 cell types, 21 voices |
-| `three_body` | Qualitative | 3 | Pan-cancer myeloid atlas (Cell, 2021) — three DC trajectories |
+| [`gene_red`](palettes/gene_red) | Qualitative | 2 | *Better Call Saul* — Gene Takavic's red coat |
+| [`walter_white`](palettes/walter_white) | Diverging | 5 | *Breaking Bad* — desert to sky |
+| [`walter_white2`](palettes/walter_white2) | Qualitative | 5 | *Breaking Bad* — muted earth tones |
+| [`walter_white3`](palettes/walter_white3) | Diverging | 5 | *Breaking Bad* — warm counterpart |
+| [`babel`](palettes/babel) | Qualitative | 21 | Pan-cancer myeloid atlas (Cell, 2021) — 22 cell types, 21 voices |
+| [`three_body`](palettes/three_body) | Qualitative | 3 | Pan-cancer myeloid atlas (Cell, 2021) — three DC trajectories |
 
 ---
 

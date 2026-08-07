@@ -1,16 +1,27 @@
-# 003 — babel
+---
+name: babel
+index: 5
+type: qualitative
+source: paper
+image: babel
+date: 2026-04-10
+---
+
+# babel
 
 ## Source
 
-![source](babel.jpg)
+![source](../_source/babel.jpg)
 
 Figure 1G from *A pan-cancer single-cell transcriptional atlas of tumor infiltrating myeloid cells* (Cell, 2021). A UMAP embedding of myeloid cell populations across multiple cancer types — macrophages, monocytes, dendritic cells, and beyond.
 
 Every dot is a cell. Every color is a voice. No two speak the same language.
 
+Positions 1–13 follow the legend order of the source figure. Positions 14–21 are the remaining colors from the same figure, appended so the palette covers all clusters rather than stopping at the legend.
+
 ## Palette
 
-![preview](babel_preview.png)
+![preview](preview.png)
 
 | # | HEX | Reference label |
 |---|---|---|
@@ -38,10 +49,6 @@ Every dot is a cell. Every color is a voice. No two speak the same language.
 
 The "Reference label" column is included only to document the source context.
 Users may freely remap the colors to their own cell types or categories.
-
-## Type
-
-Qualitative
 
 ## Use cases
 
