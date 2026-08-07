@@ -299,6 +299,29 @@ test_that("list_palettes() validates sort parameter", {
   expect_error(list_palettes(sort = NA),    "TRUE or FALSE")
 })
 
+test_that("list_palettes() row names are a clean sequence after sorting", {
+  skip_if_not(palette_data_available(), "Package palette dataset not available")
+
+  result <- list_palettes(palettes_path = .test_palettes_path())
+  expect_identical(row.names(result), as.character(seq_len(nrow(result))))
+})
+
+test_that("list_palettes() reports and returns empty when no type matches", {
+  # A dataset that carries only one type, so asking for another finds nothing.
+  palettes <- list(qualitative = list(only_one = c("#000000", "#FFFFFF")))
+  rda <- file.path(tempdir(), "lp_no_match.rda")
+  save(palettes, file = rda)
+  on.exit(unlink(rda), add = TRUE)
+
+  expect_message(
+    result <- list_palettes(type = "diverging", palettes_path = rda),
+    "No matching types"
+  )
+  expect_s3_class(result, "data.frame")
+  expect_equal(nrow(result), 0L)
+  expect_true(all(c("name", "type", "n_color", "colors") %in% names(result)))
+})
+
 #==============================================================================
 # create_palette()
 #==============================================================================
@@ -503,6 +526,32 @@ test_that("compile_palettes() errors when palettes_dir does not exist", {
 
 test_that("compile_palettes() errors when palettes_dir is invalid string", {
   expect_error(compile_palettes(""), "single non-empty string")
+})
+
+test_that("compile_palettes() warns on duplicate names and keeps the last", {
+  dir <- file.path(tempdir(), paste0("cp_dup_", Sys.getpid()))
+  qual <- file.path(dir, "qualitative")
+  dir.create(qual, recursive = TRUE, showWarnings = FALSE)
+  on.exit(unlink(dir, recursive = TRUE), add = TRUE)
+
+  # Two files, one name: the palette name lives inside the JSON, so a copied
+  # file under a new stem is enough to collide.
+  writeLines(
+    '{"name": "twin", "type": "qualitative", "colors": ["#000000"]}',
+    file.path(qual, "a.json")
+  )
+  writeLines(
+    '{"name": "twin", "type": "qualitative", "colors": ["#FFFFFF"]}',
+    file.path(qual, "b.json")
+  )
+
+  expect_message(
+    compiled <- compile_palettes(dir),
+    "Duplicate palette"
+  )
+  # Files are read in sorted order, so b.json wins.
+  expect_identical(compiled$qualitative$twin, "#FFFFFF")
+  expect_length(compiled$qualitative, 1L)
 })
 
 #==============================================================================

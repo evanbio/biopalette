@@ -21,8 +21,9 @@
 
 #' Assert that an argument is a valid path string
 #'
-#' Checks that the value is a single non-empty string suitable for use as a
-#' file or directory path. Does not require the path to already exist.
+#' Same check as \code{.assert_scalar_string()}; the separate name marks
+#' call sites where the string is a file or directory path. The path is not
+#' required to already exist.
 #'
 #' @param x The argument to check.
 #' @param arg Name of the argument (for error messages).
@@ -31,10 +32,7 @@
 #' @keywords internal
 #' @noRd
 .assert_dir_path <- function(x, arg = deparse(substitute(x))) {
-  if (!is.character(x) || length(x) != 1L || is.na(x) || !nzchar(x)) {
-    cli::cli_abort("{.arg {arg}} must be a single non-empty string.", call = NULL)
-  }
-  invisible(x)
+  .assert_scalar_string(x, arg = arg)
 }
 
 

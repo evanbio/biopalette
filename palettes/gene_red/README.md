@@ -13,7 +13,7 @@ date: 2026-04-03
 
 ![source](../_source/gene_red.jpg)
 
-Poster from *Better Call Saul* — the world's second best lawyer, perhaps, but undeniably the world's best TV series, so it gets to go first.
+Poster from *Better Call Saul*.
 
 Meet Gene Takavic: a perfectly ordinary man running a Cinnabon in Omaha, helping elderly folks with their wheelchairs, keeping his head down, and doing absolutely nothing wrong. Nothing to see here. "So after all that? A happy ending."
 

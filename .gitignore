@@ -12,3 +12,9 @@ AGENTS.md
 .agents/
 skills-lock.json
 PLANNING.md
+
+# Vignette knit artifacts (the chunks are evaluated now, so building one
+# locally leaves figures and rendered output behind)
+vignettes/figure/
+vignettes/*.html
+vignettes/*_files/

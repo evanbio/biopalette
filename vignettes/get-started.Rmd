@@ -9,9 +9,11 @@ vignette: >
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment  = "#>",
-  eval     = FALSE
+  collapse   = TRUE,
+  comment    = "#>",
+  fig.width  = 7,
+  fig.height = 3,
+  fig.align  = "center"
 )
 ```
 
@@ -21,7 +23,7 @@ knitr::opts_chunk$set(
 
 ## Installation
 
-```{r install}
+```{r install, eval = FALSE}
 pak::pkg_install("evanbio/biopalette")
 ```
 
@@ -31,16 +33,24 @@ pak::pkg_install("evanbio/biopalette")
 library(biopalette)
 
 list_palettes()
-palette_gallery()
 ```
 
-`list_palettes()` returns a data frame of all available palettes with their name, type, and number of colors. `palette_gallery()` renders a visual overview.
+`list_palettes()` returns a data frame of all available palettes with their name, type, and number of colors.
+
+`palette_gallery()` renders a visual overview and returns one ggplot per page, so you can display the page you want:
+
+```{r gallery, fig.height = 4}
+pages <- palette_gallery(verbose = FALSE)
+names(pages)
+
+pages[["qualitative_page1"]]
+```
 
 ## Retrieve Colors
 
 ```{r get}
 # Full palette
-get_palette("babel")
+get_palette("three_body")
 
 # First n colors
 get_palette("babel", n = 5)
@@ -53,32 +63,36 @@ The returned value is a character vector of HEX codes, ready to pass to any plot
 
 ## Preview a Palette
 
-```{r preview}
-preview_palette("gene_red")
+```{r preview-rect, fig.height = 2.2}
+preview_palette("gene_red", plot_type = "rect")
+```
+
+```{r preview-babel, fig.height = 2.2}
 preview_palette("babel", plot_type = "rect")
+```
+
+```{r preview-circle, fig.height = 2.5}
 preview_palette("three_body", plot_type = "circle")
 ```
 
 ## Use in ggplot2
 
-```{r ggplot}
+```{r ggplot, fig.height = 4}
 library(ggplot2)
-
-cols <- get_palette("three_body")
 
 ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
   geom_point(size = 2) +
-  scale_color_manual(values = cols)
+  scale_color_manual(values = get_palette("three_body")) +
+  theme_minimal()
 ```
 
-For continuous scales, pass colors directly to `scale_fill_gradientn()` or `scale_color_gradientn()`:
+For continuous scales, pass the colors to `scale_fill_gradientn()` or `scale_color_gradientn()`. Diverging palettes are the natural fit here:
 
-```{r ggplot-continuous}
-cols <- get_palette("walter_white")
-
+```{r ggplot-continuous, fig.height = 4}
 ggplot(faithfuld, aes(waiting, eruptions, fill = density)) +
   geom_tile() +
-  scale_fill_gradientn(colors = cols)
+  scale_fill_gradientn(colors = get_palette("walter_white")) +
+  theme_minimal()
 ```
 
 ## Color Utilities

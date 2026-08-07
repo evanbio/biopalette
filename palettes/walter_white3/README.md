@@ -17,6 +17,8 @@ Poster from *Breaking Bad* — the pilot. Walter White, still with hair, standin
 
 Back when he was still a hamburger, not yet Heisenberg.
 
+The warm read of the same poster: rose at one end, green at the other, warm beige between them.
+
 ## Palette
 
 ![preview](preview.png)
@@ -31,5 +33,7 @@ Back when he was still a hamburger, not yet Heisenberg.
 
 ## Use cases
 
-- Same as `walter_white`, but warmer in tone
-- A backup option when a cooler palette conflicts with other figure elements
+- Two-sided continuous data in a warm register — fold change, effect size
+- When a cool palette clashes with the rest of the figure
+
+Its two ends are rose and green, so red–green color blindness will struggle with it. For signed data going to a general audience, `walter_white` is the safer diverging choice.

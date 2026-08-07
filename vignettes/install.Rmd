@@ -8,6 +8,8 @@ vignette: >
 ---
 
 ```{r setup, include = FALSE}
+# Reason: this vignette is mostly install/uninstall commands, which must not
+# run while the vignette is built. Only the verification chunk is evaluated.
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment  = "#>",
@@ -43,7 +45,7 @@ All dependencies are installed automatically with the package.
 
 ## Verify Installation
 
-```{r verify}
+```{r verify, eval = TRUE}
 library(biopalette)
 
 packageVersion("biopalette")

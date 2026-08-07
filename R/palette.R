@@ -110,7 +110,9 @@ list_palettes <- function(type = NULL,
     data.frame(
       name    = names(pset),
       type    = t,
-      n_color = lengths(pset),
+      # Reason: unname() keeps lengths()'s names off the data.frame, which
+      # would otherwise become row names duplicating the `name` column.
+      n_color = unname(lengths(pset)),
       colors  = I(unname(pset)),
       stringsAsFactors = FALSE
     )
@@ -119,8 +121,14 @@ list_palettes <- function(type = NULL,
   if (is.null(palette_df)) return(.empty_palette_df())
 
   if (sort) {
-    palette_df <- palette_df[order(palette_df$type, palette_df$n_color, palette_df$name), ]
+    palette_df <- palette_df[
+      order(palette_df$type, palette_df$n_color, palette_df$name),
+    ]
   }
+
+  # Reason: subsetting carries the pre-sort positions along as row names,
+  # which print as a jumbled sequence (1, 2, 4, 5, 6, 3).
+  row.names(palette_df) <- NULL
 
   palette_df
 }
@@ -255,10 +263,10 @@ preview_palette <- function(name,
 #' palette_gallery(type = c("sequential", "diverging"), max_palettes = 10)
 #' }
 palette_gallery <- function(type = NULL,
-                                max_palettes = 30,
-                                max_row = 12,
-                                verbose = TRUE,
-                                palettes_path = NULL) {
+                            max_palettes = 30,
+                            max_row = 12,
+                            verbose = TRUE,
+                            palettes_path = NULL) {
 
   # Validate inputs
   .assert_count(max_palettes)
@@ -329,7 +337,7 @@ palette_gallery <- function(type = NULL,
 #' @export
 compile_palettes <- function(palettes_dir) {
 
-  .assert_scalar_string(palettes_dir)
+  .assert_dir_path(palettes_dir)
 
   if (!dir.exists(palettes_dir)) {
     cli::cli_abort("Palettes directory does not exist: {.path {palettes_dir}}", call = NULL)
@@ -381,8 +389,8 @@ compile_palettes <- function(palettes_dir) {
 #' remove_palette("gene_red", type = "qualitative", color_dir = "path/to/palettes")
 #' }
 remove_palette <- function(name,
-                            type = NULL,
-                            color_dir) {
+                           type = NULL,
+                           color_dir) {
 
   # Validate inputs
   .assert_palette_name(name)

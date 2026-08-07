@@ -17,6 +17,8 @@ Poster from *Breaking Bad* — the pilot. Walter White, still with hair, standin
 
 Back when he was still a hamburger, not yet Heisenberg.
 
+The cool read of the poster: sky at one end, desert scrub at the other, the washed-out horizon holding the middle.
+
 ## Palette
 
 ![preview](preview.png)

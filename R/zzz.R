@@ -2,20 +2,20 @@
 # zzz.R - Package startup
 # =============================================================================
 
-# =============================================================================
-# Package Load / Attach Hooks
-# =============================================================================
-
-.onLoad <- function(libname, pkgname) {
-  invisible(NULL)
-}
-
 .onAttach <- function(libname, pkgname) {
-  if (!interactive()) return()
-  version <- utils::packageVersion(pkgname)
-  cli::cli_text("Welcome to {pkgname}.")
-  cli::cli_text("Version: {version}")
-  cli::cli_text("Tip: type {cli::col_blue('palette_gallery()')} to browse all palettes.")
+  if (!interactive()) return(invisible(NULL))
+
+  # Reason: routed through packageStartupMessage() so the banner obeys
+  # suppressPackageStartupMessages(). cli's own output functions signal a
+  # plain message, which that suppressor does not catch.
+  packageStartupMessage(cli::format_inline(
+    "Welcome to {pkgname}. Version: {utils::packageVersion(pkgname)}"
+  ))
+  packageStartupMessage(cli::format_inline(
+    "Tip: type {.code palette_gallery()} to browse all palettes."
+  ))
+
+  invisible(NULL)
 }
 
 

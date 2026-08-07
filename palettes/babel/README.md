@@ -55,3 +55,5 @@ Users may freely remap the colors to their own cell types or categories.
 - Large single-cell UMAP or t-SNE plots with many cell clusters
 - Multi-group comparisons requiring many distinct colors
 - Any qualitative visualization where categorical separation is the priority
+
+At 21 colors some pairs inevitably sit close together — a couple of the reds especially. It works here the way it works in the source figure: clusters are told apart by position as much as by color. Don't ask color alone to carry 21 groups.
