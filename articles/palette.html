@@ -173,16 +173,12 @@
 </table>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/evanbio/biopalette" class="external-link">biopalette</a></span><span class="op">)</span></span></code></pre></div>
-<blockquote>
-<p><strong>Note:</strong> All code examples in this vignette are static
-(<code>eval = FALSE</code>). Output is hand-written to reflect the
-current implementation. If you modify the palette functions, re-verify
-the examples manually or switch chunks to <code>eval = TRUE</code>.</p>
-</blockquote>
 <p>Palettes are stored as JSON files organized under three
 subdirectories — <code>sequential/</code>, <code>diverging/</code>, and
 <code>qualitative/</code> — and compiled into the <code>palettes</code>
 package dataset via <code><a href="../reference/compile_palettes.html">compile_palettes()</a></code>.</p>
+<p>Every chunk below is evaluated when the vignette is built, so the
+output you see is what the current version actually produces.</p>
 <hr>
 </div>
 <div class="section level2">
@@ -198,28 +194,26 @@ take the first N colors from a larger palette.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Auto-detect type</span></span>
 <span><span class="fu"><a href="../reference/get_palette.html">get_palette</a></span><span class="op">(</span><span class="st">"babel"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "#1688A7" "#7673AE" "#B3DE69" "#D195F6" "#7E285E" ...</span></span>
+<span><span class="co">#&gt;  [1] "#1688A7" "#7673AE" "#B3DE69" "#D195F6" "#7E285E" "#8197FF" "#0911E9"</span></span>
+<span><span class="co">#&gt;  [8] "#FF9E81" "#EF5276" "#EB2C1D" "#FD7915" "#FEC718" "#E43EC1" "#1FDBFE"</span></span>
+<span><span class="co">#&gt; [15] "#B1E7E7" "#B03C0B" "#F39800" "#E64B35" "#A443B2" "#FFE4B5" "#FFF56A"</span></span>
 <span></span>
-<span><span class="co"># Specify type explicitly</span></span>
-<span><span class="fu"><a href="../reference/get_palette.html">get_palette</a></span><span class="op">(</span><span class="st">"babel"</span>, type <span class="op">=</span> <span class="st">"qualitative"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "#1688A7" "#7673AE" "#B3DE69" "#D195F6" "#7E285E" ...</span></span>
-<span></span>
-<span><span class="co"># Take only the first 5 colors</span></span>
+<span><span class="co"># Specify type explicitly, take only the first 5 colors</span></span>
 <span><span class="fu"><a href="../reference/get_palette.html">get_palette</a></span><span class="op">(</span><span class="st">"babel"</span>, type <span class="op">=</span> <span class="st">"qualitative"</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "#1688A7" "#7673AE" "#B3DE69" "#D195F6" "#7E285E"</span></span></code></pre></div>
 <p>When <code>type</code> is wrong, the error message tells you where
 the palette actually lives:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/get_palette.html">get_palette</a></span><span class="op">(</span><span class="st">"walter_white"</span>, type <span class="op">=</span> <span class="st">"qualitative"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in `get_palette()`:</span></span>
-<span><span class="co">#&gt; ! Palette "walter_white" not found under "qualitative", but exists under "diverging".</span></span>
-<span><span class="co">#&gt; Try: get_palette("walter_white", type = "diverging")</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;">:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Palette <span style="color: #0000BB;">"walter_white"</span> not found under <span style="color: #0000BB;">"qualitative"</span>, but exists under</span></span>
+<span><span class="co">#&gt;   <span style="color: #0000BB;">"diverging"</span>. Try: `get_palette("walter_white", type = "diverging")`</span></span></code></pre></div>
 <p>Requesting more colors than the palette contains raises an
 informative error rather than silently recycling:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/get_palette.html">get_palette</a></span><span class="op">(</span><span class="st">"gene_red"</span>, type <span class="op">=</span> <span class="st">"qualitative"</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in `get_palette()`:</span></span>
-<span><span class="co">#&gt; ! Palette "gene_red" only has 2 colors, but requested 5.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;">:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Palette <span style="color: #0000BB;">"gene_red"</span> only has <span style="color: #0000BB;">2</span> colors, but requested <span style="color: #0000BB;">5</span>.</span></span></code></pre></div>
 <hr>
 </div>
 <div class="section level3">
@@ -227,22 +221,31 @@ informative error rather than silently recycling:</p>
 <code>list_palettes()</code> — Browse available palettes<a class="anchor" aria-label="anchor" href="#list_palettes-browse-available-palettes"></a>
 </h3>
 <p>Returns a data frame with columns <code>name</code>,
-<code>type</code>, <code>n_color</code>, and <code>colors</code>. Filter
-by one or more types with the <code>type</code> argument.</p>
+<code>type</code>, <code>n_color</code>, and <code>colors</code>. It
+reads the <strong>compiled package dataset</strong>, not a directory on
+disk.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/list_palettes.html">list_palettes</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt;           name       type n_color                               colors</span></span>
-<span><span class="co">#&gt; 1     gene_red qualitative       2                    #000000, #B11522</span></span>
-<span><span class="co">#&gt; 2        babel qualitative      21  #1688A7, #7673AE, #B3DE69, ...</span></span>
-<span><span class="co">#&gt; 3   three_body qualitative       3         #6495ED, #339933, #FF4500</span></span>
-<span><span class="co">#&gt; 4 walter_white   diverging       5  #1991A9, #A3C5C4, #E7E9E4, ...</span></span>
-<span><span class="co">#&gt; ...</span></span></code></pre></div>
+<span><span class="co">#&gt;            name        type n_color       colors</span></span>
+<span><span class="co">#&gt; 1  walter_white   diverging       5 #1991A9,....</span></span>
+<span><span class="co">#&gt; 2 walter_white3   diverging       5 #B15F63,....</span></span>
+<span><span class="co">#&gt; 3      gene_red qualitative       2 #000000,....</span></span>
+<span><span class="co">#&gt; 4    three_body qualitative       3 #6495ED,....</span></span>
+<span><span class="co">#&gt; 5 walter_white2 qualitative       5 #5AB5BF,....</span></span>
+<span><span class="co">#&gt; 6         babel qualitative      21 #1688A7,....</span></span></code></pre></div>
+<p>Filter by one or more types with the <code>type</code> argument:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Single type</span></span>
-<span><span class="fu"><a href="../reference/list_palettes.html">list_palettes</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"qualitative"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/list_palettes.html">list_palettes</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"qualitative"</span><span class="op">)</span></span>
+<span><span class="co">#&gt;            name        type n_color       colors</span></span>
+<span><span class="co">#&gt; 1      gene_red qualitative       2 #000000,....</span></span>
+<span><span class="co">#&gt; 2    three_body qualitative       3 #6495ED,....</span></span>
+<span><span class="co">#&gt; 3 walter_white2 qualitative       5 #5AB5BF,....</span></span>
+<span><span class="co">#&gt; 4         babel qualitative      21 #1688A7,....</span></span>
 <span></span>
-<span><span class="co"># Multiple types</span></span>
-<span><span class="fu"><a href="../reference/list_palettes.html">list_palettes</a></span><span class="op">(</span>type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sequential"</span>, <span class="st">"diverging"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/list_palettes.html">list_palettes</a></span><span class="op">(</span>type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sequential"</span>, <span class="st">"diverging"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;            name      type n_color       colors</span></span>
+<span><span class="co">#&gt; 1  walter_white diverging       5 #1991A9,....</span></span>
+<span><span class="co">#&gt; 2 walter_white3 diverging       5 #B15F63,....</span></span></code></pre></div>
 <p>Results are sorted by <code>type</code>, <code>n_color</code>, and
 <code>name</code> by default. Set <code>sort = FALSE</code> to keep the
 original file order.</p>
@@ -261,13 +264,20 @@ original file order.</p>
 <code>"rect"</code>, or <code>"circle"</code>. Returns <code>NULL</code>
 invisibly — called for the plotting side effect.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/preview_palette.html">preview_palette</a></span><span class="op">(</span><span class="st">"gene_red"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/preview_palette.html">preview_palette</a></span><span class="op">(</span><span class="st">"walter_white"</span>, type <span class="op">=</span> <span class="st">"diverging"</span>, plot_type <span class="op">=</span> <span class="st">"pie"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/preview_palette.html">preview_palette</a></span><span class="op">(</span><span class="st">"three_body"</span>, n <span class="op">=</span> <span class="fl">3</span>, plot_type <span class="op">=</span> <span class="st">"circle"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/preview_palette.html">preview_palette</a></span><span class="op">(</span><span class="st">"gene_red"</span>, plot_type <span class="op">=</span> <span class="st">"rect"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="palette_files/figure-html/preview-rect-1.png" class="r-plt" alt="" width="672" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/preview_palette.html">preview_palette</a></span><span class="op">(</span><span class="st">"walter_white"</span>, type <span class="op">=</span> <span class="st">"diverging"</span>, plot_type <span class="op">=</span> <span class="st">"pie"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="palette_files/figure-html/preview-pie-1.png" class="r-plt" alt="" width="672" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/preview_palette.html">preview_palette</a></span><span class="op">(</span><span class="st">"three_body"</span>, n <span class="op">=</span> <span class="fl">3</span>, plot_type <span class="op">=</span> <span class="st">"circle"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="palette_files/figure-html/preview-circle-1.png" class="r-plt" alt="" width="672" style="display: block; margin: auto;"></p>
 <p>Supply <code>title</code> to override the default title (which is the
 palette name):</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/preview_palette.html">preview_palette</a></span><span class="op">(</span><span class="st">"babel"</span>, title <span class="op">=</span> <span class="st">"Pan-cancer myeloid cell types"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/preview_palette.html">preview_palette</a></span><span class="op">(</span><span class="st">"babel"</span>, plot_type <span class="op">=</span> <span class="st">"rect"</span>,</span>
+<span>                title <span class="op">=</span> <span class="st">"Pan-cancer myeloid cell types"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="palette_files/figure-html/preview-title-1.png" class="r-plt" alt="" width="672" style="display: block; margin: auto;"></p>
 <hr>
 </div>
 <div class="section level3">
@@ -277,21 +287,25 @@ palette name):</p>
 <p>Renders a paged gallery of all palettes and returns a named list of
 ggplot objects (one per page). Useful for picking colors
 interactively.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">plots</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/palette_gallery.html">palette_gallery</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; i Type diverging: 2 palettes -&gt; 1 page(s)</span></span>
-<span><span class="co">#&gt; v Built "diverging_page1"</span></span>
-<span><span class="co">#&gt; i Type qualitative: 4 palettes -&gt; 1 page(s)</span></span>
-<span><span class="co">#&gt; v Built "qualitative_page1"</span></span></code></pre></div>
-<p>Filter by type and control how many palettes appear per page:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">plots</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/palette_gallery.html">palette_gallery</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"qualitative"</span><span class="op">)</span></span>
-<span><span class="va">plots</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/palette_gallery.html">palette_gallery</a></span><span class="op">(</span>type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"qualitative"</span>, <span class="st">"diverging"</span><span class="op">)</span>, max_palettes <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
-<p>Access individual pages from the returned list:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">plots</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/palette_gallery.html">palette_gallery</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Type <span style="font-weight: bold;">diverging</span>: 2 palettes -&gt; 1 page(s)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Built <span style="color: #0000BB;">"diverging_page1"</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Type <span style="font-weight: bold;">qualitative</span>: 4 palettes -&gt; 1 page(s)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Built <span style="color: #0000BB;">"qualitative_page1"</span></span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">plots</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "diverging_page1"   "qualitative_page1"</span></span></code></pre></div>
+<p>Access individual pages from the returned list:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">plots</span><span class="op">[[</span><span class="st">"qualitative_page1"</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
-<p>Set <code>verbose = FALSE</code> to suppress progress messages when
-calling <code><a href="../reference/palette_gallery.html">palette_gallery()</a></code> programmatically.</p>
+<p><img src="palette_files/figure-html/gallery-access-1.png" class="r-plt" alt="" width="672" style="display: block; margin: auto;"></p>
+<p>Filter by type and control how many palettes appear per page. Set
+<code>verbose = FALSE</code> to suppress progress messages when calling
+<code><a href="../reference/palette_gallery.html">palette_gallery()</a></code> programmatically:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pages</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/palette_gallery.html">palette_gallery</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"diverging"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">pages</span><span class="op">[[</span><span class="st">"diverging_page1"</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
+<p><img src="palette_files/figure-html/gallery-filter-1.png" class="r-plt" alt="" width="672" style="display: block; margin: auto;"></p>
 <hr>
 </div>
 </div>
@@ -305,30 +319,35 @@ calling <code><a href="../reference/palette_gallery.html">palette_gallery()</a><
 <p>Writes a named palette as a JSON file under
 <code>color_dir/&lt;type&gt;/&lt;name&gt;.json</code>. The directory is
 created automatically if it does not exist.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">temp_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"palettes"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/create_palette.html">create_palette</a></span><span class="op">(</span><span class="st">"my_blues"</span>, <span class="st">"sequential"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#deebf7"</span>, <span class="st">"#9ecae1"</span>, <span class="st">"#3182bd"</span><span class="op">)</span>,</span>
 <span>               color_dir <span class="op">=</span> <span class="va">temp_dir</span><span class="op">)</span></span>
-<span><span class="co">#&gt; v Palette saved: /tmp/.../palettes/sequential/my_blues.json</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Palette saved: <span style="color: #0000BB;">/tmp/RtmpuEwwyK/palettes/sequential/my_blues.json</span></span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/create_palette.html">create_palette</a></span><span class="op">(</span><span class="st">"my_trio"</span>, <span class="st">"qualitative"</span>,</span>
 <span>               <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#E64B35"</span>, <span class="st">"#4DBBD5"</span>, <span class="st">"#00A087"</span><span class="op">)</span>,</span>
 <span>               color_dir <span class="op">=</span> <span class="va">temp_dir</span><span class="op">)</span></span>
-<span><span class="co">#&gt; v Palette saved: /tmp/.../palettes/qualitative/my_trio.json</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Palette saved: <span style="color: #0000BB;">/tmp/RtmpuEwwyK/palettes/qualitative/my_trio.json</span></span></span></code></pre></div>
+<p>Note that this writes a <strong>file</strong>; it does not register
+the palette with the package. <code><a href="../reference/get_palette.html">get_palette()</a></code> and
+<code><a href="../reference/list_palettes.html">list_palettes()</a></code> read the compiled dataset, so a palette in
+your own directory only becomes visible once that directory is compiled
+— see <code><a href="../reference/compile_palettes.html">compile_palettes()</a></code> below.</p>
 <p>By default, saving over an existing name raises an error. Pass
 <code>overwrite = TRUE</code> to replace it:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/create_palette.html">create_palette</a></span><span class="op">(</span><span class="st">"my_blues"</span>, <span class="st">"sequential"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#c6dbef"</span>, <span class="st">"#6baed6"</span>, <span class="st">"#2171b5"</span><span class="op">)</span>,</span>
 <span>               color_dir <span class="op">=</span> <span class="va">temp_dir</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; i Overwriting existing palette: "my_blues"</span></span>
-<span><span class="co">#&gt; v Palette saved: /tmp/.../palettes/sequential/my_blues.json</span></span></code></pre></div>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Overwriting existing palette: <span style="color: #0000BB;">"my_blues"</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Palette saved: <span style="color: #0000BB;">/tmp/RtmpuEwwyK/palettes/sequential/my_blues.json</span></span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Without overwrite = TRUE</span></span>
 <span><span class="fu"><a href="../reference/create_palette.html">create_palette</a></span><span class="op">(</span><span class="st">"my_blues"</span>, <span class="st">"sequential"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#deebf7"</span>, <span class="st">"#9ecae1"</span>, <span class="st">"#3182bd"</span><span class="op">)</span>,</span>
 <span>               color_dir <span class="op">=</span> <span class="va">temp_dir</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in `create_palette()`:</span></span>
-<span><span class="co">#&gt; ! Palette "my_blues" already exists. Use `overwrite = TRUE` to replace.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;">:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Palette <span style="color: #0000BB;">"my_blues"</span> already exists. Use `overwrite = TRUE` to replace.</span></span></code></pre></div>
 <p>The function invisibly returns a list with <code>path</code> and
 <code>info</code> so the result can be captured when needed.</p>
 <hr>
@@ -339,18 +358,18 @@ created automatically if it does not exist.</p>
 </h3>
 <p>Removes a palette JSON file by name. If <code>type</code> is omitted,
 all three type directories are searched in order.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/remove_palette.html">remove_palette</a></span><span class="op">(</span><span class="st">"my_blues"</span>, color_dir <span class="op">=</span> <span class="va">temp_dir</span><span class="op">)</span></span>
-<span><span class="co">#&gt; v Removed "my_blues" from sequential</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed <span style="color: #0000BB;">"my_blues"</span> from <span style="font-weight: bold;">sequential</span></span></span>
 <span></span>
 <span><span class="co"># Specify type to skip the search</span></span>
 <span><span class="fu"><a href="../reference/remove_palette.html">remove_palette</a></span><span class="op">(</span><span class="st">"my_trio"</span>, type <span class="op">=</span> <span class="st">"qualitative"</span>, color_dir <span class="op">=</span> <span class="va">temp_dir</span><span class="op">)</span></span>
-<span><span class="co">#&gt; v Removed "my_trio" from qualitative</span></span></code></pre></div>
-<p>If the palette is not found in any directory, a warning is issued and
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed <span style="color: #0000BB;">"my_trio"</span> from <span style="font-weight: bold;">qualitative</span></span></span></code></pre></div>
+<p>If the palette is not found in any directory, a message is issued and
 the function returns <code>FALSE</code> invisibly:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/remove_palette.html">remove_palette</a></span><span class="op">(</span><span class="st">"nonexistent"</span>, color_dir <span class="op">=</span> <span class="va">temp_dir</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ! Palette "nonexistent" not found in any type.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Palette <span style="color: #0000BB;">"nonexistent"</span> not found in any type.</span></span></code></pre></div>
 <hr>
 </div>
 <div class="section level3">
@@ -363,22 +382,27 @@ the function returns <code>FALSE</code> invisibly:</p>
 structured list. This is the function used in
 <code>data-raw/palettes.R</code> to rebuild the <code>palettes</code>
 package dataset via <code>usethis::use_data()</code>.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">compiled</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compile_palettes.html">compile_palettes</a></span><span class="op">(</span></span>
 <span>  palettes_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"palettes"</span>, package <span class="op">=</span> <span class="st">"biopalette"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; v Compiled 6 palettes: Sequential=0, Diverging=2, Qualitative=4</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Compiled 6 palettes: Sequential=0, Diverging=2, Qualitative=4</span></span></code></pre></div>
 <p>The return value is a named list with three elements —
 <code>sequential</code>, <code>diverging</code>, and
 <code>qualitative</code> — each of which is a named list of HEX
 vectors:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">compiled</span><span class="op">$</span><span class="va">qualitative</span><span class="op">[[</span><span class="st">"babel"</span><span class="op">]</span><span class="op">]</span></span>
-<span><span class="co">#&gt; [1] "#1688A7" "#7673AE" "#B3DE69" "#D195F6" "#7E285E" ...</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">compiled</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "sequential"  "diverging"   "qualitative"</span></span>
+<span></span>
+<span><span class="va">compiled</span><span class="op">$</span><span class="va">qualitative</span><span class="op">[[</span><span class="st">"three_body"</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="co">#&gt; [1] "#6495ED" "#339933" "#FF4500"</span></span></code></pre></div>
 <blockquote>
-<p>Duplicate palette names within the same type emit a warning and the
-last file read wins. JSON files with missing or invalid fields are
-skipped with a warning rather than aborting the whole compile.</p>
+<p>Validation is strict: a JSON file with a missing field, an unknown
+type, or an invalid HEX code <strong>aborts the whole compile</strong>
+rather than being skipped, so a broken file can never quietly drop a
+palette out of the dataset. Duplicate palette names within the same type
+are a softer case — they emit a message and the last file read wins.</p>
 </blockquote>
 <hr>
 </div>
@@ -394,10 +418,10 @@ skipped with a warning rather than aborting the whole compile.</p>
 <code>hex</code>, <code>r</code>, <code>g</code>, <code>b</code>. Both
 6-digit (<code>#RRGGBB</code>) and 8-digit (<code>#RRGGBBAA</code>)
 codes are accepted; the alpha channel is silently ignored.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/hex2rgb.html">hex2rgb</a></span><span class="op">(</span><span class="st">"#1688A7"</span><span class="op">)</span></span>
-<span><span class="co">#&gt;       hex   r   g   b</span></span>
-<span><span class="co">#&gt; 1 #1688A7  22 136 167</span></span>
+<span><span class="co">#&gt;       hex  r   g   b</span></span>
+<span><span class="co">#&gt; 1 #1688A7 22 136 167</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/hex2rgb.html">hex2rgb</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#1688A7"</span>, <span class="st">"#FF4500"</span>, <span class="st">"#339933"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;       hex   r   g   b</span></span>
@@ -406,16 +430,14 @@ codes are accepted; the alpha channel is silently ignored.</p>
 <span><span class="co">#&gt; 3 #339933  51 153  51</span></span></code></pre></div>
 <p>The <code>#</code> prefix is required; codes that fail the pattern
 and <code>NA</code> values are both reported as invalid:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Missing '#' prefix</span></span>
-<span><span class="fu"><a href="../reference/hex2rgb.html">hex2rgb</a></span><span class="op">(</span><span class="st">"1688A7"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in `hex2rgb()`:</span></span>
-<span><span class="co">#&gt; ! `hex` contains invalid HEX codes: "1688A7".</span></span>
-<span></span>
-<span><span class="co"># NA is treated as an invalid code</span></span>
-<span><span class="fu"><a href="../reference/hex2rgb.html">hex2rgb</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#1688A7"</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in `hex2rgb()`:</span></span>
-<span><span class="co">#&gt; ! `hex` contains invalid HEX codes: NA.</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/hex2rgb.html">hex2rgb</a></span><span class="op">(</span><span class="st">"1688A7"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;">:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> `hex` contains invalid HEX codes: <span style="color: #0000BB;">"1688A7"</span>.</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/hex2rgb.html">hex2rgb</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#1688A7"</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;">:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> `hex` contains invalid HEX codes: <span style="color: #0000BB;">NA</span>.</span></span></code></pre></div>
 <hr>
 </div>
 <div class="section level3">
@@ -426,40 +448,36 @@ and <code>NA</code> values are both reported as invalid:</p>
 numeric vector of length 3 or the data frame returned by
 <code><a href="../reference/hex2rgb.html">hex2rgb()</a></code>. Non-integer values are rounded before
 conversion.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Single color as a length-3 vector</span></span>
 <span><span class="fu"><a href="../reference/rgb2hex.html">rgb2hex</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">22</span>, <span class="fl">136</span>, <span class="fl">167</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "#1688A7"</span></span></code></pre></div>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Round-trip: HEX -&gt; RGB -&gt; HEX</span></span>
+<span><span class="co">#&gt; [1] "#1688A7"</span></span>
+<span></span>
+<span><span class="co"># Round-trip: HEX -&gt; RGB -&gt; HEX</span></span>
 <span><span class="fu"><a href="../reference/rgb2hex.html">rgb2hex</a></span><span class="op">(</span><span class="fu"><a href="../reference/hex2rgb.html">hex2rgb</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#1688A7"</span>, <span class="st">"#FF4500"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "#1688A7" "#FF4500"</span></span></code></pre></div>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Non-integer values are rounded</span></span>
+<span><span class="co">#&gt; [1] "#1688A7" "#FF4500"</span></span>
+<span></span>
+<span><span class="co"># Non-integer values are rounded</span></span>
 <span><span class="fu"><a href="../reference/rgb2hex.html">rgb2hex</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">21.7</span>, <span class="fl">136.2</span>, <span class="fl">167.4</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "#1688A7"</span></span></code></pre></div>
 <p>Typical failure cases for the vector form:</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Wrong length</span></span>
-<span><span class="fu"><a href="../reference/rgb2hex.html">rgb2hex</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">22</span>, <span class="fl">136</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in `rgb2hex()`:</span></span>
-<span><span class="co">#&gt; ! `rgb` must be a numeric vector of length 3.</span></span>
-<span></span>
-<span><span class="co"># Value out of range</span></span>
-<span><span class="fu"><a href="../reference/rgb2hex.html">rgb2hex</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">22</span>, <span class="fl">136</span>, <span class="fl">300</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in `rgb2hex()`:</span></span>
-<span><span class="co">#&gt; ! `rgb` values must be in [0, 255].</span></span></code></pre></div>
-<p>And for the data frame form:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Missing column</span></span>
-<span><span class="fu"><a href="../reference/rgb2hex.html">rgb2hex</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>r <span class="op">=</span> <span class="fl">22</span>, g <span class="op">=</span> <span class="fl">136</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in `rgb2hex()`:</span></span>
-<span><span class="co">#&gt; ! `rgb` must have columns {"r", "g", "b"}. Missing: {"b"}.</span></span>
-<span></span>
-<span><span class="co"># Column value out of range</span></span>
-<span><span class="fu"><a href="../reference/rgb2hex.html">rgb2hex</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>r <span class="op">=</span> <span class="fl">22</span>, g <span class="op">=</span> <span class="fl">136</span>, b <span class="op">=</span> <span class="fl">300</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in `rgb2hex()`:</span></span>
-<span><span class="co">#&gt; ! Column "b" in `rgb` must be numeric with values in [0, 255].</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/rgb2hex.html">rgb2hex</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">22</span>, <span class="fl">136</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;">:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> `rgb` must be a numeric vector of length 3.</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/rgb2hex.html">rgb2hex</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">22</span>, <span class="fl">136</span>, <span class="fl">300</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;">:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> `rgb` values must be in [0, 255].</span></span></code></pre></div>
+<p>And for the data frame form:</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/rgb2hex.html">rgb2hex</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>r <span class="op">=</span> <span class="fl">22</span>, g <span class="op">=</span> <span class="fl">136</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;">:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> `rgb` must have columns <span style="color: #0000BB;">"r"</span>, <span style="color: #0000BB;">"g"</span>, and <span style="color: #0000BB;">"b"</span>. Missing: <span style="color: #0000BB;">"b"</span>.</span></span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/rgb2hex.html">rgb2hex</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>r <span class="op">=</span> <span class="fl">22</span>, g <span class="op">=</span> <span class="fl">136</span>, b <span class="op">=</span> <span class="fl">300</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;">:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Column <span style="color: #0000BB;">"b"</span> in `rgb` must be numeric with values in [0, 255].</span></span></code></pre></div>
 <hr>
 </div>
 </div>
@@ -467,13 +485,10 @@ conversion.</p>
 <h2 id="a-combined-workflow">5 A Combined Workflow<a class="anchor" aria-label="anchor" href="#a-combined-workflow"></a>
 </h2>
 <p>The palette and conversion functions compose naturally. The example
-below picks a qualitative palette, converts its colors to RGB for
-downstream processing, then round-trips back to HEX to verify no
-information was lost.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/evanbio/biopalette" class="external-link">biopalette</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># 1. Retrieve a qualitative palette</span></span>
+below picks a qualitative palette, converts its colors to RGB, lightens
+them, and saves the result as a new palette.</p>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># 1. Retrieve a qualitative palette</span></span>
 <span><span class="va">colors</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_palette.html">get_palette</a></span><span class="op">(</span><span class="st">"three_body"</span>, type <span class="op">=</span> <span class="st">"qualitative"</span><span class="op">)</span></span>
 <span><span class="va">colors</span></span>
 <span><span class="co">#&gt; [1] "#6495ED" "#339933" "#FF4500"</span></span>
@@ -486,29 +501,33 @@ information was lost.</p>
 <span><span class="co">#&gt; 2 #339933  51 153  51</span></span>
 <span><span class="co">#&gt; 3 #FF4500 255  69   0</span></span>
 <span></span>
-<span><span class="co"># 3. Lighten each color by blending 50% toward white (255)</span></span>
+<span><span class="co"># 3. Lighten each color by blending 50% toward white</span></span>
 <span><span class="va">rgb_light</span> <span class="op">&lt;-</span> <span class="va">rgb_df</span></span>
-<span><span class="va">rgb_light</span><span class="op">$</span><span class="va">r</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">rgb_light</span><span class="op">$</span><span class="va">r</span> <span class="op">+</span> <span class="fl">255</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span></span>
-<span><span class="va">rgb_light</span><span class="op">$</span><span class="va">g</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">rgb_light</span><span class="op">$</span><span class="va">g</span> <span class="op">+</span> <span class="fl">255</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span></span>
-<span><span class="va">rgb_light</span><span class="op">$</span><span class="va">b</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">rgb_light</span><span class="op">$</span><span class="va">b</span> <span class="op">+</span> <span class="fl">255</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span></span>
+<span><span class="va">rgb_light</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"r"</span>, <span class="st">"g"</span>, <span class="st">"b"</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">rgb_df</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"r"</span>, <span class="st">"g"</span>, <span class="st">"b"</span><span class="op">)</span><span class="op">]</span> <span class="op">+</span> <span class="fl">255</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span></span>
 <span></span>
-<span><span class="co"># 4. Convert back to HEX and preview</span></span>
+<span><span class="co"># 4. Convert back to HEX</span></span>
 <span><span class="va">light_hex</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rgb2hex.html">rgb2hex</a></span><span class="op">(</span><span class="va">rgb_light</span><span class="op">)</span></span>
 <span><span class="va">light_hex</span></span>
-<span><span class="co">#&gt; [1] "#B2CAF6" "#99CC99" "#FF9C80"</span></span>
-<span></span>
-<span><span class="co"># 5. Save the new derived palette for reuse</span></span>
-<span><span class="va">temp_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"palettes"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "#B2CAF6" "#99CC99" "#FFA280"</span></span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># 5. Save the derived palette to your own directory</span></span>
 <span><span class="fu"><a href="../reference/create_palette.html">create_palette</a></span><span class="op">(</span><span class="st">"three_body_light"</span>, <span class="st">"qualitative"</span>, <span class="va">light_hex</span>,</span>
 <span>               color_dir <span class="op">=</span> <span class="va">temp_dir</span><span class="op">)</span></span>
-<span><span class="co">#&gt; v Palette saved: /tmp/.../palettes/qualitative/three_body_light.json</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Palette saved: <span style="color: #0000BB;">/tmp/RtmpuEwwyK/palettes/qualitative/three_body_light.json</span></span></span>
 <span></span>
-<span><span class="co"># 6. Verify the new palette is retrievable</span></span>
-<span><span class="st">"three_body_light"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="../reference/list_palettes.html">list_palettes</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"qualitative"</span><span class="op">)</span><span class="op">$</span><span class="va">name</span></span>
-<span><span class="co">#&gt; [1] TRUE</span></span>
-<span></span>
-<span><span class="co"># 7. Clean up</span></span>
+<span><span class="co"># 6. Compile that directory to make the palette usable.</span></span>
+<span><span class="co">#    create_palette() wrote a file; compile_palettes() is what turns a</span></span>
+<span><span class="co">#    directory of files into the list the query functions work with.</span></span>
+<span><span class="va">mine</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compile_palettes.html">compile_palettes</a></span><span class="op">(</span><span class="va">temp_dir</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Compiled 1 palette: Sequential=0, Diverging=0, Qualitative=1</span></span>
+<span><span class="va">mine</span><span class="op">$</span><span class="va">qualitative</span><span class="op">[[</span><span class="st">"three_body_light"</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="co">#&gt; [1] "#B2CAF6" "#99CC99" "#FFA280"</span></span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># 7. Clean up</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">temp_dir</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p>To make a palette part of the package itself rather than a local
+directory, write its JSON under <code>inst/extdata/palettes/</code> and
+rebuild the dataset with <code>data-raw/palettes.R</code>.</p>
 <hr>
 </div>
 <div class="section level2">
@@ -539,7 +558,7 @@ Issues</a></li>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by <a href="https://github.com/evanbio" class="external-link"><img src="https://github.com/evanbio.png" height="32" style="border-radius: 50%;" alt="Yibin Zhou"> Yibin Zhou</a>. Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.
+  <p>Developed by <a href="https://github.com/evanbio" class="external-link"><img src="https://github.com/evanbio.png" height="32" style="border-radius: 50%;" alt="Yibin Zhou"> Yibin Zhou</a>. Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.
 </p>
 <div class="text-muted">
 <p><i class="fas fa-balance-scale me-1"></i> <a href="https://opensource.org/licenses/MIT" class="external-link text-muted">MIT License</a></p>

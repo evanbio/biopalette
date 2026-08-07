@@ -52,14 +52,16 @@ devtools::install_github("evanbio/biopalette")
 
 ## 配色列表
 
+点击名称查看故事页：源图、色表，以及适合用在哪里。
+
 | 名称 | 类型 | 颜色数 | 来源 |
 |----|----|----|----|
-| `gene_red` | 定性 | 2 | *风骚律师* — Gene Takavic 的红色外套 |
-| `walter_white` | 发散 | 5 | *绝命毒师* — 荒漠到天空 |
-| `walter_white2` | 定性 | 5 | *绝命毒师* — 低饱和大地色调 |
-| `walter_white3` | 发散 | 5 | *绝命毒师* — 暖色对应版本 |
-| `babel` | 定性 | 21 | 泛癌骨髓细胞图谱（Cell, 2021）— 22 种细胞类型，21 种声音 |
-| `three_body` | 定性 | 3 | 泛癌骨髓细胞图谱（Cell, 2021）— 三条树突状细胞分化轨迹 |
+| [`gene_red`](https://evanbio.github.io/biopalette/palettes/gene_red) | 定性 | 2 | *风骚律师* — Gene Takavic 的红色外套 |
+| [`walter_white`](https://evanbio.github.io/biopalette/palettes/walter_white) | 发散 | 5 | *绝命毒师* — 荒漠到天空 |
+| [`walter_white2`](https://evanbio.github.io/biopalette/palettes/walter_white2) | 定性 | 5 | *绝命毒师* — 低饱和大地色调 |
+| [`walter_white3`](https://evanbio.github.io/biopalette/palettes/walter_white3) | 发散 | 5 | *绝命毒师* — 暖色对应版本 |
+| [`babel`](https://evanbio.github.io/biopalette/palettes/babel) | 定性 | 21 | 泛癌骨髓细胞图谱（Cell, 2021）— 22 种细胞类型，21 种声音 |
+| [`three_body`](https://evanbio.github.io/biopalette/palettes/three_body) | 定性 | 3 | 泛癌骨髓细胞图谱（Cell, 2021）— 三条树突状细胞分化轨迹 |
 
 ------------------------------------------------------------------------
 

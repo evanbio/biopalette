@@ -16,15 +16,13 @@ The palette module provides nine functions covering four areas:
 library(biopalette)
 ```
 
-> **Note:** All code examples in this vignette are static
-> (`eval = FALSE`). Output is hand-written to reflect the current
-> implementation. If you modify the palette functions, re-verify the
-> examples manually or switch chunks to `eval = TRUE`.
-
 Palettes are stored as JSON files organized under three subdirectories —
 `sequential/`, `diverging/`, and `qualitative/` — and compiled into the
 `palettes` package dataset via
 [`compile_palettes()`](https://evanbio.github.io/biopalette/reference/compile_palettes.md).
+
+Every chunk below is evaluated when the vignette is built, so the output
+you see is what the current version actually produces.
 
 ------------------------------------------------------------------------
 
@@ -40,13 +38,11 @@ larger palette.
 
 # Auto-detect type
 get_palette("babel")
-#> [1] "#1688A7" "#7673AE" "#B3DE69" "#D195F6" "#7E285E" ...
+#>  [1] "#1688A7" "#7673AE" "#B3DE69" "#D195F6" "#7E285E" "#8197FF" "#0911E9"
+#>  [8] "#FF9E81" "#EF5276" "#EB2C1D" "#FD7915" "#FEC718" "#E43EC1" "#1FDBFE"
+#> [15] "#B1E7E7" "#B03C0B" "#F39800" "#E64B35" "#A443B2" "#FFE4B5" "#FFF56A"
 
-# Specify type explicitly
-get_palette("babel", type = "qualitative")
-#> [1] "#1688A7" "#7673AE" "#B3DE69" "#D195F6" "#7E285E" ...
-
-# Take only the first 5 colors
+# Specify type explicitly, take only the first 5 colors
 get_palette("babel", type = "qualitative", n = 5)
 #> [1] "#1688A7" "#7673AE" "#B3DE69" "#D195F6" "#7E285E"
 ```
@@ -57,9 +53,9 @@ actually lives:
 ``` r
 
 get_palette("walter_white", type = "qualitative")
-#> Error in `get_palette()`:
-#> ! Palette "walter_white" not found under "qualitative", but exists under "diverging".
-#> Try: get_palette("walter_white", type = "diverging")
+#> Error:
+#> ! Palette "walter_white" not found under "qualitative", but exists under
+#>   "diverging". Try: `get_palette("walter_white", type = "diverging")`
 ```
 
 Requesting more colors than the palette contains raises an informative
@@ -68,7 +64,7 @@ error rather than silently recycling:
 ``` r
 
 get_palette("gene_red", type = "qualitative", n = 5)
-#> Error in `get_palette()`:
+#> Error:
 #> ! Palette "gene_red" only has 2 colors, but requested 5.
 ```
 
@@ -77,26 +73,36 @@ get_palette("gene_red", type = "qualitative", n = 5)
 ### `list_palettes()` — Browse available palettes
 
 Returns a data frame with columns `name`, `type`, `n_color`, and
-`colors`. Filter by one or more types with the `type` argument.
+`colors`. It reads the **compiled package dataset**, not a directory on
+disk.
 
 ``` r
 
 list_palettes()
-#>           name       type n_color                               colors
-#> 1     gene_red qualitative       2                    #000000, #B11522
-#> 2        babel qualitative      21  #1688A7, #7673AE, #B3DE69, ...
-#> 3   three_body qualitative       3         #6495ED, #339933, #FF4500
-#> 4 walter_white   diverging       5  #1991A9, #A3C5C4, #E7E9E4, ...
-#> ...
+#>            name        type n_color       colors
+#> 1  walter_white   diverging       5 #1991A9,....
+#> 2 walter_white3   diverging       5 #B15F63,....
+#> 3      gene_red qualitative       2 #000000,....
+#> 4    three_body qualitative       3 #6495ED,....
+#> 5 walter_white2 qualitative       5 #5AB5BF,....
+#> 6         babel qualitative      21 #1688A7,....
 ```
+
+Filter by one or more types with the `type` argument:
 
 ``` r
 
-# Single type
 list_palettes(type = "qualitative")
+#>            name        type n_color       colors
+#> 1      gene_red qualitative       2 #000000,....
+#> 2    three_body qualitative       3 #6495ED,....
+#> 3 walter_white2 qualitative       5 #5AB5BF,....
+#> 4         babel qualitative      21 #1688A7,....
 
-# Multiple types
 list_palettes(type = c("sequential", "diverging"))
+#>            name      type n_color       colors
+#> 1  walter_white diverging       5 #1991A9,....
+#> 2 walter_white3 diverging       5 #B15F63,....
 ```
 
 Results are sorted by `type`, `n_color`, and `name` by default. Set
@@ -114,18 +120,35 @@ called for the plotting side effect.
 
 ``` r
 
-preview_palette("gene_red")
+preview_palette("gene_red", plot_type = "rect")
+```
+
+![](palette_files/figure-html/preview-rect-1.png)
+
+``` r
+
 preview_palette("walter_white", type = "diverging", plot_type = "pie")
+```
+
+![](palette_files/figure-html/preview-pie-1.png)
+
+``` r
+
 preview_palette("three_body", n = 3, plot_type = "circle")
 ```
+
+![](palette_files/figure-html/preview-circle-1.png)
 
 Supply `title` to override the default title (which is the palette
 name):
 
 ``` r
 
-preview_palette("babel", title = "Pan-cancer myeloid cell types")
+preview_palette("babel", plot_type = "rect",
+                title = "Pan-cancer myeloid cell types")
 ```
+
+![](palette_files/figure-html/preview-title-1.png)
 
 ------------------------------------------------------------------------
 
@@ -137,18 +160,12 @@ ggplot objects (one per page). Useful for picking colors interactively.
 ``` r
 
 plots <- palette_gallery()
-#> i Type diverging: 2 palettes -> 1 page(s)
-#> v Built "diverging_page1"
-#> i Type qualitative: 4 palettes -> 1 page(s)
-#> v Built "qualitative_page1"
-```
-
-Filter by type and control how many palettes appear per page:
-
-``` r
-
-plots <- palette_gallery(type = "qualitative")
-plots <- palette_gallery(type = c("qualitative", "diverging"), max_palettes = 3)
+#> ℹ Type diverging: 2 palettes -> 1 page(s)
+#> ✔ Built "diverging_page1"
+#> ℹ Type qualitative: 4 palettes -> 1 page(s)
+#> ✔ Built "qualitative_page1"
+names(plots)
+#> [1] "diverging_page1"   "qualitative_page1"
 ```
 
 Access individual pages from the returned list:
@@ -158,9 +175,20 @@ Access individual pages from the returned list:
 plots[["qualitative_page1"]]
 ```
 
-Set `verbose = FALSE` to suppress progress messages when calling
+![](palette_files/figure-html/gallery-access-1.png)
+
+Filter by type and control how many palettes appear per page. Set
+`verbose = FALSE` to suppress progress messages when calling
 [`palette_gallery()`](https://evanbio.github.io/biopalette/reference/palette_gallery.md)
-programmatically.
+programmatically:
+
+``` r
+
+pages <- palette_gallery(type = "diverging", verbose = FALSE)
+pages[["diverging_page1"]]
+```
+
+![](palette_files/figure-html/gallery-filter-1.png)
 
 ------------------------------------------------------------------------
 
@@ -178,13 +206,23 @@ temp_dir <- file.path(tempdir(), "palettes")
 
 create_palette("my_blues", "sequential", c("#deebf7", "#9ecae1", "#3182bd"),
                color_dir = temp_dir)
-#> v Palette saved: /tmp/.../palettes/sequential/my_blues.json
+#> ✔ Palette saved: /tmp/RtmpuEwwyK/palettes/sequential/my_blues.json
 
 create_palette("my_trio", "qualitative",
                c("#E64B35", "#4DBBD5", "#00A087"),
                color_dir = temp_dir)
-#> v Palette saved: /tmp/.../palettes/qualitative/my_trio.json
+#> ✔ Palette saved: /tmp/RtmpuEwwyK/palettes/qualitative/my_trio.json
 ```
+
+Note that this writes a **file**; it does not register the palette with
+the package.
+[`get_palette()`](https://evanbio.github.io/biopalette/reference/get_palette.md)
+and
+[`list_palettes()`](https://evanbio.github.io/biopalette/reference/list_palettes.md)
+read the compiled dataset, so a palette in your own directory only
+becomes visible once that directory is compiled — see
+[`compile_palettes()`](https://evanbio.github.io/biopalette/reference/compile_palettes.md)
+below.
 
 By default, saving over an existing name raises an error. Pass
 `overwrite = TRUE` to replace it:
@@ -193,8 +231,8 @@ By default, saving over an existing name raises an error. Pass
 
 create_palette("my_blues", "sequential", c("#c6dbef", "#6baed6", "#2171b5"),
                color_dir = temp_dir, overwrite = TRUE)
-#> i Overwriting existing palette: "my_blues"
-#> v Palette saved: /tmp/.../palettes/sequential/my_blues.json
+#> ℹ Overwriting existing palette: "my_blues"
+#> ✔ Palette saved: /tmp/RtmpuEwwyK/palettes/sequential/my_blues.json
 ```
 
 ``` r
@@ -202,7 +240,7 @@ create_palette("my_blues", "sequential", c("#c6dbef", "#6baed6", "#2171b5"),
 # Without overwrite = TRUE
 create_palette("my_blues", "sequential", c("#deebf7", "#9ecae1", "#3182bd"),
                color_dir = temp_dir)
-#> Error in `create_palette()`:
+#> Error:
 #> ! Palette "my_blues" already exists. Use `overwrite = TRUE` to replace.
 ```
 
@@ -219,14 +257,14 @@ type directories are searched in order.
 ``` r
 
 remove_palette("my_blues", color_dir = temp_dir)
-#> v Removed "my_blues" from sequential
+#> ✔ Removed "my_blues" from sequential
 
 # Specify type to skip the search
 remove_palette("my_trio", type = "qualitative", color_dir = temp_dir)
-#> v Removed "my_trio" from qualitative
+#> ✔ Removed "my_trio" from qualitative
 ```
 
-If the palette is not found in any directory, a warning is issued and
+If the palette is not found in any directory, a message is issued and
 the function returns `FALSE` invisibly:
 
 ``` r
@@ -250,7 +288,7 @@ them, and returns a structured list. This is the function used in
 compiled <- compile_palettes(
   palettes_dir = system.file("extdata", "palettes", package = "biopalette")
 )
-#> v Compiled 6 palettes: Sequential=0, Diverging=2, Qualitative=4
+#> ✔ Compiled 6 palettes: Sequential=0, Diverging=2, Qualitative=4
 ```
 
 The return value is a named list with three elements — `sequential`,
@@ -259,13 +297,18 @@ vectors:
 
 ``` r
 
-compiled$qualitative[["babel"]]
-#> [1] "#1688A7" "#7673AE" "#B3DE69" "#D195F6" "#7E285E" ...
+names(compiled)
+#> [1] "sequential"  "diverging"   "qualitative"
+
+compiled$qualitative[["three_body"]]
+#> [1] "#6495ED" "#339933" "#FF4500"
 ```
 
-> Duplicate palette names within the same type emit a warning and the
-> last file read wins. JSON files with missing or invalid fields are
-> skipped with a warning rather than aborting the whole compile.
+> Validation is strict: a JSON file with a missing field, an unknown
+> type, or an invalid HEX code **aborts the whole compile** rather than
+> being skipped, so a broken file can never quietly drop a palette out
+> of the dataset. Duplicate palette names within the same type are a
+> softer case — they emit a message and the last file read wins.
 
 ------------------------------------------------------------------------
 
@@ -280,8 +323,8 @@ codes are accepted; the alpha channel is silently ignored.
 ``` r
 
 hex2rgb("#1688A7")
-#>       hex   r   g   b
-#> 1 #1688A7  22 136 167
+#>       hex  r   g   b
+#> 1 #1688A7 22 136 167
 
 hex2rgb(c("#1688A7", "#FF4500", "#339933"))
 #>       hex   r   g   b
@@ -295,14 +338,15 @@ are both reported as invalid:
 
 ``` r
 
-# Missing '#' prefix
 hex2rgb("1688A7")
-#> Error in `hex2rgb()`:
+#> Error:
 #> ! `hex` contains invalid HEX codes: "1688A7".
+```
 
-# NA is treated as an invalid code
+``` r
+
 hex2rgb(c("#1688A7", NA))
-#> Error in `hex2rgb()`:
+#> Error:
 #> ! `hex` contains invalid HEX codes: NA.
 ```
 
@@ -322,16 +366,10 @@ Non-integer values are rounded before conversion.
 # Single color as a length-3 vector
 rgb2hex(c(22, 136, 167))
 #> [1] "#1688A7"
-```
-
-``` r
 
 # Round-trip: HEX -> RGB -> HEX
 rgb2hex(hex2rgb(c("#1688A7", "#FF4500")))
 #> [1] "#1688A7" "#FF4500"
-```
-
-``` r
 
 # Non-integer values are rounded
 rgb2hex(c(21.7, 136.2, 167.4))
@@ -342,14 +380,15 @@ Typical failure cases for the vector form:
 
 ``` r
 
-# Wrong length
 rgb2hex(c(22, 136))
-#> Error in `rgb2hex()`:
+#> Error:
 #> ! `rgb` must be a numeric vector of length 3.
+```
 
-# Value out of range
+``` r
+
 rgb2hex(c(22, 136, 300))
-#> Error in `rgb2hex()`:
+#> Error:
 #> ! `rgb` values must be in [0, 255].
 ```
 
@@ -357,14 +396,15 @@ And for the data frame form:
 
 ``` r
 
-# Missing column
 rgb2hex(data.frame(r = 22, g = 136))
-#> Error in `rgb2hex()`:
-#> ! `rgb` must have columns {"r", "g", "b"}. Missing: {"b"}.
+#> Error:
+#> ! `rgb` must have columns "r", "g", and "b". Missing: "b".
+```
 
-# Column value out of range
+``` r
+
 rgb2hex(data.frame(r = 22, g = 136, b = 300))
-#> Error in `rgb2hex()`:
+#> Error:
 #> ! Column "b" in `rgb` must be numeric with values in [0, 255].
 ```
 
@@ -373,13 +413,10 @@ rgb2hex(data.frame(r = 22, g = 136, b = 300))
 ## 5 A Combined Workflow
 
 The palette and conversion functions compose naturally. The example
-below picks a qualitative palette, converts its colors to RGB for
-downstream processing, then round-trips back to HEX to verify no
-information was lost.
+below picks a qualitative palette, converts its colors to RGB, lightens
+them, and saves the result as a new palette.
 
 ``` r
-
-library(biopalette)
 
 # 1. Retrieve a qualitative palette
 colors <- get_palette("three_body", type = "qualitative")
@@ -394,30 +431,41 @@ rgb_df
 #> 2 #339933  51 153  51
 #> 3 #FF4500 255  69   0
 
-# 3. Lighten each color by blending 50% toward white (255)
+# 3. Lighten each color by blending 50% toward white
 rgb_light <- rgb_df
-rgb_light$r <- (rgb_light$r + 255) / 2
-rgb_light$g <- (rgb_light$g + 255) / 2
-rgb_light$b <- (rgb_light$b + 255) / 2
+rgb_light[c("r", "g", "b")] <- (rgb_df[c("r", "g", "b")] + 255) / 2
 
-# 4. Convert back to HEX and preview
+# 4. Convert back to HEX
 light_hex <- rgb2hex(rgb_light)
 light_hex
-#> [1] "#B2CAF6" "#99CC99" "#FF9C80"
+#> [1] "#B2CAF6" "#99CC99" "#FFA280"
+```
 
-# 5. Save the new derived palette for reuse
-temp_dir <- file.path(tempdir(), "palettes")
+``` r
+
+# 5. Save the derived palette to your own directory
 create_palette("three_body_light", "qualitative", light_hex,
                color_dir = temp_dir)
-#> v Palette saved: /tmp/.../palettes/qualitative/three_body_light.json
+#> ✔ Palette saved: /tmp/RtmpuEwwyK/palettes/qualitative/three_body_light.json
 
-# 6. Verify the new palette is retrievable
-"three_body_light" %in% list_palettes(type = "qualitative")$name
-#> [1] TRUE
+# 6. Compile that directory to make the palette usable.
+#    create_palette() wrote a file; compile_palettes() is what turns a
+#    directory of files into the list the query functions work with.
+mine <- compile_palettes(temp_dir)
+#> ✔ Compiled 1 palette: Sequential=0, Diverging=0, Qualitative=1
+mine$qualitative[["three_body_light"]]
+#> [1] "#B2CAF6" "#99CC99" "#FFA280"
+```
+
+``` r
 
 # 7. Clean up
 unlink(temp_dir, recursive = TRUE)
 ```
+
+To make a palette part of the package itself rather than a local
+directory, write its JSON under `inst/extdata/palettes/` and rebuild the
+dataset with `data-raw/palettes.R`.
 
 ------------------------------------------------------------------------
 
