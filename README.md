@@ -63,6 +63,8 @@ Each name links to its story page — source image, color table, and when to use
 | [`walter_white3`](palettes/walter_white3) | Diverging | 5 | *Breaking Bad* — warm counterpart |
 | [`babel`](palettes/babel) | Qualitative | 21 | Pan-cancer myeloid atlas (Cell, 2021) — 22 cell types, 21 voices |
 | [`three_body`](palettes/three_body) | Qualitative | 3 | Pan-cancer myeloid atlas (Cell, 2021) — three DC trajectories |
+| [`mitonuclear_blue`](palettes/mitonuclear_blue) | Sequential | 6 | Mito-nuclear communication in aging (TIBS, 2022) — young blue |
+| [`mitonuclear_orange`](palettes/mitonuclear_orange) | Sequential | 6 | Mito-nuclear communication in aging (TIBS, 2022) — aged orange |
 
 ---
 
