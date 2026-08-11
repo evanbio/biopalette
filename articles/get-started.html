@@ -151,13 +151,15 @@ plots.</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/evanbio/biopalette" class="external-link">biopalette</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/list_palettes.html">list_palettes</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt;            name        type n_color       colors</span></span>
-<span><span class="co">#&gt; 1  walter_white   diverging       5 #1991A9,....</span></span>
-<span><span class="co">#&gt; 2 walter_white3   diverging       5 #B15F63,....</span></span>
-<span><span class="co">#&gt; 3      gene_red qualitative       2 #000000,....</span></span>
-<span><span class="co">#&gt; 4    three_body qualitative       3 #6495ED,....</span></span>
-<span><span class="co">#&gt; 5 walter_white2 qualitative       5 #5AB5BF,....</span></span>
-<span><span class="co">#&gt; 6         babel qualitative      21 #1688A7,....</span></span></code></pre></div>
+<span><span class="co">#&gt;                 name        type n_color       colors</span></span>
+<span><span class="co">#&gt; 1       walter_white   diverging       5 #1991A9,....</span></span>
+<span><span class="co">#&gt; 2      walter_white3   diverging       5 #B15F63,....</span></span>
+<span><span class="co">#&gt; 3           gene_red qualitative       2 #000000,....</span></span>
+<span><span class="co">#&gt; 4         three_body qualitative       3 #6495ED,....</span></span>
+<span><span class="co">#&gt; 5      walter_white2 qualitative       5 #5AB5BF,....</span></span>
+<span><span class="co">#&gt; 6              babel qualitative      21 #1688A7,....</span></span>
+<span><span class="co">#&gt; 7   mitonuclear_blue  sequential       6 #EEF4FB,....</span></span>
+<span><span class="co">#&gt; 8 mitonuclear_orange  sequential       6 #F8E7E3,....</span></span></code></pre></div>
 <p><code><a href="../reference/list_palettes.html">list_palettes()</a></code> returns a data frame of all available
 palettes with their name, type, and number of colors.</p>
 <p><code><a href="../reference/palette_gallery.html">palette_gallery()</a></code> renders a visual overview and returns
@@ -165,7 +167,7 @@ one ggplot per page, so you can display the page you want:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pages</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/palette_gallery.html">palette_gallery</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">pages</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "diverging_page1"   "qualitative_page1"</span></span>
+<span><span class="co">#&gt; [1] "sequential_page1"  "diverging_page1"   "qualitative_page1"</span></span>
 <span></span>
 <span><span class="va">pages</span><span class="op">[[</span><span class="st">"qualitative_page1"</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
 <p><img src="get-started_files/figure-html/gallery-1.png" class="r-plt" alt="" width="672" style="display: block; margin: auto;"></p>

@@ -79,13 +79,15 @@ disk.
 ``` r
 
 list_palettes()
-#>            name        type n_color       colors
-#> 1  walter_white   diverging       5 #1991A9,....
-#> 2 walter_white3   diverging       5 #B15F63,....
-#> 3      gene_red qualitative       2 #000000,....
-#> 4    three_body qualitative       3 #6495ED,....
-#> 5 walter_white2 qualitative       5 #5AB5BF,....
-#> 6         babel qualitative      21 #1688A7,....
+#>                 name        type n_color       colors
+#> 1       walter_white   diverging       5 #1991A9,....
+#> 2      walter_white3   diverging       5 #B15F63,....
+#> 3           gene_red qualitative       2 #000000,....
+#> 4         three_body qualitative       3 #6495ED,....
+#> 5      walter_white2 qualitative       5 #5AB5BF,....
+#> 6              babel qualitative      21 #1688A7,....
+#> 7   mitonuclear_blue  sequential       6 #EEF4FB,....
+#> 8 mitonuclear_orange  sequential       6 #F8E7E3,....
 ```
 
 Filter by one or more types with the `type` argument:
@@ -100,9 +102,11 @@ list_palettes(type = "qualitative")
 #> 4         babel qualitative      21 #1688A7,....
 
 list_palettes(type = c("sequential", "diverging"))
-#>            name      type n_color       colors
-#> 1  walter_white diverging       5 #1991A9,....
-#> 2 walter_white3 diverging       5 #B15F63,....
+#>                 name       type n_color       colors
+#> 1       walter_white  diverging       5 #1991A9,....
+#> 2      walter_white3  diverging       5 #B15F63,....
+#> 3   mitonuclear_blue sequential       6 #EEF4FB,....
+#> 4 mitonuclear_orange sequential       6 #F8E7E3,....
 ```
 
 Results are sorted by `type`, `n_color`, and `name` by default. Set
@@ -160,12 +164,14 @@ ggplot objects (one per page). Useful for picking colors interactively.
 ``` r
 
 plots <- palette_gallery()
+#> ℹ Type sequential: 2 palettes -> 1 page(s)
+#> ✔ Built "sequential_page1"
 #> ℹ Type diverging: 2 palettes -> 1 page(s)
 #> ✔ Built "diverging_page1"
 #> ℹ Type qualitative: 4 palettes -> 1 page(s)
 #> ✔ Built "qualitative_page1"
 names(plots)
-#> [1] "diverging_page1"   "qualitative_page1"
+#> [1] "sequential_page1"  "diverging_page1"   "qualitative_page1"
 ```
 
 Access individual pages from the returned list:
@@ -206,12 +212,12 @@ temp_dir <- file.path(tempdir(), "palettes")
 
 create_palette("my_blues", "sequential", c("#deebf7", "#9ecae1", "#3182bd"),
                color_dir = temp_dir)
-#> ✔ Palette saved: /tmp/RtmpHa5sTD/palettes/sequential/my_blues.json
+#> ✔ Palette saved: /tmp/RtmpxgTzyJ/palettes/sequential/my_blues.json
 
 create_palette("my_trio", "qualitative",
                c("#E64B35", "#4DBBD5", "#00A087"),
                color_dir = temp_dir)
-#> ✔ Palette saved: /tmp/RtmpHa5sTD/palettes/qualitative/my_trio.json
+#> ✔ Palette saved: /tmp/RtmpxgTzyJ/palettes/qualitative/my_trio.json
 ```
 
 Note that this writes a **file**; it does not register the palette with
@@ -232,7 +238,7 @@ By default, saving over an existing name raises an error. Pass
 create_palette("my_blues", "sequential", c("#c6dbef", "#6baed6", "#2171b5"),
                color_dir = temp_dir, overwrite = TRUE)
 #> ℹ Overwriting existing palette: "my_blues"
-#> ✔ Palette saved: /tmp/RtmpHa5sTD/palettes/sequential/my_blues.json
+#> ✔ Palette saved: /tmp/RtmpxgTzyJ/palettes/sequential/my_blues.json
 ```
 
 ``` r
@@ -288,7 +294,7 @@ them, and returns a structured list. This is the function used in
 compiled <- compile_palettes(
   palettes_dir = system.file("extdata", "palettes", package = "biopalette")
 )
-#> ✔ Compiled 6 palettes: Sequential=0, Diverging=2, Qualitative=4
+#> ✔ Compiled 8 palettes: Sequential=2, Diverging=2, Qualitative=4
 ```
 
 The return value is a named list with three elements — `sequential`,
@@ -446,7 +452,7 @@ light_hex
 # 5. Save the derived palette to your own directory
 create_palette("three_body_light", "qualitative", light_hex,
                color_dir = temp_dir)
-#> ✔ Palette saved: /tmp/RtmpHa5sTD/palettes/qualitative/three_body_light.json
+#> ✔ Palette saved: /tmp/RtmpxgTzyJ/palettes/qualitative/three_body_light.json
 
 # 6. Compile that directory to make the palette usable.
 #    create_palette() wrote a file; compile_palettes() is what turns a
