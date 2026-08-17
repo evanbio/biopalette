@@ -43,6 +43,7 @@ palette_gallery()
 | `babel` | Qualitative | 21 | Pan-cancer myeloid atlas (Cell, 2021) |
 | `three_body` | Qualitative | 3 | Pan-cancer myeloid atlas (Cell, 2021) |
 | `heat_light` | Qualitative | 2 | Bond ampholysis (Nature, 2024) |
+| `tam_pastel` | Qualitative | 6 | Pan-cancer myeloid atlas (Cell, 2021) |
 
 ## Function Areas
 
