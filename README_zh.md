@@ -67,6 +67,8 @@ devtools::install_github("evanbio/biopalette")
 | [`mitonuclear_orange`](palettes/mitonuclear_orange) | 渐进 | 6 | 衰老中的线粒体—细胞核通信（TIBS, 2022）— 衰老状态橙 |
 | [`heat_light`](palettes/heat_light) | 定性 | 2 | 键两性解离（Nature, 2024）— 热与光将自由基对转为离子对 |
 | [`tam_pastel`](palettes/tam_pastel) | 定性 | 6 | 泛癌骨髓细胞图谱（Cell, 2021）— 柔和的 TAM 状态色 |
+| [`cancer_mosaic`](palettes/cancer_mosaic) | 定性 | 15 | 泛癌骨髓细胞图谱（Cell, 2021）— 癌种马赛克 |
+| [`lactate_steps`](palettes/lactate_steps) | 定性 | 5 | 乳酸代谢与免疫治疗（JECCR, 2024）— 五个研究阶段 |
 
 ---
 

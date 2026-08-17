@@ -67,6 +67,8 @@ Each name links to its story page — source image, color table, and when to use
 | [`mitonuclear_orange`](palettes/mitonuclear_orange) | Sequential | 6 | Mito-nuclear communication in aging (TIBS, 2022) — aged orange |
 | [`heat_light`](palettes/heat_light) | Qualitative | 2 | Bond ampholysis (Nature, 2024) — heat and light turn radicals into an ion pair |
 | [`tam_pastel`](palettes/tam_pastel) | Qualitative | 6 | Pan-cancer myeloid atlas (Cell, 2021) — soft TAM states |
+| [`cancer_mosaic`](palettes/cancer_mosaic) | Qualitative | 15 | Pan-cancer myeloid atlas (Cell, 2021) — cancer-type mosaic |
+| [`lactate_steps`](palettes/lactate_steps) | Qualitative | 5 | Lactate metabolism and immunotherapy (JECCR, 2024) — five study stages |
 
 ---
 
