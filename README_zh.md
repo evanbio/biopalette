@@ -63,6 +63,9 @@ devtools::install_github("evanbio/biopalette")
 | [`walter_white3`](palettes/walter_white3) | 发散 | 5 | *绝命毒师* — 暖色对应版本 |
 | [`babel`](palettes/babel) | 定性 | 21 | 泛癌骨髓细胞图谱（Cell, 2021）— 22 种细胞类型，21 种声音 |
 | [`three_body`](palettes/three_body) | 定性 | 3 | 泛癌骨髓细胞图谱（Cell, 2021）— 三条树突状细胞分化轨迹 |
+| [`mitonuclear_blue`](palettes/mitonuclear_blue) | 渐进 | 6 | 衰老中的线粒体—细胞核通信（TIBS, 2022）— 年轻状态蓝 |
+| [`mitonuclear_orange`](palettes/mitonuclear_orange) | 渐进 | 6 | 衰老中的线粒体—细胞核通信（TIBS, 2022）— 衰老状态橙 |
+| [`heat_light`](palettes/heat_light) | 定性 | 2 | 键两性解离（Nature, 2024）— 热与光将自由基对转为离子对 |
 
 ---
 

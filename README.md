@@ -65,6 +65,7 @@ Each name links to its story page — source image, color table, and when to use
 | [`three_body`](palettes/three_body) | Qualitative | 3 | Pan-cancer myeloid atlas (Cell, 2021) — three DC trajectories |
 | [`mitonuclear_blue`](palettes/mitonuclear_blue) | Sequential | 6 | Mito-nuclear communication in aging (TIBS, 2022) — young blue |
 | [`mitonuclear_orange`](palettes/mitonuclear_orange) | Sequential | 6 | Mito-nuclear communication in aging (TIBS, 2022) — aged orange |
+| [`heat_light`](palettes/heat_light) | Qualitative | 2 | Bond ampholysis (Nature, 2024) — heat and light turn radicals into an ion pair |
 
 ---
 
