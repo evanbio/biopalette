@@ -39,7 +39,8 @@ A named list with three elements:
 names(palettes)
 #> [1] "sequential"  "diverging"   "qualitative"
 names(palettes$qualitative)
-#> [1] "babel"         "gene_red"      "three_body"    "walter_white2"
+#> [1] "babel"         "cancer_mosaic" "gene_red"      "heat_light"   
+#> [5] "lactate_steps" "tam_pastel"    "three_body"    "walter_white2"
 palettes$qualitative$gene_red
 #> [1] "#000000" "#B11522"
 ```

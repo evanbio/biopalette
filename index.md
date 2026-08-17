@@ -48,6 +48,10 @@ palette_gallery()
 | `walter_white3` | Diverging | 5 | *Breaking Bad* — warm counterpart |
 | `babel` | Qualitative | 21 | Pan-cancer myeloid atlas (Cell, 2021) |
 | `three_body` | Qualitative | 3 | Pan-cancer myeloid atlas (Cell, 2021) |
+| `heat_light` | Qualitative | 2 | Bond ampholysis (Nature, 2024) |
+| `tam_pastel` | Qualitative | 6 | Pan-cancer myeloid atlas (Cell, 2021) |
+| `cancer_mosaic` | Qualitative | 15 | Pan-cancer myeloid atlas (Cell, 2021) |
+| `lactate_steps` | Qualitative | 5 | Lactate metabolism and immunotherapy (JECCR, 2024) |
 
 ## Function Areas
 

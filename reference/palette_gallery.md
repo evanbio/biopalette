@@ -52,7 +52,7 @@ palette_gallery()
 #> ✔ Built "sequential_page1"
 #> ℹ Type diverging: 2 palettes -> 1 page(s)
 #> ✔ Built "diverging_page1"
-#> ℹ Type qualitative: 4 palettes -> 1 page(s)
+#> ℹ Type qualitative: 8 palettes -> 1 page(s)
 #> ✔ Built "qualitative_page1"
 #> $sequential_page1
 
@@ -64,7 +64,7 @@ palette_gallery()
 
 #> 
 palette_gallery(type = "qualitative")
-#> ℹ Type qualitative: 4 palettes -> 1 page(s)
+#> ℹ Type qualitative: 8 palettes -> 1 page(s)
 #> ✔ Built "qualitative_page1"
 #> $qualitative_page1
 

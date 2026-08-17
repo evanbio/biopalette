@@ -29,6 +29,6 @@ Invisibly returns a named list with elements `sequential`, `diverging`,
 compile_palettes(
   palettes_dir = system.file("extdata", "palettes", package = "biopalette")
 )
-#> ✔ Compiled 8 palettes: Sequential=2, Diverging=2, Qualitative=4
+#> ✔ Compiled 12 palettes: Sequential=2, Diverging=2, Qualitative=8
 # }
 ```
