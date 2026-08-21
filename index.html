@@ -141,7 +141,7 @@
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
-<p><strong>biopalette</strong> is an R package providing story-driven color palettes for biomedical visualization.</p>
+<p><strong>biopalette</strong> is an R package providing image-inspired color palettes for biomedical visualization.</p>
 <p>Every palette begins with a real image — a film still, a scientific figure, an artwork — and is translated into a reproducible color system. The source is always documented: where the colors came from, what they mean, and when to use them.</p>
 </div>
 <div class="section level2">
@@ -171,92 +171,127 @@
 </h2>
 <table class="table">
 <colgroup>
+<col width="18%">
+<col width="18%">
 <col width="25%">
-<col width="25%">
-<col width="25%">
-<col width="25%">
+<col width="18%">
+<col width="18%">
 </colgroup>
 <thead><tr>
 <th>Name</th>
 <th>Type</th>
-<th>Colors</th>
+<th align="right">Colors</th>
+<th>Recommended use</th>
 <th>Source</th>
 </tr></thead>
 <tbody>
 <tr>
 <td><code>gene_red</code></td>
 <td>Qualitative</td>
-<td>2</td>
+<td align="right">2</td>
+<td>Emphasized signal versus a dark or neutral counterpart</td>
 <td>
 <em>Better Call Saul</em> — Gene Takavic’s red coat</td>
 </tr>
 <tr>
 <td><code>walter_white</code></td>
 <td>Diverging</td>
-<td>5</td>
+<td align="right">5</td>
+<td>Signed continuous values around a neutral center</td>
 <td>
 <em>Breaking Bad</em> — desert to sky</td>
 </tr>
 <tr>
 <td><code>walter_white2</code></td>
 <td>Qualitative</td>
-<td>5</td>
+<td align="right">5</td>
+<td>Up to five unordered groups</td>
 <td>
 <em>Breaking Bad</em> — muted earth tones</td>
 </tr>
 <tr>
 <td><code>walter_white3</code></td>
 <td>Diverging</td>
-<td>5</td>
+<td align="right">5</td>
+<td>Warm-register signed continuous values</td>
 <td>
 <em>Breaking Bad</em> — warm counterpart</td>
 </tr>
 <tr>
 <td><code>babel</code></td>
 <td>Qualitative</td>
-<td>21</td>
+<td align="right">21</td>
+<td>Many categorical groups with labels or position support</td>
 <td>Pan-cancer myeloid atlas (Cell, 2021)</td>
+</tr>
+<tr>
+<td><code>bcell_atlas</code></td>
+<td>Qualitative</td>
+<td align="right">7</td>
+<td>Four-to-seven categorical groups with direct labels or position support</td>
+<td>Pan-cancer B-cell atlas (Cell, 2024) — graphical abstract</td>
+</tr>
+<tr>
+<td><code>bcell_atlas2</code></td>
+<td>Diverging</td>
+<td align="right">5</td>
+<td>Signed change between warm and cool biological states</td>
+<td>Pan-cancer B-cell atlas (Cell, 2024) — IgA to IgG shift</td>
+</tr>
+<tr>
+<td><code>bcell_clusters</code></td>
+<td>Qualitative</td>
+<td align="right">20</td>
+<td>Many labeled categorical groups with position or faceting support</td>
+<td>Pan-cancer B-cell atlas (Cell, 2024) — Figure 1B cluster legend</td>
 </tr>
 <tr>
 <td><code>three_body</code></td>
 <td>Qualitative</td>
-<td>3</td>
+<td align="right">3</td>
+<td>Three groups, lineages, or trajectories</td>
 <td>Pan-cancer myeloid atlas (Cell, 2021)</td>
 </tr>
 <tr>
 <td><code>heat_light</code></td>
 <td>Qualitative</td>
-<td>2</td>
+<td align="right">2</td>
+<td>Paired categories or experimental conditions</td>
 <td>Bond ampholysis (Nature, 2024)</td>
 </tr>
 <tr>
 <td><code>tam_pastel</code></td>
 <td>Qualitative</td>
-<td>6</td>
+<td align="right">6</td>
+<td>Four-to-six categorical groups on light backgrounds</td>
 <td>Pan-cancer myeloid atlas (Cell, 2021)</td>
 </tr>
 <tr>
 <td><code>cancer_mosaic</code></td>
 <td>Qualitative</td>
-<td>15</td>
+<td align="right">15</td>
+<td>Ten-to-fifteen categories with labels or position support</td>
 <td>Pan-cancer myeloid atlas (Cell, 2021)</td>
 </tr>
 <tr>
 <td><code>lactate_steps</code></td>
 <td>Qualitative</td>
-<td>5</td>
+<td align="right">5</td>
+<td>Five discrete workflow stages or study groups</td>
 <td>Lactate metabolism and immunotherapy (JECCR, 2024)</td>
 </tr>
 <tr>
 <td><code>mitonuclear_blue</code></td>
 <td>Sequential</td>
-<td>6</td>
+<td align="right">6</td>
+<td>Cool low-to-high continuous values</td>
 <td>Mito-nuclear communication in aging (TIBS, 2022) — young blue</td>
 </tr>
 <tr>
 <td><code>mitonuclear_orange</code></td>
 <td>Sequential</td>
-<td>6</td>
+<td align="right">6</td>
+<td>Warm low-to-high continuous values</td>
 <td>Mito-nuclear communication in aging (TIBS, 2022) — aged orange</td>
 </tr>
 </tbody>
@@ -309,14 +344,38 @@
 </ul>
 </div>
 <div class="section level2">
-<h2 id="explore-the-palettes">Explore the Palettes<a class="anchor" aria-label="anchor" href="#explore-the-palettes"></a>
+<h2 id="from-palette-to-figure">From Palette to Figure<a class="anchor" aria-label="anchor" href="#from-palette-to-figure"></a>
 </h2>
-<ul>
-<li>
-<strong><a href="https://folio.evanzhou.org/tessera" class="external-link">Tessera</a></strong> presents the palettes with example datasets, visual demonstrations, and reproducible R figure recipes.</li>
-<li>
-<strong><a href="https://folio.evanzhou.org/apps/palette-lab" class="external-link">Palette Lab</a></strong> lets you compare the palettes interactively across a consistent set of plots.</li>
-</ul>
+<p><strong>biopalette</strong> provides the R interface for retrieving and applying image-inspired palettes. <strong><a href="https://folio.evanzhou.org/tessera" class="external-link">Tessera</a></strong> documents their source images, example data, and reproducible R figure recipes. <strong><a href="https://folio.evanzhou.org/apps/palette-lab" class="external-link">Palette Lab</a></strong> keeps the data and graphical structure fixed while comparing palette behavior across 17 graphical contexts.</p>
+<p align="center">
+<img src="reference/figures/showcase/showcase-lab-overview.webp" alt="Palette Lab overview showing representative graphical contexts" width="100%"></p>
+<p>The panels below are rendered from Palette Lab with fixed data and figure structure. Each Tessera link provides the corresponding reproducible figure recipe and data context.</p>
+<table class="table">
+<tr>
+<td width="50%" align="center">
+<a href="https://folio.evanzhou.org/tessera/figures/grouped_scatter" class="external-link"><img src="reference/figures/showcase/showcase-scatter.webp" alt="Grouped scatter plot using babel" width="100%"></a><br><sub><b>Grouped scatter</b> · <code>babel</code></sub>
+</td>
+<td width="50%" align="center">
+<a href="https://folio.evanzhou.org/tessera/figures/multi_line" class="external-link"><img src="reference/figures/showcase/showcase-line.webp" alt="Grouped line chart using walter_white2" width="100%"></a><br><sub><b>Multi-line comparison</b> · <code>walter_white2</code></sub>
+</td>
+</tr>
+<tr>
+<td width="50%" align="center">
+<a href="https://folio.evanzhou.org/tessera/figures/correlation_heatmap" class="external-link"><img src="reference/figures/showcase/showcase-heatmap.webp" alt="Correlation heatmap using walter_white" width="100%"></a><br><sub><b>Correlation heatmap</b> · <code>walter_white</code></sub>
+</td>
+<td width="50%" align="center">
+<a href="https://folio.evanzhou.org/tessera/figures/bar" class="external-link"><img src="reference/figures/showcase/showcase-stacked.webp" alt="Eye color composition by hair color using lactate_steps" width="100%"></a><br><sub><b>Eye color composition by hair color</b> · <code>lactate_steps</code></sub>
+</td>
+</tr>
+<tr>
+<td width="50%" align="center">
+<a href="https://folio.evanzhou.org/tessera/figures/survival_curve" class="external-link"><img src="reference/figures/showcase/showcase-survival.webp" alt="Kaplan-Meier survival curve using heat_light" width="100%"></a><br><sub><b>Kaplan–Meier survival curve</b> · <code>heat_light</code></sub>
+</td>
+<td width="50%" align="center">
+<a href="https://folio.evanzhou.org/tessera/figures/manhattan" class="external-link"><img src="reference/figures/showcase/showcase-manhattan.webp" alt="Manhattan plot using cancer_mosaic" width="100%"></a><br><sub><b>Manhattan plot</b> · <code>cancer_mosaic</code></sub>
+</td>
+</tr>
+</table>
 </div>
 <div class="section level2">
 <h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>

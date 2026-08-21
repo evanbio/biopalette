@@ -22,7 +22,7 @@ Lab](https://folio.evanzhou.org/apps/palette-lab)
 ## 项目简介
 
 **biopalette** 是一个 R
-包，提供以图像为来源的故事驱动配色方案，专为生物医学可视化设计。
+包，提供图像启发的配色方案，专为生物医学可视化设计。
 
 每一套配色都源自一张真实的图像——电影剧照、科研图表或艺术作品——并转化为可复现的色彩系统。来源始终有据可查：颜色从哪里来、代表什么、适合用在哪里。
 
@@ -58,31 +58,44 @@ devtools::install_github("evanbio/biopalette")
 
 ## 配色列表
 
-点击名称查看故事页：源图、色表，以及适合用在哪里。
+点击名称查看来源页：源图、色表，以及适合的使用场景。
 
-| 名称 | 类型 | 颜色数 | 来源 |
-|----|----|----|----|
-| [`gene_red`](https://evanbio.github.io/biopalette/palettes/gene_red) | 定性 | 2 | *风骚律师* — Gene Takavic 的红色外套 |
-| [`walter_white`](https://evanbio.github.io/biopalette/palettes/walter_white) | 发散 | 5 | *绝命毒师* — 荒漠到天空 |
-| [`walter_white2`](https://evanbio.github.io/biopalette/palettes/walter_white2) | 定性 | 5 | *绝命毒师* — 低饱和大地色调 |
-| [`walter_white3`](https://evanbio.github.io/biopalette/palettes/walter_white3) | 发散 | 5 | *绝命毒师* — 暖色对应版本 |
-| [`babel`](https://evanbio.github.io/biopalette/palettes/babel) | 定性 | 21 | 泛癌骨髓细胞图谱（Cell, 2021）— 22 种细胞类型，21 种声音 |
-| [`three_body`](https://evanbio.github.io/biopalette/palettes/three_body) | 定性 | 3 | 泛癌骨髓细胞图谱（Cell, 2021）— 三条树突状细胞分化轨迹 |
-| [`mitonuclear_blue`](https://evanbio.github.io/biopalette/palettes/mitonuclear_blue) | 渐进 | 6 | 衰老中的线粒体—细胞核通信（TIBS, 2022）— 年轻状态蓝 |
-| [`mitonuclear_orange`](https://evanbio.github.io/biopalette/palettes/mitonuclear_orange) | 渐进 | 6 | 衰老中的线粒体—细胞核通信（TIBS, 2022）— 衰老状态橙 |
-| [`heat_light`](https://evanbio.github.io/biopalette/palettes/heat_light) | 定性 | 2 | 键两性解离（Nature, 2024）— 热与光将自由基对转为离子对 |
-| [`tam_pastel`](https://evanbio.github.io/biopalette/palettes/tam_pastel) | 定性 | 6 | 泛癌骨髓细胞图谱（Cell, 2021）— 柔和的 TAM 状态色 |
-| [`cancer_mosaic`](https://evanbio.github.io/biopalette/palettes/cancer_mosaic) | 定性 | 15 | 泛癌骨髓细胞图谱（Cell, 2021）— 癌种马赛克 |
-| [`lactate_steps`](https://evanbio.github.io/biopalette/palettes/lactate_steps) | 定性 | 5 | 乳酸代谢与免疫治疗（JECCR, 2024）— 五个研究阶段 |
+| 名称 | 类型 | 颜色数 | 推荐用途 | 来源 |
+|----|----|---:|----|----|
+| [`gene_red`](https://evanbio.github.io/biopalette/palettes/gene_red) | 定性 | 2 | 重点信号与深色或中性色的对比 | *风骚律师* — Gene Takavic 的红色外套 |
+| [`walter_white`](https://evanbio.github.io/biopalette/palettes/walter_white) | 发散 | 5 | 围绕中性中心的有符号连续数值 | *绝命毒师* — 荒漠到天空 |
+| [`walter_white2`](https://evanbio.github.io/biopalette/palettes/walter_white2) | 定性 | 5 | 不超过五个无序类别 | *绝命毒师* — 低饱和大地色调 |
+| [`walter_white3`](https://evanbio.github.io/biopalette/palettes/walter_white3) | 发散 | 5 | 暖色调的有符号连续数值 | *绝命毒师* — 暖色对应版本 |
+| [`babel`](https://evanbio.github.io/biopalette/palettes/babel) | 定性 | 21 | 需要标签或位置辅助的多类别图形 | 泛癌骨髓细胞图谱（Cell, 2021）— 22 种细胞类型，21 种声音 |
+| [`bcell_atlas`](https://evanbio.github.io/biopalette/palettes/bcell_atlas) | 定性 | 7 | 四到七个需要标签或位置辅助的类别 | 泛癌 B 细胞图谱（Cell, 2024）— 图形摘要 |
+| [`bcell_atlas2`](https://evanbio.github.io/biopalette/palettes/bcell_atlas2) | 发散 | 5 | 暖色与冷色生物学状态之间的有符号变化 | 泛癌 B 细胞图谱（Cell, 2024）— IgA 到 IgG 的转变 |
+| [`bcell_clusters`](https://evanbio.github.io/biopalette/palettes/bcell_clusters) | 定性 | 20 | 需要标签、位置或分面的多类别图形 | 泛癌 B 细胞图谱（Cell, 2024）— Figure 1B cluster 图例 |
+| [`three_body`](https://evanbio.github.io/biopalette/palettes/three_body) | 定性 | 3 | 三个群组、谱系或轨迹 | 泛癌骨髓细胞图谱（Cell, 2021）— 三条树突状细胞分化轨迹 |
+| [`mitonuclear_blue`](https://evanbio.github.io/biopalette/palettes/mitonuclear_blue) | 渐进 | 6 | 冷色调的低到高连续数值 | 衰老中的线粒体—细胞核通信（TIBS, 2022）— 年轻状态蓝 |
+| [`mitonuclear_orange`](https://evanbio.github.io/biopalette/palettes/mitonuclear_orange) | 渐进 | 6 | 暖色调的低到高连续数值 | 衰老中的线粒体—细胞核通信（TIBS, 2022）— 衰老状态橙 |
+| [`heat_light`](https://evanbio.github.io/biopalette/palettes/heat_light) | 定性 | 2 | 成对类别或实验条件 | 键两性解离（Nature, 2024）— 热与光将自由基对转为离子对 |
+| [`tam_pastel`](https://evanbio.github.io/biopalette/palettes/tam_pastel) | 定性 | 6 | 浅色背景上的四到六个类别 | 泛癌骨髓细胞图谱（Cell, 2021）— 柔和的 TAM 状态色 |
+| [`cancer_mosaic`](https://evanbio.github.io/biopalette/palettes/cancer_mosaic) | 定性 | 15 | 需要标签或位置辅助的十到十五个类别 | 泛癌骨髓细胞图谱（Cell, 2021）— 癌种马赛克 |
+| [`lactate_steps`](https://evanbio.github.io/biopalette/palettes/lactate_steps) | 定性 | 5 | 五个离散流程阶段或研究组别 | 乳酸代谢与免疫治疗（JECCR, 2024）— 五个研究阶段 |
 
 ------------------------------------------------------------------------
 
-## 延伸探索
+## 从色板到图形
 
-- **[Tessera](https://folio.evanzhou.org/tessera)**
-  将配色与示例数据、视觉展示和可复现的 R 作图配方组织在一起。
-- **[Palette Lab](https://folio.evanzhou.org/apps/palette-lab)**
-  提供交互式环境，便于在一组 统一图形中比较不同配色。
+**biopalette** 提供在 R 中获取和应用图像启发配色的接口。
+**[Tessera](https://folio.evanzhou.org/tessera)**
+记录色板的来源图像、示例数据和可复现的 R 作图配方；**[Palette
+Lab](https://folio.evanzhou.org/apps/palette-lab)** 固定数据和图形结构，
+在 17 类图形场景中比较色板的实际表现。下面的总览和图形均来自 Palette Lab
+的真实渲染；Tessera 链接提供对应的图形配方和数据背景。
+
+![Palette Lab
+图形场景总览](reference/figures/showcase/showcase-lab-overview.webp)
+
+同一套色板用于点、线、填充区域、热图单元格、集合交集、生存曲线或全基因组信号时，表现可能完全不同。下面这些图形来自
+Tessera 配方，也对应 Palette Lab 中的色板比较场景。
+
+[TABLE]
 
 ------------------------------------------------------------------------
 

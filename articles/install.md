@@ -49,12 +49,12 @@ packageVersion("biopalette")
 #> [1] '0.1.0'
 head(list_palettes()[c("name", "type", "n_color")])
 #>            name        type n_color
-#> 1  walter_white   diverging       5
-#> 2 walter_white3   diverging       5
-#> 3      gene_red qualitative       2
-#> 4    heat_light qualitative       2
-#> 5    three_body qualitative       3
-#> 6 lactate_steps qualitative       5
+#> 1  bcell_atlas2   diverging       5
+#> 2  walter_white   diverging       5
+#> 3 walter_white3   diverging       5
+#> 4      gene_red qualitative       2
+#> 5    heat_light qualitative       2
+#> 6    three_body qualitative       3
 ```
 
 For a visual check, open the palette gallery in an interactive R

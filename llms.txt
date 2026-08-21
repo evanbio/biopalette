@@ -9,8 +9,8 @@
 
 ## Overview
 
-**biopalette** is an R package providing story-driven color palettes for
-biomedical visualization.
+**biopalette** is an R package providing image-inspired color palettes
+for biomedical visualization.
 
 Every palette begins with a real image — a film still, a scientific
 figure, an artwork — and is translated into a reproducible color system.
@@ -43,20 +43,23 @@ scale_fill_biopalette_gradient("mitonuclear_blue")
 
 ## Palettes
 
-| Name | Type | Colors | Source |
-|----|----|----|----|
-| `gene_red` | Qualitative | 2 | *Better Call Saul* — Gene Takavic’s red coat |
-| `walter_white` | Diverging | 5 | *Breaking Bad* — desert to sky |
-| `walter_white2` | Qualitative | 5 | *Breaking Bad* — muted earth tones |
-| `walter_white3` | Diverging | 5 | *Breaking Bad* — warm counterpart |
-| `babel` | Qualitative | 21 | Pan-cancer myeloid atlas (Cell, 2021) |
-| `three_body` | Qualitative | 3 | Pan-cancer myeloid atlas (Cell, 2021) |
-| `heat_light` | Qualitative | 2 | Bond ampholysis (Nature, 2024) |
-| `tam_pastel` | Qualitative | 6 | Pan-cancer myeloid atlas (Cell, 2021) |
-| `cancer_mosaic` | Qualitative | 15 | Pan-cancer myeloid atlas (Cell, 2021) |
-| `lactate_steps` | Qualitative | 5 | Lactate metabolism and immunotherapy (JECCR, 2024) |
-| `mitonuclear_blue` | Sequential | 6 | Mito-nuclear communication in aging (TIBS, 2022) — young blue |
-| `mitonuclear_orange` | Sequential | 6 | Mito-nuclear communication in aging (TIBS, 2022) — aged orange |
+| Name | Type | Colors | Recommended use | Source |
+|----|----|---:|----|----|
+| `gene_red` | Qualitative | 2 | Emphasized signal versus a dark or neutral counterpart | *Better Call Saul* — Gene Takavic’s red coat |
+| `walter_white` | Diverging | 5 | Signed continuous values around a neutral center | *Breaking Bad* — desert to sky |
+| `walter_white2` | Qualitative | 5 | Up to five unordered groups | *Breaking Bad* — muted earth tones |
+| `walter_white3` | Diverging | 5 | Warm-register signed continuous values | *Breaking Bad* — warm counterpart |
+| `babel` | Qualitative | 21 | Many categorical groups with labels or position support | Pan-cancer myeloid atlas (Cell, 2021) |
+| `bcell_atlas` | Qualitative | 7 | Four-to-seven categorical groups with direct labels or position support | Pan-cancer B-cell atlas (Cell, 2024) — graphical abstract |
+| `bcell_atlas2` | Diverging | 5 | Signed change between warm and cool biological states | Pan-cancer B-cell atlas (Cell, 2024) — IgA to IgG shift |
+| `bcell_clusters` | Qualitative | 20 | Many labeled categorical groups with position or faceting support | Pan-cancer B-cell atlas (Cell, 2024) — Figure 1B cluster legend |
+| `three_body` | Qualitative | 3 | Three groups, lineages, or trajectories | Pan-cancer myeloid atlas (Cell, 2021) |
+| `heat_light` | Qualitative | 2 | Paired categories or experimental conditions | Bond ampholysis (Nature, 2024) |
+| `tam_pastel` | Qualitative | 6 | Four-to-six categorical groups on light backgrounds | Pan-cancer myeloid atlas (Cell, 2021) |
+| `cancer_mosaic` | Qualitative | 15 | Ten-to-fifteen categories with labels or position support | Pan-cancer myeloid atlas (Cell, 2021) |
+| `lactate_steps` | Qualitative | 5 | Five discrete workflow stages or study groups | Lactate metabolism and immunotherapy (JECCR, 2024) |
+| `mitonuclear_blue` | Sequential | 6 | Cool low-to-high continuous values | Mito-nuclear communication in aging (TIBS, 2022) — young blue |
+| `mitonuclear_orange` | Sequential | 6 | Warm low-to-high continuous values | Mito-nuclear communication in aging (TIBS, 2022) — aged orange |
 
 ## Function Areas
 
@@ -72,14 +75,24 @@ scale_fill_biopalette_gradient("mitonuclear_blue")
 - [Function
   Reference](https://evanbio.github.io/biopalette/reference/index.md)
 
-## Explore the Palettes
+## From Palette to Figure
 
-- **[Tessera](https://folio.evanzhou.org/tessera)** presents the
-  palettes with example datasets, visual demonstrations, and
-  reproducible R figure recipes.
-- **[Palette Lab](https://folio.evanzhou.org/apps/palette-lab)** lets
-  you compare the palettes interactively across a consistent set of
-  plots.
+**biopalette** provides the R interface for retrieving and applying
+image-inspired palettes.
+**[Tessera](https://folio.evanzhou.org/tessera)** documents their source
+images, example data, and reproducible R figure recipes. **[Palette
+Lab](https://folio.evanzhou.org/apps/palette-lab)** keeps the data and
+graphical structure fixed while comparing palette behavior across 17
+graphical contexts.
+
+![Palette Lab overview showing representative graphical
+contexts](reference/figures/showcase/showcase-lab-overview.webp)
+
+The panels below are rendered from Palette Lab with fixed data and
+figure structure. Each Tessera link provides the corresponding
+reproducible figure recipe and data context.
+
+[TABLE]
 
 ## License
 

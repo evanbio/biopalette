@@ -51,9 +51,9 @@ A named list of ggplot objects (one per page).
 palette_gallery()
 #> ℹ Type sequential: 2 palettes -> 1 page(s)
 #> ✔ Built "sequential_page1"
-#> ℹ Type diverging: 2 palettes -> 1 page(s)
+#> ℹ Type diverging: 3 palettes -> 1 page(s)
 #> ✔ Built "diverging_page1"
-#> ℹ Type qualitative: 8 palettes -> 1 page(s)
+#> ℹ Type qualitative: 10 palettes -> 1 page(s)
 #> ✔ Built "qualitative_page1"
 #> $sequential_page1
 
@@ -65,7 +65,7 @@ palette_gallery()
 
 #> 
 palette_gallery(type = "qualitative")
-#> ℹ Type qualitative: 8 palettes -> 1 page(s)
+#> ℹ Type qualitative: 10 palettes -> 1 page(s)
 #> ✔ Built "qualitative_page1"
 #> $qualitative_page1
 
@@ -73,7 +73,7 @@ palette_gallery(type = "qualitative")
 palette_gallery(type = c("sequential", "diverging"), max_palettes = 10)
 #> ℹ Type sequential: 2 palettes -> 1 page(s)
 #> ✔ Built "sequential_page1"
-#> ℹ Type diverging: 2 palettes -> 1 page(s)
+#> ℹ Type diverging: 3 palettes -> 1 page(s)
 #> ✔ Built "diverging_page1"
 #> $sequential_page1
 

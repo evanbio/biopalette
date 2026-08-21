@@ -23,18 +23,21 @@ library(biopalette)
 
 list_palettes()[c("name", "type", "n_color")]
 #>                  name        type n_color
-#> 1        walter_white   diverging       5
-#> 2       walter_white3   diverging       5
-#> 3            gene_red qualitative       2
-#> 4          heat_light qualitative       2
-#> 5          three_body qualitative       3
-#> 6       lactate_steps qualitative       5
-#> 7       walter_white2 qualitative       5
-#> 8          tam_pastel qualitative       6
-#> 9       cancer_mosaic qualitative      15
-#> 10              babel qualitative      21
-#> 11   mitonuclear_blue  sequential       6
-#> 12 mitonuclear_orange  sequential       6
+#> 1        bcell_atlas2   diverging       5
+#> 2        walter_white   diverging       5
+#> 3       walter_white3   diverging       5
+#> 4            gene_red qualitative       2
+#> 5          heat_light qualitative       2
+#> 6          three_body qualitative       3
+#> 7       lactate_steps qualitative       5
+#> 8       walter_white2 qualitative       5
+#> 9          tam_pastel qualitative       6
+#> 10        bcell_atlas qualitative       7
+#> 11      cancer_mosaic qualitative      15
+#> 12     bcell_clusters qualitative      20
+#> 13              babel qualitative      21
+#> 14   mitonuclear_blue  sequential       6
+#> 15 mitonuclear_orange  sequential       6
 ```
 
 Filter by type when the visual role is already known:
