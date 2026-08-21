@@ -65,6 +65,13 @@ scale_fill_biopalette_gradient("mitonuclear_blue")
 
 - [Function Reference](reference/index.html)
 
+## Explore the Palettes
+
+- **[Tessera](https://folio.evanzhou.org/tessera)** presents the palettes with
+  example datasets, visual demonstrations, and reproducible R figure recipes.
+- **[Palette Lab](https://folio.evanzhou.org/apps/palette-lab)** lets you compare
+  the palettes interactively across a consistent set of plots.
+
 ## License
 
 MIT License © 2025–2026 Yibin Zhou

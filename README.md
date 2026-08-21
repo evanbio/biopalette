@@ -11,7 +11,8 @@
 
 [📚 Documentation](https://evanbio.github.io/biopalette/) •
 [💬 Issues](https://github.com/evanbio/biopalette/issues) •
-[🎨 Tessera](https://folio.evanzhou.org/tessera)
+[🎨 Tessera](https://folio.evanzhou.org/tessera) •
+[🧪 Palette Lab](https://folio.evanzhou.org/apps/palette-lab)
 
 ---
 
@@ -73,6 +74,15 @@ Each name links to its story page — source image, color table, and when to use
 | [`tam_pastel`](palettes/tam_pastel) | Qualitative | 6 | Pan-cancer myeloid atlas (Cell, 2021) — soft TAM states |
 | [`cancer_mosaic`](palettes/cancer_mosaic) | Qualitative | 15 | Pan-cancer myeloid atlas (Cell, 2021) — cancer-type mosaic |
 | [`lactate_steps`](palettes/lactate_steps) | Qualitative | 5 | Lactate metabolism and immunotherapy (JECCR, 2024) — five study stages |
+
+---
+
+## Explore Beyond the Package
+
+- **[Tessera](https://folio.evanzhou.org/tessera)** presents the palettes alongside
+  example datasets, visual demonstrations, and reproducible R figure recipes.
+- **[Palette Lab](https://folio.evanzhou.org/apps/palette-lab)** provides an
+  interactive way to compare the palettes across a consistent set of plots.
 
 ---
 

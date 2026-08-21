@@ -190,6 +190,8 @@ navbar:
       - reference
       - news
     right:
+      - tessera
+      - palette_lab
       - github
 
   components:
@@ -223,6 +225,16 @@ navbar:
     news:
       text: "News"
       href: news/index.html
+
+    tessera:
+      icon: "fas fa-palette"
+      href: https://folio.evanzhou.org/tessera
+      aria-label: "Tessera"
+
+    palette_lab:
+      icon: "fas fa-flask"
+      href: https://folio.evanzhou.org/apps/palette-lab
+      aria-label: "Palette Lab"
 
     github:
       icon: "fab fa-github"

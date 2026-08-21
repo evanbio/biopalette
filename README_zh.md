@@ -11,7 +11,8 @@
 
 [📚 文档](https://evanbio.github.io/biopalette/) •
 [💬 问题反馈](https://github.com/evanbio/biopalette/issues) •
-[🎨 Tessera](https://folio.evanzhou.org/tessera)
+[🎨 Tessera](https://folio.evanzhou.org/tessera) •
+[🧪 Palette Lab](https://folio.evanzhou.org/apps/palette-lab)
 
 ---
 
@@ -73,6 +74,15 @@ devtools::install_github("evanbio/biopalette")
 | [`tam_pastel`](palettes/tam_pastel) | 定性 | 6 | 泛癌骨髓细胞图谱（Cell, 2021）— 柔和的 TAM 状态色 |
 | [`cancer_mosaic`](palettes/cancer_mosaic) | 定性 | 15 | 泛癌骨髓细胞图谱（Cell, 2021）— 癌种马赛克 |
 | [`lactate_steps`](palettes/lactate_steps) | 定性 | 5 | 乳酸代谢与免疫治疗（JECCR, 2024）— 五个研究阶段 |
+
+---
+
+## 延伸探索
+
+- **[Tessera](https://folio.evanzhou.org/tessera)** 将配色与示例数据、视觉展示和可复现的
+  R 作图配方组织在一起。
+- **[Palette Lab](https://folio.evanzhou.org/apps/palette-lab)** 提供交互式环境，便于在一组
+  统一图形中比较不同配色。
 
 ---
 
