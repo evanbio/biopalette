@@ -133,6 +133,21 @@ If more than one library contains biopalette, pass the relevant library
 path through the `lib` argument of
 [`remove.packages()`](https://rdrr.io/r/utils/remove.packages.html).
 
+## Where to begin
+
+After installation:
+
+- open
+  [`vignette("get-started", package = "biopalette")`](https://evanbio.github.io/biopalette/articles/get-started.md)
+  for the core R workflow;
+- open
+  [`vignette("palette", package = "biopalette")`](https://evanbio.github.io/biopalette/articles/palette.md)
+  to browse the palettes included with the package;
+- open
+  [`vignette("tessera", package = "biopalette")`](https://evanbio.github.io/biopalette/articles/tessera.md)
+  to continue from palette discovery to example data and complete R
+  figure recipes.
+
 ## Getting help
 
 - Read the [package

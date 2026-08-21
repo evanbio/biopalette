@@ -243,7 +243,8 @@ rgb2hex(rgba)
 
 - Read
   [`vignette("palette", package = "biopalette")`](https://evanbio.github.io/biopalette/articles/palette.md)
-  to create and manage a custom JSON palette collection.
+  for the sources, intended uses, and limitations of every bundled
+  palette.
 - Open
   [`?scale_color_biopalette`](https://evanbio.github.io/biopalette/reference/scale_color_biopalette.md)
   for discrete scale options.
@@ -251,8 +252,9 @@ rgb2hex(rgba)
   [`?scale_color_biopalette_gradient`](https://evanbio.github.io/biopalette/reference/scale_color_biopalette_gradient.md)
   for continuous gradients, transformations, custom stop positions, and
   diverging midpoints.
-- Browse the [palette
-  stories](https://github.com/evanbio/biopalette/tree/main/palettes) for
-  the source and intended use of every bundled palette.
+- Read
+  [`vignette("tessera", package = "biopalette")`](https://evanbio.github.io/biopalette/articles/tessera.md)
+  to explore palettes, example datasets, Palette Lab, and complete R
+  figure recipes.
 - Report reproducible problems in [GitHub
   Issues](https://github.com/evanbio/biopalette/issues).

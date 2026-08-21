@@ -141,7 +141,7 @@ Package-level documentation.
   biopalette](https://evanbio.github.io/biopalette/articles/get-started.md):
 - [Installing
   biopalette](https://evanbio.github.io/biopalette/articles/install.md):
-- [Managing custom palette
-  collections](https://evanbio.github.io/biopalette/articles/palette.md):
-- [Choosing palettes with
+- [Palettes included in
+  biopalette](https://evanbio.github.io/biopalette/articles/palette.md):
+- [From palette to plot with
   Tessera](https://evanbio.github.io/biopalette/articles/tessera.md):

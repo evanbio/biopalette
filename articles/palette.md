@@ -1,297 +1,219 @@
-# Managing custom palette collections
+# Palettes included in biopalette
 
-biopalette includes a curated palette collection, but the same tools can
-read and manage a collection owned by a project, laboratory, or
-organization. A custom collection is useful when colors carry stable
-meaning across several figures or analyses and should be stored,
-reviewed, and reused like other project data.
+biopalette is a curated collection of image-inspired color palettes for
+biomedical visualization. Every included palette has a documented
+source, an intentional color order, a defined type, and notes about
+where it works well.
 
-This vignette covers the complete lifecycle of such a collection. For
-the bundled palettes and plotting scales, begin with
-[`vignette("get-started", package = "biopalette")`](https://evanbio.github.io/biopalette/articles/get-started.md).
+This article is a guide to the collection. Complete source
+records—including the original image, color table, reference labels, use
+cases, and limitations— are available in the
+[`palettes/`](https://github.com/evanbio/biopalette/tree/main/palettes)
+directory on GitHub.
 
 ``` r
 
 library(biopalette)
 ```
 
-## Collection structure
+## Browse all palettes
 
-A collection is a directory with up to three type subdirectories:
-
-``` text
-palettes/
-├── qualitative/
-├── sequential/
-└── diverging/
-```
-
-Each palette is one JSON file. There is no compiled copy or secondary
-data format. A minimal file contains a name, a type, and a vector of HEX
-colors:
-
-``` json
-{
-  "name": "treatment_groups",
-  "type": "qualitative",
-  "colors": ["#3E6186", "#EE761F", "#318336"]
-}
-```
-
-The file name must match `name`, and its parent directory must match
-`type`. Palette names are unique across the entire collection, so a name
-cannot refer to different palettes under different types.
-
-Choose the type from the meaning of the colors:
-
-- `qualitative` for unordered categories;
-- `sequential` for an ordered low-to-high ramp;
-- `diverging` for two directions around a meaningful center.
-
-## Create a collection
-
-For this example, create an isolated temporary directory. In a real
-project, use a stable path such as `config/palettes` or
-`assets/palettes` and commit the JSON files to version control.
+Use
+[`list_palettes()`](https://evanbio.github.io/biopalette/reference/list_palettes.md)
+for a compact inventory:
 
 ``` r
 
-palettes_dir <- tempfile("biopalette-palettes-")
+list_palettes()[c("name", "type", "n_color")]
+#>                  name        type n_color
+#> 1        walter_white   diverging       5
+#> 2       walter_white3   diverging       5
+#> 3            gene_red qualitative       2
+#> 4          heat_light qualitative       2
+#> 5          three_body qualitative       3
+#> 6       lactate_steps qualitative       5
+#> 7       walter_white2 qualitative       5
+#> 8          tam_pastel qualitative       6
+#> 9       cancer_mosaic qualitative      15
+#> 10              babel qualitative      21
+#> 11   mitonuclear_blue  sequential       6
+#> 12 mitonuclear_orange  sequential       6
 ```
 
-[`create_palette()`](https://evanbio.github.io/biopalette/reference/create_palette.md)
-creates the required type directory and writes a validated JSON file:
+Use
+[`palette_gallery()`](https://evanbio.github.io/biopalette/reference/palette_gallery.md)
+when choosing visually in an interactive R session:
 
 ``` r
 
-create_palette(
-  name = "treatment_groups",
-  type = "qualitative",
-  colors = c("#3E6186", "#EE761F", "#318336"),
-  palettes_dir = palettes_dir
-)
-#> ✔ Palette saved: /tmp/RtmppsPEjo/biopalette-palettes-1cdf7d443ce4/qualitative/treatment_groups.json
-
-create_palette(
-  name = "response_blue",
-  type = "sequential",
-  colors = c("#F2F6FA", "#B9DBF4", "#3A68AE", "#155289"),
-  palettes_dir = palettes_dir
-)
-#> ✔ Palette saved: /tmp/RtmppsPEjo/biopalette-palettes-1cdf7d443ce4/sequential/response_blue.json
-
-create_palette(
-  name = "effect_balance",
-  type = "diverging",
-  colors = c("#1991A9", "#A3C5C4", "#E7E9E4", "#D7AD85", "#A65C31"),
-  palettes_dir = palettes_dir
-)
-#> ✔ Palette saved: /tmp/RtmppsPEjo/biopalette-palettes-1cdf7d443ce4/diverging/effect_balance.json
+palette_gallery()
 ```
 
-`palettes_dir` is required for every write. This is deliberate: package
-data cannot be modified accidentally, and a write always has an explicit
-owner and destination.
+The complete collection is summarized below. “Source record” opens the
+full English curation record in this repository; “Tessera” opens the
+corresponding visual page in the companion Tessera collection.
 
-## Inspect and use the collection
+| Palette | Type | Colors | Source | Details |
+|----|----|---:|----|----|
+| `gene_red` | Qualitative | 2 | *Better Call Saul* poster | [Source record](https://github.com/evanbio/biopalette/tree/main/palettes/gene_red) · [Tessera](https://folio.evanzhou.org/tessera/palettes/gene_red) |
+| `heat_light` | Qualitative | 2 | Bond ampholysis illustration, *Nature* (2024) | [Source record](https://github.com/evanbio/biopalette/tree/main/palettes/heat_light) · [Tessera](https://folio.evanzhou.org/tessera/palettes/heat_light) |
+| `three_body` | Qualitative | 3 | Pan-cancer myeloid atlas, *Cell* (2021) | [Source record](https://github.com/evanbio/biopalette/tree/main/palettes/three_body) · [Tessera](https://folio.evanzhou.org/tessera/palettes/three_body) |
+| `walter_white2` | Qualitative | 5 | *Breaking Bad* pilot poster | [Source record](https://github.com/evanbio/biopalette/tree/main/palettes/walter_white2) · [Tessera](https://folio.evanzhou.org/tessera/palettes/walter_white2) |
+| `lactate_steps` | Qualitative | 5 | Lactate-metabolism workflow, JECCR (2024) | [Source record](https://github.com/evanbio/biopalette/tree/main/palettes/lactate_steps) · [Tessera](https://folio.evanzhou.org/tessera/palettes/lactate_steps) |
+| `tam_pastel` | Qualitative | 6 | Pan-cancer myeloid atlas, *Cell* (2021) | [Source record](https://github.com/evanbio/biopalette/tree/main/palettes/tam_pastel) · [Tessera](https://folio.evanzhou.org/tessera/palettes/tam_pastel) |
+| `cancer_mosaic` | Qualitative | 15 | Pan-cancer myeloid atlas, *Cell* (2021) | [Source record](https://github.com/evanbio/biopalette/tree/main/palettes/cancer_mosaic) · [Tessera](https://folio.evanzhou.org/tessera/palettes/cancer_mosaic) |
+| `babel` | Qualitative | 21 | Pan-cancer myeloid atlas, *Cell* (2021) | [Source record](https://github.com/evanbio/biopalette/tree/main/palettes/babel) · [Tessera](https://folio.evanzhou.org/tessera/palettes/babel) |
+| `mitonuclear_blue` | Sequential | 6 | Mito-nuclear communication in aging, TIBS (2022) | [Source record](https://github.com/evanbio/biopalette/tree/main/palettes/mitonuclear_blue) · [Tessera](https://folio.evanzhou.org/tessera/palettes/mitonuclear_blue) |
+| `mitonuclear_orange` | Sequential | 6 | Mito-nuclear communication in aging, TIBS (2022) | [Source record](https://github.com/evanbio/biopalette/tree/main/palettes/mitonuclear_orange) · [Tessera](https://folio.evanzhou.org/tessera/palettes/mitonuclear_orange) |
+| `walter_white` | Diverging | 5 | *Breaking Bad* pilot poster | [Source record](https://github.com/evanbio/biopalette/tree/main/palettes/walter_white) · [Tessera](https://folio.evanzhou.org/tessera/palettes/walter_white) |
+| `walter_white3` | Diverging | 5 | *Breaking Bad* pilot poster | [Source record](https://github.com/evanbio/biopalette/tree/main/palettes/walter_white3) · [Tessera](https://folio.evanzhou.org/tessera/palettes/walter_white3) |
 
-Pass the same directory to any palette-reading function:
+## Qualitative palettes
+
+Qualitative palettes distinguish unordered categories. The first `n`
+colors are returned when a smaller set is requested, because every
+stored color is a curated category color rather than a stop on a
+continuous ramp.
 
 ``` r
 
-list_palettes(palettes_dir = palettes_dir)[c("name", "type", "n_color")]
-#>               name        type n_color
-#> 1   effect_balance   diverging       5
-#> 2 treatment_groups qualitative       3
-#> 3    response_blue  sequential       4
-palette_info("response_blue", palettes_dir = palettes_dir)
-#>            name       type n_color       colors
-#> 1 response_blue sequential       4 #F2F6FA,....
-get_palette("treatment_groups", palettes_dir = palettes_dir)
-#> [1] "#3E6186" "#EE761F" "#318336"
+pages <- palette_gallery(type = "qualitative", verbose = FALSE)
+pages[["qualitative_page1"]]
 ```
 
-Custom palettes follow exactly the same type-aware `n` rules as bundled
-ones. A qualitative palette returns its first `n` category colors, while
-sequential and diverging palettes sample the complete ramp:
+![](palette_files/figure-html/qualitative-gallery-1.png)
+
+Choose the palette size to match the real number of groups:
+
+- `gene_red` and `heat_light` provide restrained two-group contrasts;
+- `three_body` provides three strongly separated colors;
+- `walter_white2`, `lactate_steps`, and `tam_pastel` cover common
+  medium-sized groupings;
+- `cancer_mosaic` and `babel` support unusually large categorical
+  displays.
+
+Large qualitative palettes require help from position, direct labels,
+shape, faceting, or annotation. Twenty-one categories cannot be made
+effortless by color alone.
 
 ``` r
 
-get_palette("treatment_groups", n = 2, palettes_dir = palettes_dir)
-#> [1] "#3E6186" "#EE761F"
-get_palette("response_blue", n = 7, palettes_dir = palettes_dir)
-#> [1] "#F2F6FA" "#D6E8F7" "#B9DBF4" "#7D9FD1" "#3A68AE" "#295D9B" "#155289"
+get_palette("babel", n = 5)
+#> [1] "#1688A7" "#7673AE" "#B3DE69" "#D195F6" "#7E285E"
 ```
 
-They also work directly in ggplot2 scales:
+## Sequential palettes
+
+`mitonuclear_blue` and `mitonuclear_orange` represent one-direction
+change. Both run from a quiet light end to a darker visual anchor.
 
 ``` r
 
-library(ggplot2)
-
-ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
-  geom_point(size = 2.5) +
-  scale_color_biopalette(
-    "treatment_groups",
-    palettes_dir = palettes_dir
-  ) +
-  theme_minimal()
+pages <- palette_gallery(type = "sequential", verbose = FALSE)
+pages[["sequential_page1"]]
 ```
 
-![](palette_files/figure-html/custom-discrete-scale-1.png)
+![](palette_files/figure-html/sequential-gallery-1.png)
+
+For sequential palettes, `n` samples the complete ramp in Lab color
+space. It does not take only the first `n` pale stops:
 
 ``` r
 
-ggplot(faithfuld, aes(waiting, eruptions, fill = density)) +
-  geom_raster() +
-  scale_fill_biopalette_gradient(
-    "response_blue",
-    palettes_dir = palettes_dir
-  ) +
-  theme_minimal()
+get_palette("mitonuclear_blue", n = 3)
+#> [1] "#EEF4FB" "#A7C2E3" "#155289"
+get_palette("mitonuclear_orange", n = 8)
+#> [1] "#F8E7E3" "#EAD7D5" "#EEC9B5" "#F4BA8C" "#E89E6B" "#C28968" "#A1745E"
+#> [8] "#925A44"
 ```
 
-![](palette_files/figure-html/custom-gradient-scale-1.png)
+Use the light-to-dark direction for increasing values unless the
+scientific meaning requires the reverse. On white backgrounds,
+boundaries or grid lines help the lightest colors remain visible.
 
-The bundled and custom collections remain separate. Omitting
-`palettes_dir` always selects the palettes installed with biopalette;
-supplying it selects only that custom collection. The two collections
-are not merged implicitly.
+## Diverging palettes
 
-## Update a palette safely
-
-Existing files are protected from accidental replacement:
+`walter_white` and `walter_white3` represent two directions around a
+pale center.
 
 ``` r
 
-create_palette(
-  "response_blue",
-  "sequential",
-  c("#EFF5FB", "#9ECAE1", "#3182BD"),
-  palettes_dir = palettes_dir
-)
-#> Error:
-#> ! Palette "response_blue" already exists. Use `overwrite = TRUE` to
-#>   replace.
+pages <- palette_gallery(type = "diverging", verbose = FALSE)
+pages[["diverging_page1"]]
 ```
 
-Use `overwrite = TRUE` only when replacement is intentional:
+![](palette_files/figure-html/diverging-gallery-1.png)
+
+Use a diverging palette only when the center has a meaningful
+interpretation, such as zero fold change, a clinical threshold, or a
+reference estimate. `walter_white` is the safer general-purpose option.
+The rose-to-green ends of `walter_white3` can be difficult for common
+red-green color-vision deficiencies.
 
 ``` r
 
-create_palette(
-  "response_blue",
-  "sequential",
-  c("#EFF5FB", "#9ECAE1", "#3182BD"),
-  palettes_dir = palettes_dir,
-  overwrite = TRUE
-)
-#> ℹ Overwriting existing palette: "response_blue"
-#> ✔ Palette saved: /tmp/RtmppsPEjo/biopalette-palettes-1cdf7d443ce4/sequential/response_blue.json
-
-get_palette("response_blue", palettes_dir = palettes_dir)
-#> [1] "#EFF5FB" "#9ECAE1" "#3182BD"
+get_palette("walter_white", n = 7)
+#> [1] "#1991A9" "#80B3BB" "#BAD1CF" "#E7E9E4" "#BEC7A6" "#889669" "#495A2E"
 ```
 
-Writes are transactional from the caller’s perspective. biopalette
-writes a temporary JSON file beside the destination, reads it back
-through the normal validator, and commits it only after validation
-succeeds. If an overwrite cannot be completed, the previous palette is
-retained whenever the file system allows it. The collection cache is
-invalidated only after a successful write.
+## Source labels and new mappings
 
-## Validation and collaboration
+Some source records associate colors with cell types, cancer types,
+workflow stages, or objects in a screen image. Those labels document
+where the colors came from; they do not force the same labels in a new
+dataset.
 
-All reading functions use the same collection loader. It checks every
-JSON file before returning data and reports the discovered problems
-together. A malformed file is not silently skipped, because silently
-dropping a palette would turn a data-quality problem into a misleading
-“not found” error later.
+When remapping a palette:
 
-Useful project practices are therefore straightforward:
+1.  preserve a stable mapping throughout the project;
+2.  explain the mapping in the figure legend;
+3.  do not imply that biological meaning transfers with a HEX value;
+4.  retain non-color cues when categories are numerous or close in
+    appearance.
 
-1.  Keep the collection under version control.
-2.  Review palette type, order, and source meaning along with the HEX
-    values.
-3.  Use one stable palette name in analysis code instead of copying
-    vectors between scripts.
-4.  Exercise the collection in continuous integration with a read such
-    as:
+## Use the selected palette
+
+Once selected, the palette name is the complete handoff to plotting
+code:
 
 ``` r
 
-stopifnot(nrow(list_palettes(palettes_dir = "config/palettes")) > 0)
+# Unordered categories
+scale_color_biopalette("three_body")
+scale_fill_biopalette("tam_pastel")
+
+# Ordered continuous values
+scale_fill_biopalette_gradient("mitonuclear_blue")
+
+# Signed values around zero
+scale_color_biopalette_gradient("walter_white", midpoint = 0)
 ```
 
-This check invokes the same validation path used by plots and palette
-queries; it does not create a second validation contract.
+Use `reverse = TRUE` when the direction should be flipped. Palette names
+in the bundled collection are unique, so `type` normally does not need
+to be specified.
 
-## Remove a palette
+## Explore further
 
-Deletion also requires an explicit custom collection directory. If
-`type` is omitted, biopalette searches all three type directories:
+- Browse the complete [GitHub source
+  records](https://github.com/evanbio/biopalette/tree/main/palettes) for
+  original images, extraction notes, reference labels, and limitations.
+- Open [Tessera palettes](https://folio.evanzhou.org/tessera) for a
+  visual, reader-oriented view of the same named palettes.
+- Use [Palette Lab](https://folio.evanzhou.org/apps/palette-lab) to
+  switch the palettes across a consistent set of graphical displays.
+- Read
+  [`vignette("tessera", package = "biopalette")`](https://evanbio.github.io/biopalette/articles/tessera.md)
+  to continue from palette discovery to data, R recipes, and complete
+  figures.
 
-``` r
+## Propose a palette
 
-remove_palette("response_blue", palettes_dir = palettes_dir)
-#> ✔ Removed "response_blue" from sequential
-remove_palette(
-  "treatment_groups",
-  type = "qualitative",
-  palettes_dir = palettes_dir
-)
-#> ✔ Removed "treatment_groups" from qualitative
-```
+New palettes enter the public collection through review. A proposal
+should include the source image, source attribution, palette JSON,
+preview, intended type, use cases, and known limitations—not only an
+attractive vector of HEX values.
 
-The function returns `TRUE` invisibly after a successful deletion and
-`FALSE` invisibly when the palette is absent. The bundled collection
-cannot be removed through this interface because `palettes_dir` has no
-write default.
-
-``` r
-
-remove_palette("effect_balance", palettes_dir = palettes_dir)
-#> ✔ Removed "effect_balance" from diverging
-unlink(palettes_dir, recursive = TRUE)
-```
-
-## Color representation
-
-Palette JSON accepts uppercase or lowercase 6-digit HEX colors and
-8-digit HEX colors with alpha.
-[`hex2rgb()`](https://evanbio.github.io/biopalette/reference/hex2rgb.md)
-and
-[`rgb2hex()`](https://evanbio.github.io/biopalette/reference/rgb2hex.md)
-provide a lossless conversion path when colors need to be inspected or
-exchanged with numeric RGB(A) data:
-
-``` r
-
-channels <- hex2rgb(c("#3E6186", "#EE761F80"))
-channels
-#>         hex   r   g   b alpha
-#> 1   #3E6186  62  97 134    NA
-#> 2 #EE761F80 238 118  31   128
-rgb2hex(channels)
-#> [1] "#3E6186"   "#EE761F80"
-```
-
-For color derivation and interpolation, use a color-aware workflow
-rather than averaging RGB channels casually. biopalette itself
-interpolates sequential and diverging ramps in Lab color space so
-palette retrieval and ggplot2 gradients remain consistent.
-
-## Related documentation
-
-- [`?create_palette`](https://evanbio.github.io/biopalette/reference/create_palette.md)
-  and
-  [`?remove_palette`](https://evanbio.github.io/biopalette/reference/remove_palette.md)
-  document the write operations.
-- [`?get_palette`](https://evanbio.github.io/biopalette/reference/get_palette.md)
-  explains type-aware sampling.
-- [`?scale_color_biopalette`](https://evanbio.github.io/biopalette/reference/scale_color_biopalette.md)
-  and
-  [`?scale_color_biopalette_gradient`](https://evanbio.github.io/biopalette/reference/scale_color_biopalette_gradient.md)
-  document custom scale options.
-- [GitHub Issues](https://github.com/evanbio/biopalette/issues) is the
-  place to report reproducible collection or validation problems.
+See the [contribution
+guide](https://github.com/evanbio/biopalette/blob/main/CONTRIBUTING.md)
+before opening a pull request.

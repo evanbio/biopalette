@@ -5,14 +5,14 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Managing custom palette collections • biopalette</title>
+<title>Palettes included in biopalette • biopalette</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/Inter-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Managing custom palette collections">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Palettes included in biopalette">
 <meta name="keywords" content="R package, color palette, biomedical visualization, ggplot2, single cell, UMAP">
 <meta name="description" content="biopalette: Image-inspired color palettes for biomedical visualization in R">
 <meta name="author" content="Yibin Zhou">
@@ -99,8 +99,8 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-vignettes" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Vignettes</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-vignettes">
-<li><a class="dropdown-item" href="../articles/palette.html">Custom Palette Collections</a></li>
-    <li><a class="dropdown-item" href="../articles/tessera.html">Choosing Palettes with Tessera</a></li>
+<li><a class="dropdown-item" href="../articles/palette.html">The Palette Collection</a></li>
+    <li><a class="dropdown-item" href="../articles/tessera.html">From Palette to Plot with Tessera</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="../articles/">All Articles</a></li>
   </ul>
@@ -122,7 +122,7 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>Managing custom palette collections</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>Palettes included in biopalette</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/evanbio/biopalette/blob/main/vignettes/palette.Rmd" class="external-link"><code>vignettes/palette.Rmd</code></a></small>
@@ -131,257 +131,323 @@
 
     
     
-<p>biopalette includes a curated palette collection, but the same tools
-can read and manage a collection owned by a project, laboratory, or
-organization. A custom collection is useful when colors carry stable
-meaning across several figures or analyses and should be stored,
-reviewed, and reused like other project data.</p>
-<p>This vignette covers the complete lifecycle of such a collection. For
-the bundled palettes and plotting scales, begin with
-<code><a href="../articles/get-started.html">vignette("get-started", package = "biopalette")</a></code>.</p>
+<p>biopalette is a curated collection of image-inspired color palettes
+for biomedical visualization. Every included palette has a documented
+source, an intentional color order, a defined type, and notes about
+where it works well.</p>
+<p>This article is a guide to the collection. Complete source
+records—including the original image, color table, reference labels, use
+cases, and limitations— are available in the <a href="https://github.com/evanbio/biopalette/tree/main/palettes" class="external-link"><code>palettes/</code></a>
+directory on GitHub.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/evanbio/biopalette" class="external-link">biopalette</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
-<h2 id="collection-structure">Collection structure<a class="anchor" aria-label="anchor" href="#collection-structure"></a>
+<h2 id="browse-all-palettes">Browse all palettes<a class="anchor" aria-label="anchor" href="#browse-all-palettes"></a>
 </h2>
-<p>A collection is a directory with up to three type subdirectories:</p>
-<pre class="text"><code>palettes/
-├── qualitative/
-├── sequential/
-└── diverging/</code></pre>
-<p>Each palette is one JSON file. There is no compiled copy or secondary
-data format. A minimal file contains a name, a type, and a vector of HEX
-colors:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"treatment_groups"</span><span class="fu">,</span></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"qualitative"</span><span class="fu">,</span></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  <span class="dt">"colors"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"#3E6186"</span><span class="ot">,</span> <span class="st">"#EE761F"</span><span class="ot">,</span> <span class="st">"#318336"</span><span class="ot">]</span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
-<p>The file name must match <code>name</code>, and its parent directory
-must match <code>type</code>. Palette names are unique across the entire
-collection, so a name cannot refer to different palettes under different
-types.</p>
-<p>Choose the type from the meaning of the colors:</p>
-<ul>
-<li>
-<code>qualitative</code> for unordered categories;</li>
-<li>
-<code>sequential</code> for an ordered low-to-high ramp;</li>
-<li>
-<code>diverging</code> for two directions around a meaningful
-center.</li>
-</ul>
+<p>Use <code><a href="../reference/list_palettes.html">list_palettes()</a></code> for a compact inventory:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/list_palettes.html">list_palettes</a></span><span class="op">(</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"name"</span>, <span class="st">"type"</span>, <span class="st">"n_color"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="co">#&gt;                  name        type n_color</span></span>
+<span><span class="co">#&gt; 1        walter_white   diverging       5</span></span>
+<span><span class="co">#&gt; 2       walter_white3   diverging       5</span></span>
+<span><span class="co">#&gt; 3            gene_red qualitative       2</span></span>
+<span><span class="co">#&gt; 4          heat_light qualitative       2</span></span>
+<span><span class="co">#&gt; 5          three_body qualitative       3</span></span>
+<span><span class="co">#&gt; 6       lactate_steps qualitative       5</span></span>
+<span><span class="co">#&gt; 7       walter_white2 qualitative       5</span></span>
+<span><span class="co">#&gt; 8          tam_pastel qualitative       6</span></span>
+<span><span class="co">#&gt; 9       cancer_mosaic qualitative      15</span></span>
+<span><span class="co">#&gt; 10              babel qualitative      21</span></span>
+<span><span class="co">#&gt; 11   mitonuclear_blue  sequential       6</span></span>
+<span><span class="co">#&gt; 12 mitonuclear_orange  sequential       6</span></span></code></pre></div>
+<p>Use <code><a href="../reference/palette_gallery.html">palette_gallery()</a></code> when choosing visually in an
+interactive R session:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/palette_gallery.html">palette_gallery</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>The complete collection is summarized below. “Source record” opens
+the full English curation record in this repository; “Tessera” opens the
+corresponding visual page in the companion Tessera collection.</p>
+<table class="table">
+<colgroup>
+<col width="18%">
+<col width="18%">
+<col width="25%">
+<col width="18%">
+<col width="18%">
+</colgroup>
+<thead><tr class="header">
+<th>Palette</th>
+<th>Type</th>
+<th align="right">Colors</th>
+<th>Source</th>
+<th>Details</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>gene_red</code></td>
+<td>Qualitative</td>
+<td align="right">2</td>
+<td>
+<em>Better Call Saul</em> poster</td>
+<td>
+<a href="https://github.com/evanbio/biopalette/tree/main/palettes/gene_red" class="external-link">Source
+record</a> · <a href="https://folio.evanzhou.org/tessera/palettes/gene_red" class="external-link">Tessera</a>
+</td>
+</tr>
+<tr class="even">
+<td><code>heat_light</code></td>
+<td>Qualitative</td>
+<td align="right">2</td>
+<td>Bond ampholysis illustration, <em>Nature</em> (2024)</td>
+<td>
+<a href="https://github.com/evanbio/biopalette/tree/main/palettes/heat_light" class="external-link">Source
+record</a> · <a href="https://folio.evanzhou.org/tessera/palettes/heat_light" class="external-link">Tessera</a>
+</td>
+</tr>
+<tr class="odd">
+<td><code>three_body</code></td>
+<td>Qualitative</td>
+<td align="right">3</td>
+<td>Pan-cancer myeloid atlas, <em>Cell</em> (2021)</td>
+<td>
+<a href="https://github.com/evanbio/biopalette/tree/main/palettes/three_body" class="external-link">Source
+record</a> · <a href="https://folio.evanzhou.org/tessera/palettes/three_body" class="external-link">Tessera</a>
+</td>
+</tr>
+<tr class="even">
+<td><code>walter_white2</code></td>
+<td>Qualitative</td>
+<td align="right">5</td>
+<td>
+<em>Breaking Bad</em> pilot poster</td>
+<td>
+<a href="https://github.com/evanbio/biopalette/tree/main/palettes/walter_white2" class="external-link">Source
+record</a> · <a href="https://folio.evanzhou.org/tessera/palettes/walter_white2" class="external-link">Tessera</a>
+</td>
+</tr>
+<tr class="odd">
+<td><code>lactate_steps</code></td>
+<td>Qualitative</td>
+<td align="right">5</td>
+<td>Lactate-metabolism workflow, JECCR (2024)</td>
+<td>
+<a href="https://github.com/evanbio/biopalette/tree/main/palettes/lactate_steps" class="external-link">Source
+record</a> · <a href="https://folio.evanzhou.org/tessera/palettes/lactate_steps" class="external-link">Tessera</a>
+</td>
+</tr>
+<tr class="even">
+<td><code>tam_pastel</code></td>
+<td>Qualitative</td>
+<td align="right">6</td>
+<td>Pan-cancer myeloid atlas, <em>Cell</em> (2021)</td>
+<td>
+<a href="https://github.com/evanbio/biopalette/tree/main/palettes/tam_pastel" class="external-link">Source
+record</a> · <a href="https://folio.evanzhou.org/tessera/palettes/tam_pastel" class="external-link">Tessera</a>
+</td>
+</tr>
+<tr class="odd">
+<td><code>cancer_mosaic</code></td>
+<td>Qualitative</td>
+<td align="right">15</td>
+<td>Pan-cancer myeloid atlas, <em>Cell</em> (2021)</td>
+<td>
+<a href="https://github.com/evanbio/biopalette/tree/main/palettes/cancer_mosaic" class="external-link">Source
+record</a> · <a href="https://folio.evanzhou.org/tessera/palettes/cancer_mosaic" class="external-link">Tessera</a>
+</td>
+</tr>
+<tr class="even">
+<td><code>babel</code></td>
+<td>Qualitative</td>
+<td align="right">21</td>
+<td>Pan-cancer myeloid atlas, <em>Cell</em> (2021)</td>
+<td>
+<a href="https://github.com/evanbio/biopalette/tree/main/palettes/babel" class="external-link">Source
+record</a> · <a href="https://folio.evanzhou.org/tessera/palettes/babel" class="external-link">Tessera</a>
+</td>
+</tr>
+<tr class="odd">
+<td><code>mitonuclear_blue</code></td>
+<td>Sequential</td>
+<td align="right">6</td>
+<td>Mito-nuclear communication in aging, TIBS (2022)</td>
+<td>
+<a href="https://github.com/evanbio/biopalette/tree/main/palettes/mitonuclear_blue" class="external-link">Source
+record</a> · <a href="https://folio.evanzhou.org/tessera/palettes/mitonuclear_blue" class="external-link">Tessera</a>
+</td>
+</tr>
+<tr class="even">
+<td><code>mitonuclear_orange</code></td>
+<td>Sequential</td>
+<td align="right">6</td>
+<td>Mito-nuclear communication in aging, TIBS (2022)</td>
+<td>
+<a href="https://github.com/evanbio/biopalette/tree/main/palettes/mitonuclear_orange" class="external-link">Source
+record</a> · <a href="https://folio.evanzhou.org/tessera/palettes/mitonuclear_orange" class="external-link">Tessera</a>
+</td>
+</tr>
+<tr class="odd">
+<td><code>walter_white</code></td>
+<td>Diverging</td>
+<td align="right">5</td>
+<td>
+<em>Breaking Bad</em> pilot poster</td>
+<td>
+<a href="https://github.com/evanbio/biopalette/tree/main/palettes/walter_white" class="external-link">Source
+record</a> · <a href="https://folio.evanzhou.org/tessera/palettes/walter_white" class="external-link">Tessera</a>
+</td>
+</tr>
+<tr class="even">
+<td><code>walter_white3</code></td>
+<td>Diverging</td>
+<td align="right">5</td>
+<td>
+<em>Breaking Bad</em> pilot poster</td>
+<td>
+<a href="https://github.com/evanbio/biopalette/tree/main/palettes/walter_white3" class="external-link">Source
+record</a> · <a href="https://folio.evanzhou.org/tessera/palettes/walter_white3" class="external-link">Tessera</a>
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="section level2">
-<h2 id="create-a-collection">Create a collection<a class="anchor" aria-label="anchor" href="#create-a-collection"></a>
+<h2 id="qualitative-palettes">Qualitative palettes<a class="anchor" aria-label="anchor" href="#qualitative-palettes"></a>
 </h2>
-<p>For this example, create an isolated temporary directory. In a real
-project, use a stable path such as <code>config/palettes</code> or
-<code>assets/palettes</code> and commit the JSON files to version
-control.</p>
+<p>Qualitative palettes distinguish unordered categories. The first
+<code>n</code> colors are returned when a smaller set is requested,
+because every stored color is a curated category color rather than a
+stop on a continuous ramp.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">palettes_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="st">"biopalette-palettes-"</span><span class="op">)</span></span></code></pre></div>
-<p><code><a href="../reference/create_palette.html">create_palette()</a></code> creates the required type directory and
-writes a validated JSON file:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/create_palette.html">create_palette</a></span><span class="op">(</span></span>
-<span>  name <span class="op">=</span> <span class="st">"treatment_groups"</span>,</span>
-<span>  type <span class="op">=</span> <span class="st">"qualitative"</span>,</span>
-<span>  colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#3E6186"</span>, <span class="st">"#EE761F"</span>, <span class="st">"#318336"</span><span class="op">)</span>,</span>
-<span>  palettes_dir <span class="op">=</span> <span class="va">palettes_dir</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Palette saved: <span style="color: #0000BB;">/tmp/RtmppsPEjo/biopalette-palettes-1cdf7d443ce4/qualitative/treatment_groups.json</span></span></span>
-<span></span>
-<span><span class="fu"><a href="../reference/create_palette.html">create_palette</a></span><span class="op">(</span></span>
-<span>  name <span class="op">=</span> <span class="st">"response_blue"</span>,</span>
-<span>  type <span class="op">=</span> <span class="st">"sequential"</span>,</span>
-<span>  colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#F2F6FA"</span>, <span class="st">"#B9DBF4"</span>, <span class="st">"#3A68AE"</span>, <span class="st">"#155289"</span><span class="op">)</span>,</span>
-<span>  palettes_dir <span class="op">=</span> <span class="va">palettes_dir</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Palette saved: <span style="color: #0000BB;">/tmp/RtmppsPEjo/biopalette-palettes-1cdf7d443ce4/sequential/response_blue.json</span></span></span>
-<span></span>
-<span><span class="fu"><a href="../reference/create_palette.html">create_palette</a></span><span class="op">(</span></span>
-<span>  name <span class="op">=</span> <span class="st">"effect_balance"</span>,</span>
-<span>  type <span class="op">=</span> <span class="st">"diverging"</span>,</span>
-<span>  colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#1991A9"</span>, <span class="st">"#A3C5C4"</span>, <span class="st">"#E7E9E4"</span>, <span class="st">"#D7AD85"</span>, <span class="st">"#A65C31"</span><span class="op">)</span>,</span>
-<span>  palettes_dir <span class="op">=</span> <span class="va">palettes_dir</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Palette saved: <span style="color: #0000BB;">/tmp/RtmppsPEjo/biopalette-palettes-1cdf7d443ce4/diverging/effect_balance.json</span></span></span></code></pre></div>
-<p><code>palettes_dir</code> is required for every write. This is
-deliberate: package data cannot be modified accidentally, and a write
-always has an explicit owner and destination.</p>
-</div>
-<div class="section level2">
-<h2 id="inspect-and-use-the-collection">Inspect and use the collection<a class="anchor" aria-label="anchor" href="#inspect-and-use-the-collection"></a>
-</h2>
-<p>Pass the same directory to any palette-reading function:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/list_palettes.html">list_palettes</a></span><span class="op">(</span>palettes_dir <span class="op">=</span> <span class="va">palettes_dir</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"name"</span>, <span class="st">"type"</span>, <span class="st">"n_color"</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="co">#&gt;               name        type n_color</span></span>
-<span><span class="co">#&gt; 1   effect_balance   diverging       5</span></span>
-<span><span class="co">#&gt; 2 treatment_groups qualitative       3</span></span>
-<span><span class="co">#&gt; 3    response_blue  sequential       4</span></span>
-<span><span class="fu"><a href="../reference/palette_info.html">palette_info</a></span><span class="op">(</span><span class="st">"response_blue"</span>, palettes_dir <span class="op">=</span> <span class="va">palettes_dir</span><span class="op">)</span></span>
-<span><span class="co">#&gt;            name       type n_color       colors</span></span>
-<span><span class="co">#&gt; 1 response_blue sequential       4 #F2F6FA,....</span></span>
-<span><span class="fu"><a href="../reference/get_palette.html">get_palette</a></span><span class="op">(</span><span class="st">"treatment_groups"</span>, palettes_dir <span class="op">=</span> <span class="va">palettes_dir</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "#3E6186" "#EE761F" "#318336"</span></span></code></pre></div>
-<p>Custom palettes follow exactly the same type-aware <code>n</code>
-rules as bundled ones. A qualitative palette returns its first
-<code>n</code> category colors, while sequential and diverging palettes
-sample the complete ramp:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_palette.html">get_palette</a></span><span class="op">(</span><span class="st">"treatment_groups"</span>, n <span class="op">=</span> <span class="fl">2</span>, palettes_dir <span class="op">=</span> <span class="va">palettes_dir</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "#3E6186" "#EE761F"</span></span>
-<span><span class="fu"><a href="../reference/get_palette.html">get_palette</a></span><span class="op">(</span><span class="st">"response_blue"</span>, n <span class="op">=</span> <span class="fl">7</span>, palettes_dir <span class="op">=</span> <span class="va">palettes_dir</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "#F2F6FA" "#D6E8F7" "#B9DBF4" "#7D9FD1" "#3A68AE" "#295D9B" "#155289"</span></span></code></pre></div>
-<p>They also work directly in ggplot2 scales:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">iris</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, <span class="va">Sepal.Width</span>, color <span class="op">=</span> <span class="va">Species</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2.5</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/scale_color_biopalette.html">scale_color_biopalette</a></span><span class="op">(</span></span>
-<span>    <span class="st">"treatment_groups"</span>,</span>
-<span>    palettes_dir <span class="op">=</span> <span class="va">palettes_dir</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="palette_files/figure-html/custom-discrete-scale-1.png" class="r-plt" alt="" width="672" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">faithfuld</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">waiting</span>, <span class="va">eruptions</span>, fill <span class="op">=</span> <span class="va">density</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_raster</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/scale_color_biopalette_gradient.html">scale_fill_biopalette_gradient</a></span><span class="op">(</span></span>
-<span>    <span class="st">"response_blue"</span>,</span>
-<span>    palettes_dir <span class="op">=</span> <span class="va">palettes_dir</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="palette_files/figure-html/custom-gradient-scale-1.png" class="r-plt" alt="" width="672" style="display: block; margin: auto;"></p>
-<p>The bundled and custom collections remain separate. Omitting
-<code>palettes_dir</code> always selects the palettes installed with
-biopalette; supplying it selects only that custom collection. The two
-collections are not merged implicitly.</p>
-</div>
-<div class="section level2">
-<h2 id="update-a-palette-safely">Update a palette safely<a class="anchor" aria-label="anchor" href="#update-a-palette-safely"></a>
-</h2>
-<p>Existing files are protected from accidental replacement:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/create_palette.html">create_palette</a></span><span class="op">(</span></span>
-<span>  <span class="st">"response_blue"</span>,</span>
-<span>  <span class="st">"sequential"</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#EFF5FB"</span>, <span class="st">"#9ECAE1"</span>, <span class="st">"#3182BD"</span><span class="op">)</span>,</span>
-<span>  palettes_dir <span class="op">=</span> <span class="va">palettes_dir</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;">:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Palette <span style="color: #0000BB;">"response_blue"</span> already exists. Use `overwrite = TRUE` to</span></span>
-<span><span class="co">#&gt;   replace.</span></span></code></pre></div>
-<p>Use <code>overwrite = TRUE</code> only when replacement is
-intentional:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/create_palette.html">create_palette</a></span><span class="op">(</span></span>
-<span>  <span class="st">"response_blue"</span>,</span>
-<span>  <span class="st">"sequential"</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#EFF5FB"</span>, <span class="st">"#9ECAE1"</span>, <span class="st">"#3182BD"</span><span class="op">)</span>,</span>
-<span>  palettes_dir <span class="op">=</span> <span class="va">palettes_dir</span>,</span>
-<span>  overwrite <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Overwriting existing palette: <span style="color: #0000BB;">"response_blue"</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Palette saved: <span style="color: #0000BB;">/tmp/RtmppsPEjo/biopalette-palettes-1cdf7d443ce4/sequential/response_blue.json</span></span></span>
-<span></span>
-<span><span class="fu"><a href="../reference/get_palette.html">get_palette</a></span><span class="op">(</span><span class="st">"response_blue"</span>, palettes_dir <span class="op">=</span> <span class="va">palettes_dir</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "#EFF5FB" "#9ECAE1" "#3182BD"</span></span></code></pre></div>
-<p>Writes are transactional from the caller’s perspective. biopalette
-writes a temporary JSON file beside the destination, reads it back
-through the normal validator, and commits it only after validation
-succeeds. If an overwrite cannot be completed, the previous palette is
-retained whenever the file system allows it. The collection cache is
-invalidated only after a successful write.</p>
-</div>
-<div class="section level2">
-<h2 id="validation-and-collaboration">Validation and collaboration<a class="anchor" aria-label="anchor" href="#validation-and-collaboration"></a>
-</h2>
-<p>All reading functions use the same collection loader. It checks every
-JSON file before returning data and reports the discovered problems
-together. A malformed file is not silently skipped, because silently
-dropping a palette would turn a data-quality problem into a misleading
-“not found” error later.</p>
-<p>Useful project practices are therefore straightforward:</p>
-<ol style="list-style-type: decimal">
-<li>Keep the collection under version control.</li>
-<li>Review palette type, order, and source meaning along with the HEX
-values.</li>
-<li>Use one stable palette name in analysis code instead of copying
-vectors between scripts.</li>
-<li>Exercise the collection in continuous integration with a read such
-as:</li>
-</ol>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="../reference/list_palettes.html">list_palettes</a></span><span class="op">(</span>palettes_dir <span class="op">=</span> <span class="st">"config/palettes"</span><span class="op">)</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
-<p>This check invokes the same validation path used by plots and palette
-queries; it does not create a second validation contract.</p>
-</div>
-<div class="section level2">
-<h2 id="remove-a-palette">Remove a palette<a class="anchor" aria-label="anchor" href="#remove-a-palette"></a>
-</h2>
-<p>Deletion also requires an explicit custom collection directory. If
-<code>type</code> is omitted, biopalette searches all three type
-directories:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/remove_palette.html">remove_palette</a></span><span class="op">(</span><span class="st">"response_blue"</span>, palettes_dir <span class="op">=</span> <span class="va">palettes_dir</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed <span style="color: #0000BB;">"response_blue"</span> from <span style="font-weight: bold;">sequential</span></span></span>
-<span><span class="fu"><a href="../reference/remove_palette.html">remove_palette</a></span><span class="op">(</span></span>
-<span>  <span class="st">"treatment_groups"</span>,</span>
-<span>  type <span class="op">=</span> <span class="st">"qualitative"</span>,</span>
-<span>  palettes_dir <span class="op">=</span> <span class="va">palettes_dir</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed <span style="color: #0000BB;">"treatment_groups"</span> from <span style="font-weight: bold;">qualitative</span></span></span></code></pre></div>
-<p>The function returns <code>TRUE</code> invisibly after a successful
-deletion and <code>FALSE</code> invisibly when the palette is absent.
-The bundled collection cannot be removed through this interface because
-<code>palettes_dir</code> has no write default.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/remove_palette.html">remove_palette</a></span><span class="op">(</span><span class="st">"effect_balance"</span>, palettes_dir <span class="op">=</span> <span class="va">palettes_dir</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed <span style="color: #0000BB;">"effect_balance"</span> from <span style="font-weight: bold;">diverging</span></span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">palettes_dir</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="color-representation">Color representation<a class="anchor" aria-label="anchor" href="#color-representation"></a>
-</h2>
-<p>Palette JSON accepts uppercase or lowercase 6-digit HEX colors and
-8-digit HEX colors with alpha. <code><a href="../reference/hex2rgb.html">hex2rgb()</a></code> and
-<code><a href="../reference/rgb2hex.html">rgb2hex()</a></code> provide a lossless conversion path when colors
-need to be inspected or exchanged with numeric RGB(A) data:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">channels</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hex2rgb.html">hex2rgb</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#3E6186"</span>, <span class="st">"#EE761F80"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">channels</span></span>
-<span><span class="co">#&gt;         hex   r   g   b alpha</span></span>
-<span><span class="co">#&gt; 1   #3E6186  62  97 134    NA</span></span>
-<span><span class="co">#&gt; 2 #EE761F80 238 118  31   128</span></span>
-<span><span class="fu"><a href="../reference/rgb2hex.html">rgb2hex</a></span><span class="op">(</span><span class="va">channels</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "#3E6186"   "#EE761F80"</span></span></code></pre></div>
-<p>For color derivation and interpolation, use a color-aware workflow
-rather than averaging RGB channels casually. biopalette itself
-interpolates sequential and diverging ramps in Lab color space so
-palette retrieval and ggplot2 gradients remain consistent.</p>
-</div>
-<div class="section level2">
-<h2 id="related-documentation">Related documentation<a class="anchor" aria-label="anchor" href="#related-documentation"></a>
-</h2>
+<code class="sourceCode R"><span><span class="va">pages</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/palette_gallery.html">palette_gallery</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"qualitative"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">pages</span><span class="op">[[</span><span class="st">"qualitative_page1"</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
+<p><img src="palette_files/figure-html/qualitative-gallery-1.png" class="r-plt" alt="" width="768" style="display: block; margin: auto;"></p>
+<p>Choose the palette size to match the real number of groups:</p>
 <ul>
 <li>
-<code><a href="../reference/create_palette.html">?create_palette</a></code> and <code><a href="../reference/remove_palette.html">?remove_palette</a></code>
-document the write operations.</li>
+<code>gene_red</code> and <code>heat_light</code> provide restrained
+two-group contrasts;</li>
 <li>
-<code><a href="../reference/get_palette.html">?get_palette</a></code> explains type-aware sampling.</li>
+<code>three_body</code> provides three strongly separated
+colors;</li>
 <li>
-<code><a href="../reference/scale_color_biopalette.html">?scale_color_biopalette</a></code> and
-<code><a href="../reference/scale_color_biopalette_gradient.html">?scale_color_biopalette_gradient</a></code> document custom scale
-options.</li>
+<code>walter_white2</code>, <code>lactate_steps</code>, and
+<code>tam_pastel</code> cover common medium-sized groupings;</li>
 <li>
-<a href="https://github.com/evanbio/biopalette/issues" class="external-link">GitHub
-Issues</a> is the place to report reproducible collection or validation
-problems.</li>
+<code>cancer_mosaic</code> and <code>babel</code> support unusually
+large categorical displays.</li>
 </ul>
+<p>Large qualitative palettes require help from position, direct labels,
+shape, faceting, or annotation. Twenty-one categories cannot be made
+effortless by color alone.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_palette.html">get_palette</a></span><span class="op">(</span><span class="st">"babel"</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "#1688A7" "#7673AE" "#B3DE69" "#D195F6" "#7E285E"</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="sequential-palettes">Sequential palettes<a class="anchor" aria-label="anchor" href="#sequential-palettes"></a>
+</h2>
+<p><code>mitonuclear_blue</code> and <code>mitonuclear_orange</code>
+represent one-direction change. Both run from a quiet light end to a
+darker visual anchor.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pages</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/palette_gallery.html">palette_gallery</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"sequential"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">pages</span><span class="op">[[</span><span class="st">"sequential_page1"</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
+<p><img src="palette_files/figure-html/sequential-gallery-1.png" class="r-plt" alt="" width="768" style="display: block; margin: auto;"></p>
+<p>For sequential palettes, <code>n</code> samples the complete ramp in
+Lab color space. It does not take only the first <code>n</code> pale
+stops:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_palette.html">get_palette</a></span><span class="op">(</span><span class="st">"mitonuclear_blue"</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "#EEF4FB" "#A7C2E3" "#155289"</span></span>
+<span><span class="fu"><a href="../reference/get_palette.html">get_palette</a></span><span class="op">(</span><span class="st">"mitonuclear_orange"</span>, n <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "#F8E7E3" "#EAD7D5" "#EEC9B5" "#F4BA8C" "#E89E6B" "#C28968" "#A1745E"</span></span>
+<span><span class="co">#&gt; [8] "#925A44"</span></span></code></pre></div>
+<p>Use the light-to-dark direction for increasing values unless the
+scientific meaning requires the reverse. On white backgrounds,
+boundaries or grid lines help the lightest colors remain visible.</p>
+</div>
+<div class="section level2">
+<h2 id="diverging-palettes">Diverging palettes<a class="anchor" aria-label="anchor" href="#diverging-palettes"></a>
+</h2>
+<p><code>walter_white</code> and <code>walter_white3</code> represent
+two directions around a pale center.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pages</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/palette_gallery.html">palette_gallery</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"diverging"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">pages</span><span class="op">[[</span><span class="st">"diverging_page1"</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
+<p><img src="palette_files/figure-html/diverging-gallery-1.png" class="r-plt" alt="" width="768" style="display: block; margin: auto;"></p>
+<p>Use a diverging palette only when the center has a meaningful
+interpretation, such as zero fold change, a clinical threshold, or a
+reference estimate. <code>walter_white</code> is the safer
+general-purpose option. The rose-to-green ends of
+<code>walter_white3</code> can be difficult for common red-green
+color-vision deficiencies.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_palette.html">get_palette</a></span><span class="op">(</span><span class="st">"walter_white"</span>, n <span class="op">=</span> <span class="fl">7</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "#1991A9" "#80B3BB" "#BAD1CF" "#E7E9E4" "#BEC7A6" "#889669" "#495A2E"</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="source-labels-and-new-mappings">Source labels and new mappings<a class="anchor" aria-label="anchor" href="#source-labels-and-new-mappings"></a>
+</h2>
+<p>Some source records associate colors with cell types, cancer types,
+workflow stages, or objects in a screen image. Those labels document
+where the colors came from; they do not force the same labels in a new
+dataset.</p>
+<p>When remapping a palette:</p>
+<ol style="list-style-type: decimal">
+<li>preserve a stable mapping throughout the project;</li>
+<li>explain the mapping in the figure legend;</li>
+<li>do not imply that biological meaning transfers with a HEX
+value;</li>
+<li>retain non-color cues when categories are numerous or close in
+appearance.</li>
+</ol>
+</div>
+<div class="section level2">
+<h2 id="use-the-selected-palette">Use the selected palette<a class="anchor" aria-label="anchor" href="#use-the-selected-palette"></a>
+</h2>
+<p>Once selected, the palette name is the complete handoff to plotting
+code:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Unordered categories</span></span>
+<span><span class="fu"><a href="../reference/scale_color_biopalette.html">scale_color_biopalette</a></span><span class="op">(</span><span class="st">"three_body"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/scale_color_biopalette.html">scale_fill_biopalette</a></span><span class="op">(</span><span class="st">"tam_pastel"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Ordered continuous values</span></span>
+<span><span class="fu"><a href="../reference/scale_color_biopalette_gradient.html">scale_fill_biopalette_gradient</a></span><span class="op">(</span><span class="st">"mitonuclear_blue"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Signed values around zero</span></span>
+<span><span class="fu"><a href="../reference/scale_color_biopalette_gradient.html">scale_color_biopalette_gradient</a></span><span class="op">(</span><span class="st">"walter_white"</span>, midpoint <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
+<p>Use <code>reverse = TRUE</code> when the direction should be flipped.
+Palette names in the bundled collection are unique, so <code>type</code>
+normally does not need to be specified.</p>
+</div>
+<div class="section level2">
+<h2 id="explore-further">Explore further<a class="anchor" aria-label="anchor" href="#explore-further"></a>
+</h2>
+<ul>
+<li>Browse the complete <a href="https://github.com/evanbio/biopalette/tree/main/palettes" class="external-link">GitHub
+source records</a> for original images, extraction notes, reference
+labels, and limitations.</li>
+<li>Open <a href="https://folio.evanzhou.org/tessera" class="external-link">Tessera
+palettes</a> for a visual, reader-oriented view of the same named
+palettes.</li>
+<li>Use <a href="https://folio.evanzhou.org/apps/palette-lab" class="external-link">Palette
+Lab</a> to switch the palettes across a consistent set of graphical
+displays.</li>
+<li>Read <code><a href="../articles/tessera.html">vignette("tessera", package = "biopalette")</a></code> to
+continue from palette discovery to data, R recipes, and complete
+figures.</li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="propose-a-palette">Propose a palette<a class="anchor" aria-label="anchor" href="#propose-a-palette"></a>
+</h2>
+<p>New palettes enter the public collection through review. A proposal
+should include the source image, source attribution, palette JSON,
+preview, intended type, use cases, and known limitations—not only an
+attractive vector of HEX values.</p>
+<p>See the <a href="https://github.com/evanbio/biopalette/blob/main/CONTRIBUTING.md" class="external-link">contribution
+guide</a> before opening a pull request.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
