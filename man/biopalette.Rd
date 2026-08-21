@@ -15,7 +15,8 @@ Main features:
 \itemize{
 \item Retrieve palettes by name, type, and size
 \item Preview and browse palettes interactively
-\item Create, compile, and manage custom palettes
+\item Apply palettes as discrete or continuous ggplot2 scales
+\item Create and manage custom palettes
 \item Convert between HEX and RGB color formats
 }
 }

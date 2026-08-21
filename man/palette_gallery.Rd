@@ -9,7 +9,7 @@ palette_gallery(
   max_palettes = 30,
   max_row = 12,
   verbose = TRUE,
-  palettes_path = NULL
+  palettes_dir = NULL
 )
 }
 \arguments{
@@ -21,7 +21,9 @@ palette_gallery(
 
 \item{verbose}{Whether to print progress info. Default: TRUE.}
 
-\item{palettes_path}{Character. Path to a \code{palettes.rda} file. If NULL, uses the installed package dataset.}
+\item{palettes_dir}{Character. Directory holding a palette collection
+(\verb{sequential/}, \verb{diverging/}, \verb{qualitative/} subdirectories of JSON files).
+If NULL, the palettes bundled with the package are used.}
 }
 \value{
 A named list of ggplot objects (one per page).

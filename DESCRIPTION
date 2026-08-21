@@ -17,8 +17,10 @@ Depends:
 Imports:
     cli,
     ggplot2,
-    jsonlite
+    jsonlite,
+    scales
 Encoding: UTF-8
+Language: en-US
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Suggests:
@@ -27,4 +29,3 @@ Suggests:
     testthat (>= 3.0.0)
 VignetteBuilder: knitr, rmarkdown
 Config/testthat/edition: 3
-LazyData: true

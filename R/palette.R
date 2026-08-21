@@ -2,66 +2,148 @@
 # palette.R — Color palette management functions
 # =============================================================================
 
+
 #' Get a Color Palette
 #'
 #' Retrieve a named palette by name and type, returning a vector of HEX colors.
 #' Automatically checks for type mismatch and provides smart suggestions.
 #'
+#' @section What `n` means:
+#'
+#' `n` is resolved according to what the palette's type says the colors *are*,
+#' because "give me 3 colors" means two different things:
+#'
+#' \describe{
+#'   \item{`qualitative`}{The colors are unordered categories, so `n` takes the
+#'     first `n` of them. Asking for more than the palette holds is an error —
+#'     there is no way to invent a category that the palette does not contain.}
+#'   \item{`sequential`, `diverging`}{The colors are stops along a ramp, so `n`
+#'     returns `n` steps spanning the *whole* ramp, interpolating as needed.
+#'     Interpolation takes place in Lab colour space, matching the package's
+#'     ggplot2 gradient scales.
+#'     Any `n` works, above or below the number of stops. Taking the first `n`
+#'     stops instead would silently hand back one end of the ramp — the light
+#'     half of a sequential scale, or one arm of a diverging one.}
+#' }
+#'
+#' `n` equal to the number of stops returns the palette untouched. When
+#' `reverse = TRUE` the palette is flipped first, so `n` selects from the
+#' reversed palette.
+#'
 #' @param name Character. Name of the palette (e.g. "qual_vivid").
 #' @param type Character. One of "sequential", "diverging", "qualitative". If NULL, type is auto-detected.
-#' @param n Integer. Number of colors to return. If NULL, returns all colors. Default is NULL.
-#' @param palettes_path Character. Path to a `palettes.rda` file. If NULL, uses the installed package dataset.
+#' @param n Integer. Number of colors to return. If NULL, returns all colors.
+#'   See *What `n` means* above. Default is NULL.
+#' @param reverse Logical. Reverse the palette before `n` is applied, so the
+#'   two arguments stay independent: `reverse` hands back a different palette
+#'   and `n` then selects from it. Default: FALSE.
+#' @param palettes_dir Character. Directory holding a palette collection
+#'   (`sequential/`, `diverging/`, `qualitative/` subdirectories of JSON files).
+#'   If NULL, the palettes bundled with the package are used.
 #'
 #' @return Character vector of HEX color codes.
 #'
 #' @examples
 #' get_palette("gene_red", type = "qualitative")
+#'
+#' # Qualitative: the first n categories
 #' get_palette("walter_white2", type = "qualitative", n = 2)
-#' get_palette("walter_white", type = "diverging")
+#'
+#' # Sequential: n steps across the whole ramp, not the first n stops
+#' get_palette("mitonuclear_blue")
+#' get_palette("mitonuclear_blue", n = 3)
+#'
+#' # Ramps can also be stretched beyond the stops they were drawn from
+#' get_palette("walter_white", type = "diverging", n = 9)
+#'
+#' # Flip a ramp end to end
+#' get_palette("mitonuclear_blue", reverse = TRUE)
 #'
 #' @export
 get_palette <- function(name,
                         type = NULL,
                         n = NULL,
-                        palettes_path = NULL) {
+                        reverse = FALSE,
+                        palettes_dir = NULL) {
 
-  # Validate inputs
-  .assert_scalar_string(name)
-  if (!is.null(type)) type <- match.arg(type, c("sequential", "diverging", "qualitative"))
   if (!is.null(n)) .assert_count(n)
+  .assert_flag(reverse)
 
-  palettes <- .load_palettes(palettes_path)
+  palette <- .resolve_palette(name, type, palettes_dir)
+  .palette_colors(palette, n = n, reverse = reverse)
+}
 
-  # Auto-detect type if not provided
-  if (is.null(type)) {
-    found <- .find_palette_type(name, palettes)
-    if (is.null(found)) cli::cli_abort("Palette {.val {name}} not found in any type.", call = NULL)
-    if (length(found) > 1) {
-      cli::cli_alert_warning("Found in multiple types: {.val {found}}. Using {.val {found[1]}}. Specify {.arg type} to override.")
+
+#' Get Metadata for One Color Palette
+#'
+#' Return the runtime metadata for a single named palette. This is the
+#' one-palette counterpart to [list_palettes()] and uses the same lookup rules
+#' as [get_palette()].
+#'
+#' @param name Character. Palette name.
+#' @param type Character. One of `"sequential"`, `"diverging"`, or
+#'   `"qualitative"`. If `NULL`, the type is detected automatically.
+#' @param palettes_dir Character. Directory holding a palette collection. If
+#'   `NULL`, the palettes bundled with the package are used.
+#'
+#' @return A one-row data.frame with columns `name`, `type`, `n_color`, and
+#'   `colors`. The `colors` column is a list-column containing the complete HEX
+#'   color vector.
+#'
+#' @examples
+#' palette_info("walter_white")
+#' palette_info("babel", type = "qualitative")
+#'
+#' @export
+palette_info <- function(name, type = NULL, palettes_dir = NULL) {
+  palette <- .resolve_palette(name, type, palettes_dir)
+
+  data.frame(
+    name = palette$name,
+    type = palette$type,
+    n_color = length(palette$colors),
+    colors = I(list(unname(palette$colors))),
+    stringsAsFactors = FALSE
+  )
+}
+
+
+#' Select colors from a resolved palette
+#'
+#' @param palette List returned by [.resolve_palette()].
+#' @param n Integer or NULL. Number of colors.
+#' @param reverse Logical. Reverse before selecting colors.
+#' @return Character vector of HEX colors.
+#'
+#' @keywords internal
+#' @noRd
+.palette_colors <- function(palette, n = NULL, reverse = FALSE) {
+  colors <- palette$colors
+
+  # Reason: reversing before `n` is applied keeps the two arguments independent
+  # — `reverse` hands back a different palette, and `n` then selects from it.
+  # Doing it the other way round would make `n` decide which end of a
+  # qualitative palette `reverse` is allowed to see.
+  if (reverse) colors <- rev(colors)
+
+  # Reason: returning early also guarantees the palette comes back byte for
+  # byte. colorRampPalette() would rebuild it and normalise the hex codes to
+  # upper case along the way, so get_palette(x, n = length(x)) would not match
+  # get_palette(x).
+  if (is.null(n) || n == length(colors)) return(colors)
+
+  if (palette$type == "qualitative") {
+    if (n > length(colors)) {
+      cli::cli_abort(
+        c("Palette {.val {palette$name}} only has {.val {length(colors)}} colors, but {.val {n}} were requested.",
+          "i" = "{.val qualitative} palettes are unordered categories, so they cannot be interpolated."),
+        call = NULL
+      )
     }
-    type <- found[1]
-  } else {
-    # type specified — verify name exists under it
-    if (!name %in% names(palettes[[type]])) {
-      found <- .find_palette_type(name, palettes)
-      if (!is.null(found)) {
-        cli::cli_abort("Palette {.val {name}} not found under {.val {type}}, but exists under {.val {found}}. Try: {.code get_palette(\"{name}\", type = \"{found[1]}\")}",  call = NULL)
-      } else {
-        cli::cli_abort("Palette {.val {name}} not found in any type.", call = NULL)
-      }
-    }
+    return(colors[seq_len(n)])
   }
 
-  colors <- palettes[[type]][[name]]
-
-  if (is.null(n)) return(colors)
-
-  # Return requested subset
-  if (n > length(colors)) {
-    cli::cli_abort("Palette {.val {name}} only has {.val {length(colors)}} colors, but requested {.val {n}}.", call = NULL)
-  }
-
-  colors[seq_len(n)]
+  .ramp_colors(colors, n)
 }
 
 
@@ -71,7 +153,9 @@ get_palette <- function(name,
 #'
 #' @param type Palette type(s) to filter: `"sequential"`, `"diverging"`, `"qualitative"`. Default NULL returns all.
 #' @param sort Whether to sort by type, n_color, name. Default: TRUE.
-#' @param palettes_path Character. Path to a `palettes.rda` file. If NULL, uses the installed package dataset.
+#' @param palettes_dir Character. Directory holding a palette collection
+#'   (`sequential/`, `diverging/`, `qualitative/` subdirectories of JSON files).
+#'   If NULL, the palettes bundled with the package are used.
 #'
 #' @return A `data.frame` with columns: `name`, `type`, `n_color`, `colors`.
 #' @export
@@ -82,12 +166,12 @@ get_palette <- function(name,
 #' list_palettes(type = c("sequential", "diverging"))
 list_palettes <- function(type = NULL,
                           sort = TRUE,
-                          palettes_path = NULL) {
+                          palettes_dir = NULL) {
 
   # Validate inputs
   .assert_flag(sort)
 
-  palettes <- .load_palettes(palettes_path)
+  palettes <- .load_palettes(palettes_dir)
 
   # Resolve type: NULL means all available types
   if (!is.null(type)) {
@@ -96,15 +180,11 @@ list_palettes <- function(type = NULL,
     type <- names(palettes)
   }
 
-  matched_types <- intersect(type, names(palettes))
-
-  if (length(matched_types) == 0) {
-    cli::cli_alert_warning("No matching types. Available: {.val {names(palettes)}}")
-    return(.empty_palette_df())
-  }
-
+  # Reason: a collection always carries all three type slots, so `type` is
+  # already guaranteed to name real slots by match.arg() above. A slot can be
+  # empty, which falls through to the empty data.frame below.
   # Build palette metadata data.frame
-  palette_df <- do.call(rbind, lapply(matched_types, function(t) {
+  palette_df <- do.call(rbind, lapply(type, function(t) {
     pset <- palettes[[t]]
     if (length(pset) == 0) return(NULL)
     data.frame(
@@ -136,12 +216,18 @@ list_palettes <- function(type = NULL,
 
 #' Create and Save a Custom Color Palette
 #'
-#' Save a named color palette to a JSON file for future compilation and reuse.
+#' Save a named color palette as a JSON file in a collection directory. The
+#' palette is usable immediately: point any reading function at the same
+#' `palettes_dir`. The JSON is written to a same-directory temporary file,
+#' validated, and then committed; a failed overwrite leaves the previous
+#' palette intact.
 #'
 #' @param name Character. Palette name (e.g., "blues").
 #' @param type Character. One of "sequential", "diverging", or "qualitative".
 #' @param colors Character vector of HEX color values (e.g., "#E64B35" or "#E64B35B2").
-#' @param color_dir Character. Root folder to store palettes. Use tempdir() for examples/tests.
+#' @param palettes_dir Character. Directory to write the palette into. Required:
+#'   there is deliberately no default, so a palette can never be written into
+#'   the collection that ships with the package.
 #' @param overwrite Logical. If TRUE, overwrite existing palette file. Default: FALSE.
 #'
 #' @return Invisibly returns a list with `path` and `info`.
@@ -150,30 +236,30 @@ list_palettes <- function(type = NULL,
 #' @examples
 #' temp_dir <- file.path(tempdir(), "palettes")
 #' create_palette("blues", "sequential", c("#deebf7", "#9ecae1", "#3182bd"),
-#'   color_dir = temp_dir)
+#'   palettes_dir = temp_dir)
 #' create_palette("qual_vivid", "qualitative", c("#E64B35", "#4DBBD5", "#00A087"),
-#'   color_dir = temp_dir)
+#'   palettes_dir = temp_dir)
 #'
 #' # Overwrite an existing palette explicitly
 #' create_palette("blues", "sequential", c("#c6dbef", "#6baed6", "#2171b5"),
-#'   color_dir = temp_dir, overwrite = TRUE)
+#'   palettes_dir = temp_dir, overwrite = TRUE)
 #'
 #' unlink(temp_dir, recursive = TRUE)
 create_palette <- function(name,
                            type = c("sequential", "diverging", "qualitative"),
                            colors,
-                           color_dir,
+                           palettes_dir,
                            overwrite = FALSE) {
 
   # Validate inputs
   .assert_palette_name(name)
   type <- match.arg(type)
   .assert_hex_colors(colors)
-  .assert_dir_path(color_dir)
+  .assert_path_string(palettes_dir)
   .assert_flag(overwrite)
 
   # Create type subdirectory if needed
-  palette_dir <- file.path(color_dir, type)
+  palette_dir <- file.path(palettes_dir, type)
   if (!dir.exists(palette_dir)) {
     ok <- dir.create(palette_dir, recursive = TRUE, showWarnings = FALSE)
     if (!ok) cli::cli_abort("Failed to create directory: {.path {palette_dir}}", call = NULL)
@@ -190,15 +276,136 @@ create_palette <- function(name,
     cli::cli_alert_info("Overwriting existing palette: {.val {name}}")
   }
 
-  # Write JSON
-  tryCatch({
-    jsonlite::write_json(palette_info, path = json_file, pretty = TRUE, auto_unbox = TRUE)
-    cli::cli_alert_success("Palette saved: {.file {json_file}}")
-  }, error = function(e) {
-    cli::cli_abort("Failed to write JSON: {e$message}", call = NULL)
-  })
+  .write_palette_json_atomic(palette_info, json_file, type)
+  cli::cli_alert_success("Palette saved: {.file {json_file}}")
+
+  # Reason: a get_palette() in the same session has to see what was just
+  # written. The stamp check would normally catch it, but filesystem timestamp
+  # resolution can be coarser than the gap between two adjacent calls.
+  .invalidate_palette_cache(palettes_dir)
 
   invisible(list(path = json_file, info = palette_info))
+}
+
+
+#' Write and validate a palette JSON before committing it
+#'
+#' The temporary file is created beside the target, so a rename stays on the
+#' same filesystem. Nothing touches an existing target until writing and full
+#' palette validation have both succeeded.
+#'
+#' @param palette_info List containing `name`, `type`, and `colors`.
+#' @param json_file Final target path.
+#' @param type Palette type.
+#' @return Invisibly `json_file`.
+#'
+#' @keywords internal
+#' @noRd
+.write_palette_json_atomic <- function(palette_info, json_file, type) {
+  temp_file <- tempfile(
+    pattern = paste0(".", palette_info$name, "-"),
+    tmpdir = dirname(json_file),
+    fileext = ".json"
+  )
+  on.exit(if (file.exists(temp_file)) unlink(temp_file), add = TRUE)
+
+  tryCatch(
+    jsonlite::write_json(
+      palette_info,
+      path = temp_file,
+      pretty = TRUE,
+      auto_unbox = TRUE
+    ),
+    error = function(e) {
+      cli::cli_abort("Failed to write JSON: {e$message}", call = NULL)
+    }
+  )
+
+  validation <- .read_palette_json(
+    temp_file,
+    type,
+    expected_name = palette_info$name
+  )
+  if (!validation$ok) {
+    cli::cli_abort(
+      "Palette JSON failed validation before it could be saved: {validation$problem}",
+      call = NULL
+    )
+  }
+
+  .commit_palette_file(temp_file, json_file)
+  invisible(json_file)
+}
+
+
+#' Commit a validated temporary palette file
+#'
+#' A same-directory rename is atomic on platforms that support replacing an
+#' existing target. Windows commonly does not, so the fallback moves the old
+#' target to a same-directory backup and restores it if the second move fails.
+#'
+#' @param source Validated temporary file.
+#' @param target Final JSON path.
+#' @return Invisibly `target`.
+#'
+#' @keywords internal
+#' @noRd
+.rename_file <- function(from, to) {
+  file.rename(from, to)
+}
+
+
+#' @keywords internal
+#' @noRd
+.commit_palette_file <- function(source, target) {
+  if (isTRUE(suppressWarnings(.rename_file(source, target)))) {
+    return(invisible(target))
+  }
+
+  if (!file.exists(target)) {
+    cli::cli_abort("Failed to commit palette JSON to {.file {target}}.", call = NULL)
+  }
+
+  backup <- tempfile(
+    pattern = paste0(".", basename(target), "-backup-"),
+    tmpdir = dirname(target)
+  )
+
+  if (!isTRUE(suppressWarnings(.rename_file(target, backup)))) {
+    cli::cli_abort(
+      "Failed to preserve the existing palette before replacing {.file {target}}.",
+      call = NULL
+    )
+  }
+
+  committed <- FALSE
+  on.exit({
+    if (!committed && file.exists(backup) && !file.exists(target)) {
+      suppressWarnings(.rename_file(backup, target))
+    }
+  }, add = TRUE)
+
+  if (!isTRUE(suppressWarnings(.rename_file(source, target)))) {
+    restored <- isTRUE(suppressWarnings(.rename_file(backup, target)))
+    if (!restored) {
+      cli::cli_abort(
+        c("Failed to commit palette JSON and restore the previous file.",
+          "i" = "The previous file remains at {.file {backup}}."),
+        call = NULL
+      )
+    }
+    cli::cli_abort(
+      "Failed to commit palette JSON; the previous file was restored.",
+      call = NULL
+    )
+  }
+
+  committed <- TRUE
+  if (file.exists(backup) && !isTRUE(unlink(backup) == 0L)) {
+    cli::cli_warn("Palette was saved, but backup file {.file {backup}} could not be removed.")
+  }
+
+  invisible(target)
 }
 
 
@@ -206,14 +413,27 @@ create_palette <- function(name,
 #'
 #' Visualize a palette using various plot styles.
 #'
+#' `"bar"`, `"pie"`, `"point"` and `"circle"` are drawn with base graphics;
+#' `"rect"` is drawn with ggplot2. Either way the plot goes straight to the
+#' active device and nothing is returned — use [palette_gallery()] when you
+#' want plot objects you can modify, arrange or save.
+#'
 #' @param name Character. Name of the palette.
 #' @param type Character. One of "sequential", "diverging", "qualitative". If NULL, auto-detected.
 #' @param n Integer. Number of colors to use. If NULL, uses all. Default: NULL.
+#' @param reverse Logical. Reverse the palette before `n` is applied. Passed
+#'   straight through to [get_palette()]. Default: FALSE.
 #' @param plot_type Character. One of "bar", "pie", "point", "rect", "circle". Default: "bar".
 #' @param title Character. Plot title. If NULL, defaults to palette name.
-#' @param palettes_path Character. Path to a `palettes.rda` file. If NULL, uses the installed package dataset.
+#' @param palettes_dir Character. Directory holding a palette collection
+#'   (`sequential/`, `diverging/`, `qualitative/` subdirectories of JSON files).
+#'   If NULL, the palettes bundled with the package are used.
 #'
-#' @return Invisibly returns NULL. Called for plotting side effect.
+#' @return `NULL`, invisibly. Called for its plotting side effect — the return
+#'   shape is the same for every `plot_type`.
+#'
+#' @seealso [palette_gallery()], which returns ggplot objects instead of drawing.
+#'
 #' @export
 #'
 #' @examples
@@ -225,19 +445,17 @@ create_palette <- function(name,
 preview_palette <- function(name,
                             type = NULL,
                             n = NULL,
+                            reverse = FALSE,
                             plot_type = c("bar", "pie", "point", "rect", "circle"),
                             title = NULL,
-                            palettes_path = NULL) {
+                            palettes_dir = NULL) {
 
-  # Validate inputs
-  .assert_scalar_string(name)
-  if (!is.null(type)) type <- match.arg(type, c("sequential", "diverging", "qualitative"))
-  if (!is.null(n)) .assert_count(n)
   plot_type <- match.arg(plot_type)
   if (is.null(title)) title <- name else .assert_scalar_string(title)
 
-  colors <- get_palette(name = name, type = type, n = n, palettes_path = palettes_path)
-  .plot_palette_preview(colors, plot_type, title)
+  colors <- get_palette(name = name, type = type, n = n,
+                        reverse = reverse, palettes_dir = palettes_dir)
+  .preview_draw(colors, plot_type, title)
 
   invisible(NULL)
 }
@@ -251,7 +469,9 @@ preview_palette <- function(name,
 #' @param max_palettes Number of palettes per page. Default: 30.
 #' @param max_row Max colors per row. Default: 12.
 #' @param verbose Whether to print progress info. Default: TRUE.
-#' @param palettes_path Character. Path to a `palettes.rda` file. If NULL, uses the installed package dataset.
+#' @param palettes_dir Character. Directory holding a palette collection
+#'   (`sequential/`, `diverging/`, `qualitative/` subdirectories of JSON files).
+#'   If NULL, the palettes bundled with the package are used.
 #'
 #' @return A named list of ggplot objects (one per page).
 #' @export
@@ -266,14 +486,14 @@ palette_gallery <- function(type = NULL,
                             max_palettes = 30,
                             max_row = 12,
                             verbose = TRUE,
-                            palettes_path = NULL) {
+                            palettes_dir = NULL) {
 
   # Validate inputs
   .assert_count(max_palettes)
   .assert_count(max_row)
   .assert_flag(verbose)
 
-  palettes <- .load_palettes(palettes_path)
+  palettes <- .load_palettes(palettes_dir)
 
   # Resolve type: NULL means all available types
   if (!is.null(type)) {
@@ -304,8 +524,8 @@ palette_gallery <- function(type = NULL,
       idx  <- ((pg - 1) * max_palettes + 1):min(pg * max_palettes, total)
       rows <- pal_info[idx, ]
 
-      page  <- .build_palette_gallery_page_data(rows, pal_data, type_val, max_row)
-      p     <- .plot_palette_gallery_page(page$plot_data, page$label_data)
+      page  <- .gallery_page_data(rows, pal_data, type_val, max_row)
+      p     <- .gallery_page_plot(page$plot_data, page$label_data)
       key   <- paste0(type_val, "_page", pg)
       plots[[key]] <- p
 
@@ -317,84 +537,37 @@ palette_gallery <- function(type = NULL,
 }
 
 
-#' Compile JSON Palettes into a Palette List
-#'
-#' Read JSON files under `palettes_dir/`, validate content, and return a
-#' structured list of palettes. Used by `data-raw/palettes.R` to build
-#' the package dataset via `usethis::use_data()`.
-#'
-#' @param palettes_dir Character. Folder containing subdirs: sequential/, diverging/, qualitative/.
-#'
-#' @return Invisibly returns a named list with elements `sequential`, `diverging`, `qualitative`.
-#'
-#' @examples
-#' \donttest{
-#' compile_palettes(
-#'   palettes_dir = system.file("extdata", "palettes", package = "biopalette")
-#' )
-#' }
-#'
-#' @export
-compile_palettes <- function(palettes_dir) {
-
-  .assert_dir_path(palettes_dir)
-
-  if (!dir.exists(palettes_dir)) {
-    cli::cli_abort("Palettes directory does not exist: {.path {palettes_dir}}", call = NULL)
-  }
-
-  # Locate JSON files across all type subdirectories
-  json_files <- sort(unlist(lapply(
-    c("sequential", "diverging", "qualitative"),
-    function(type) list.files(file.path(palettes_dir, type), pattern = "\\.json$", full.names = TRUE)
-  )))
-
-  if (length(json_files) == 0) {
-    cli::cli_abort("No JSON files found under {.path {palettes_dir}}", call = NULL)
-  }
-
-  palettes <- list(sequential = list(), diverging = list(), qualitative = list())
-
-  for (json_file in json_files) {
-    p <- .read_palette_json(json_file)
-
-    if (p$name %in% names(palettes[[p$type]])) {
-      cli::cli_alert_warning("Duplicate palette {.val {p$name}} in {.val {p$type}}, overwriting.")
-    }
-
-    palettes[[p$type]][[p$name]] <- p$colors
-  }
-
-  total <- sum(lengths(palettes))
-  cli::cli_alert_success("Compiled {total} palette{?s}: Sequential={length(palettes$sequential)}, Diverging={length(palettes$diverging)}, Qualitative={length(palettes$qualitative)}")
-
-  invisible(palettes)
-}
-
-
 #' Remove a Saved Palette JSON
 #'
 #' Remove a palette JSON file by name, searching across types if needed.
 #'
 #' @param name Character. Palette name (without '.json' suffix).
 #' @param type Character. One of "sequential", "diverging", "qualitative". If NULL, searches all types.
-#' @param color_dir Character. Root folder where palettes are stored.
+#' @param palettes_dir Character. Directory holding the palette collection.
+#'   Required: there is deliberately no default, so the collection that ships
+#'   with the package can never be removed from.
 #'
 #' @return Invisibly TRUE if removed successfully, FALSE otherwise.
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' remove_palette("walter_white", color_dir = "path/to/palettes")
-#' remove_palette("gene_red", type = "qualitative", color_dir = "path/to/palettes")
-#' }
+#' temp_dir <- tempfile("biopalette-palettes-")
+#' create_palette(
+#'   "example_palette",
+#'   "qualitative",
+#'   c("#E64B35", "#4DBBD5", "#00A087"),
+#'   palettes_dir = temp_dir
+#' )
+#'
+#' remove_palette("example_palette", palettes_dir = temp_dir)
+#' unlink(temp_dir, recursive = TRUE)
 remove_palette <- function(name,
                            type = NULL,
-                           color_dir) {
+                           palettes_dir) {
 
   # Validate inputs
   .assert_palette_name(name)
-  .assert_dir_path(color_dir)
+  .assert_path_string(palettes_dir)
   if (!is.null(type)) type <- match.arg(type, c("sequential", "diverging", "qualitative"))
 
   # Search only the requested type when specified; otherwise search all types.
@@ -402,7 +575,7 @@ remove_palette <- function(name,
   types_to_try <- if (is.null(type)) valid_types else type
 
   for (current_type in types_to_try) {
-    json_file <- file.path(color_dir, current_type, paste0(name, ".json"))
+    json_file <- file.path(palettes_dir, current_type, paste0(name, ".json"))
 
     if (file.exists(json_file)) {
       ok <- tryCatch({
@@ -414,6 +587,7 @@ remove_palette <- function(name,
 
       if (ok) {
         cli::cli_alert_success("Removed {.val {name}} from {.strong {current_type}}")
+        .invalidate_palette_cache(palettes_dir)
         return(invisible(TRUE))
       }
     }
@@ -421,71 +595,4 @@ remove_palette <- function(name,
 
   cli::cli_alert_warning("Palette {.val {name}} not found in any type.")
   invisible(FALSE)
-}
-
-
-#' Convert HEX Colors to RGB
-#'
-#' Convert a character vector of HEX color codes to a data.frame with columns
-#' `hex`, `r`, `g`, `b`.
-#'
-#' @param hex Character vector of HEX color codes (e.g. `"#FF8000"` or `"#FF8000B2"`).
-#'   Both 6-digit and 8-digit (with alpha) codes are accepted. Alpha is silently ignored.
-#'   The `#` prefix is required. No NA values allowed.
-#'
-#' @return A data.frame with columns `hex`, `r`, `g`, `b`.
-#'
-#' @examples
-#' hex2rgb("#FF8000")
-#' hex2rgb(c("#FF8000", "#00FF00"))
-#'
-#' @export
-hex2rgb <- function(hex) {
-
-  # Validate inputs
-  .assert_hex_colors(hex)
-
-  hex_clean <- gsub("^#", "", hex)
-
-  result <- data.frame(
-    hex = hex,
-    r   = as.double(strtoi(substr(hex_clean, 1, 2), 16L)),
-    g   = as.double(strtoi(substr(hex_clean, 3, 4), 16L)),
-    b   = as.double(strtoi(substr(hex_clean, 5, 6), 16L)),
-    stringsAsFactors = FALSE
-  )
-
-  result
-}
-
-
-#' Convert RGB Values to HEX Color Codes
-#'
-#' Convert RGB values to HEX color codes. Accepts either a numeric vector of
-#' length 3 or a data.frame with columns `r`, `g`, `b` (symmetric with `hex2rgb()`).
-#'
-#' @param rgb A numeric vector of length 3 (e.g., `c(255, 128, 0)`), or a
-#'   data.frame with columns `r`, `g`, `b`. Values must be in \[0, 255\].
-#'   Non-integer values are rounded to the nearest integer before conversion.
-#'
-#' @return A character vector of HEX color codes.
-#'
-#' @examples
-#' rgb2hex(c(255, 128, 0))
-#' rgb2hex(hex2rgb(c("#FF8000", "#00FF00")))
-#'
-#' @export
-rgb2hex <- function(rgb) {
-
-  if (is.data.frame(rgb)) {
-    .assert_rgb_df(rgb)
-    mapply(
-      function(r, g, b) grDevices::rgb(round(r), round(g), round(b), maxColorValue = 255),
-      rgb$r, rgb$g, rgb$b,
-      USE.NAMES = FALSE
-    )
-  } else {
-    .assert_rgb_triplet(rgb)
-    grDevices::rgb(round(rgb[1]), round(rgb[2]), round(rgb[3]), maxColorValue = 255)
-  }
 }

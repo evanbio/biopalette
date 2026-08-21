@@ -8,7 +8,8 @@
 #'
 #' - Retrieve palettes by name, type, and size
 #' - Preview and browse palettes interactively
-#' - Create, compile, and manage custom palettes
+#' - Apply palettes as discrete or continuous ggplot2 scales
+#' - Create and manage custom palettes
 #' - Convert between HEX and RGB color formats
 #'
 #' @docType package

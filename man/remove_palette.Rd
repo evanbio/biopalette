@@ -4,14 +4,16 @@
 \alias{remove_palette}
 \title{Remove a Saved Palette JSON}
 \usage{
-remove_palette(name, type = NULL, color_dir)
+remove_palette(name, type = NULL, palettes_dir)
 }
 \arguments{
 \item{name}{Character. Palette name (without '.json' suffix).}
 
 \item{type}{Character. One of "sequential", "diverging", "qualitative". If NULL, searches all types.}
 
-\item{color_dir}{Character. Root folder where palettes are stored.}
+\item{palettes_dir}{Character. Directory holding the palette collection.
+Required: there is deliberately no default, so the collection that ships
+with the package can never be removed from.}
 }
 \value{
 Invisibly TRUE if removed successfully, FALSE otherwise.
@@ -20,8 +22,14 @@ Invisibly TRUE if removed successfully, FALSE otherwise.
 Remove a palette JSON file by name, searching across types if needed.
 }
 \examples{
-\dontrun{
-remove_palette("walter_white", color_dir = "path/to/palettes")
-remove_palette("gene_red", type = "qualitative", color_dir = "path/to/palettes")
-}
+temp_dir <- tempfile("biopalette-palettes-")
+create_palette(
+  "example_palette",
+  "qualitative",
+  c("#E64B35", "#4DBBD5", "#00A087"),
+  palettes_dir = temp_dir
+)
+
+remove_palette("example_palette", palettes_dir = temp_dir)
+unlink(temp_dir, recursive = TRUE)
 }

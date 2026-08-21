@@ -8,9 +8,10 @@ preview_palette(
   name,
   type = NULL,
   n = NULL,
+  reverse = FALSE,
   plot_type = c("bar", "pie", "point", "rect", "circle"),
   title = NULL,
-  palettes_path = NULL
+  palettes_dir = NULL
 )
 }
 \arguments{
@@ -20,17 +21,29 @@ preview_palette(
 
 \item{n}{Integer. Number of colors to use. If NULL, uses all. Default: NULL.}
 
+\item{reverse}{Logical. Reverse the palette before \code{n} is applied. Passed
+straight through to \code{\link[=get_palette]{get_palette()}}. Default: FALSE.}
+
 \item{plot_type}{Character. One of "bar", "pie", "point", "rect", "circle". Default: "bar".}
 
 \item{title}{Character. Plot title. If NULL, defaults to palette name.}
 
-\item{palettes_path}{Character. Path to a \code{palettes.rda} file. If NULL, uses the installed package dataset.}
+\item{palettes_dir}{Character. Directory holding a palette collection
+(\verb{sequential/}, \verb{diverging/}, \verb{qualitative/} subdirectories of JSON files).
+If NULL, the palettes bundled with the package are used.}
 }
 \value{
-Invisibly returns NULL. Called for plotting side effect.
+\code{NULL}, invisibly. Called for its plotting side effect — the return
+shape is the same for every \code{plot_type}.
 }
 \description{
 Visualize a palette using various plot styles.
+}
+\details{
+\code{"bar"}, \code{"pie"}, \code{"point"} and \code{"circle"} are drawn with base graphics;
+\code{"rect"} is drawn with ggplot2. Either way the plot goes straight to the
+active device and nothing is returned — use \code{\link[=palette_gallery]{palette_gallery()}} when you
+want plot objects you can modify, arrange or save.
 }
 \examples{
 \donttest{
@@ -38,4 +51,7 @@ preview_palette("gene_red", plot_type = "bar")
 preview_palette("walter_white", plot_type = "pie")
 preview_palette("walter_white2", n = 2, plot_type = "circle")
 }
+}
+\seealso{
+\code{\link[=palette_gallery]{palette_gallery()}}, which returns ggplot objects instead of drawing.
 }

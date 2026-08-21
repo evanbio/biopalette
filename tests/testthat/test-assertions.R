@@ -1,7 +1,7 @@
 #===============================================================================
-# Test: utils.R internal helpers
-# File: test-utils.R
-# Description: Unit tests for internal helpers used by current public APIs.
+# Test: assertion helpers
+# File: test-assertions.R
+# Description: Unit tests for the .assert_* input validators in R/assertions.R.
 #===============================================================================
 
 #==============================================================================
@@ -29,26 +29,26 @@ test_that(".assert_scalar_string() errors on invalid input", {
 })
 
 #==============================================================================
-# .assert_dir_path()
+# .assert_path_string()
 #==============================================================================
 
-test_that(".assert_dir_path() accepts a valid path string", {
-  expect_no_error(biopalette:::.assert_dir_path("/some/path"))
-  expect_no_error(biopalette:::.assert_dir_path("relative/path"))
-  expect_no_error(biopalette:::.assert_dir_path(tempdir()))
+test_that(".assert_path_string() accepts a valid path string", {
+  expect_no_error(biopalette:::.assert_path_string("/some/path"))
+  expect_no_error(biopalette:::.assert_path_string("relative/path"))
+  expect_no_error(biopalette:::.assert_path_string(tempdir()))
 })
 
-test_that(".assert_dir_path() returns input invisibly on success", {
-  result <- biopalette:::.assert_dir_path("/tmp/test")
+test_that(".assert_path_string() returns input invisibly on success", {
+  result <- biopalette:::.assert_path_string("/tmp/test")
   expect_equal(result, "/tmp/test")
 })
 
-test_that(".assert_dir_path() errors on invalid input", {
-  expect_error(biopalette:::.assert_dir_path(42), "single non-empty string")
-  expect_error(biopalette:::.assert_dir_path(NULL), "single non-empty string")
-  expect_error(biopalette:::.assert_dir_path(""), "single non-empty string")
-  expect_error(biopalette:::.assert_dir_path(c("/a", "/b")), "single non-empty string")
-  expect_error(biopalette:::.assert_dir_path(NA_character_), "single non-empty string")
+test_that(".assert_path_string() errors on invalid input", {
+  expect_error(biopalette:::.assert_path_string(42), "single non-empty string")
+  expect_error(biopalette:::.assert_path_string(NULL), "single non-empty string")
+  expect_error(biopalette:::.assert_path_string(""), "single non-empty string")
+  expect_error(biopalette:::.assert_path_string(c("/a", "/b")), "single non-empty string")
+  expect_error(biopalette:::.assert_path_string(NA_character_), "single non-empty string")
 })
 
 #==============================================================================
@@ -112,5 +112,5 @@ test_that("public functions propagate core helper errors correctly", {
 })
 
 #===============================================================================
-# End: test-utils.R
+# End: test-assertions.R
 #===============================================================================

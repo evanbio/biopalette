@@ -1,229 +1,175 @@
 #===============================================================================
 # Test: palette.R public functions
 # File: test-palette.R
-# Description: Unit tests for get_palette(), list_palettes(), create_palette(),
-#              preview_palette(), palette_gallery(), compile_palettes(),
-#              remove_palette(), hex2rgb(), rgb2hex()
 #===============================================================================
-
-.test_palettes_path <- function() {
-  p <- system.file("data", "palettes.rda", package = "biopalette")
-  if (nzchar(p) && file.exists(p)) return(p)
-  NULL
-}
-
-palette_data_available <- function() {
-  !is.null(.test_palettes_path())
-}
-
-# Helper: create a minimal temp palette directory with one JSON per type
-make_temp_palette_dir <- function() {
-  root <- file.path(tempdir(), paste0("pal_test_", Sys.getpid()))
-  for (type in c("sequential", "diverging", "qualitative")) {
-    dir.create(file.path(root, type), recursive = TRUE, showWarnings = FALSE)
-  }
-  # Write one valid palette per type
-  jsonlite::write_json(
-    list(name = "seq_test", type = "sequential",
-         colors = c("#deebf7", "#9ecae1", "#3182bd")),
-    path = file.path(root, "sequential", "seq_test.json"),
-    pretty = TRUE, auto_unbox = TRUE
-  )
-  jsonlite::write_json(
-    list(name = "div_test", type = "diverging",
-         colors = c("#d73027", "#f7f7f7", "#4575b4")),
-    path = file.path(root, "diverging", "div_test.json"),
-    pretty = TRUE, auto_unbox = TRUE
-  )
-  jsonlite::write_json(
-    list(name = "qual_test", type = "qualitative",
-         colors = c("#E64B35", "#4DBBD5", "#00A087")),
-    path = file.path(root, "qualitative", "qual_test.json"),
-    pretty = TRUE, auto_unbox = TRUE
-  )
-  root
-}
-
-#==============================================================================
-# hex2rgb()
-#==============================================================================
-
-test_that("hex2rgb() converts single HEX to data.frame with correct values", {
-  result <- hex2rgb("#FF8000")
-
-  expect_s3_class(result, "data.frame")
-  expect_named(result, c("hex", "r", "g", "b"))
-  expect_equal(nrow(result), 1L)
-  expect_equal(result$hex, "#FF8000")
-  expect_equal(result$r, 255)
-  expect_equal(result$g, 128)
-  expect_equal(result$b, 0)
-})
-
-test_that("hex2rgb() converts multiple HEX codes to multi-row data.frame", {
-  result <- hex2rgb(c("#FF0000", "#00FF00", "#0000FF"))
-
-  expect_s3_class(result, "data.frame")
-  expect_equal(nrow(result), 3L)
-  expect_equal(result$r, c(255, 0, 0))
-  expect_equal(result$g, c(0, 255, 0))
-  expect_equal(result$b, c(0, 0, 255))
-})
-
-test_that("hex2rgb() handles 8-digit HEX (alpha silently ignored)", {
-  result <- hex2rgb("#FF8000B2")
-
-  expect_s3_class(result, "data.frame")
-  expect_equal(result$r, 255)
-  expect_equal(result$g, 128)
-  expect_equal(result$b, 0)
-})
-
-test_that("hex2rgb() is case-insensitive for HEX codes", {
-  upper <- hex2rgb("#FFFFFF")
-  lower <- hex2rgb("#ffffff")
-  mixed <- hex2rgb("#FfFfFf")
-
-  expect_equal(upper$r, 255); expect_equal(upper$g, 255); expect_equal(upper$b, 255)
-  expect_equal(lower$r, 255); expect_equal(lower$g, 255); expect_equal(lower$b, 255)
-  expect_equal(mixed$r, 255); expect_equal(mixed$g, 255); expect_equal(mixed$b, 255)
-})
-
-test_that("hex2rgb() handles black and white correctly", {
-  black <- hex2rgb("#000000")
-  white <- hex2rgb("#FFFFFF")
-
-  expect_equal(c(black$r, black$g, black$b), c(0, 0, 0))
-  expect_equal(c(white$r, white$g, white$b), c(255, 255, 255))
-})
-
-test_that("hex2rgb() validates # prefix is required", {
-  expect_error(hex2rgb("FF8000"),  "invalid HEX codes")
-  expect_error(hex2rgb("FF8000B2"), "invalid HEX codes")
-})
-
-test_that("hex2rgb() rejects non-character input", {
-  expect_error(hex2rgb(123),          "non-empty character vector")
-  expect_error(hex2rgb(NULL),         "non-empty character vector")
-  expect_error(hex2rgb(character(0)), "non-empty character vector")
-})
-
-test_that("hex2rgb() rejects invalid HEX patterns", {
-  expect_error(hex2rgb("#GGGGGG"),    "invalid HEX codes")
-  expect_error(hex2rgb("#FFF"),       "invalid HEX codes")
-  expect_error(hex2rgb("#FF800"),     "invalid HEX codes")
-  # NA_character_ passes is.character check but fails regex — error is "invalid HEX codes"
-  expect_error(hex2rgb(NA_character_), "invalid HEX codes")
-})
-
-#==============================================================================
-# rgb2hex()
-#==============================================================================
-
-test_that("rgb2hex() converts numeric triplet to HEX string", {
-  result <- rgb2hex(c(255, 128, 0))
-  expect_type(result, "character")
-  expect_equal(result, "#FF8000")
-})
-
-test_that("rgb2hex() converts boundary values correctly", {
-  expect_equal(rgb2hex(c(0, 0, 0)),     "#000000")
-  expect_equal(rgb2hex(c(255, 255, 255)), "#FFFFFF")
-})
-
-test_that("rgb2hex() rounds non-integer values", {
-  result <- rgb2hex(c(254.6, 127.4, 0.5))
-  expect_type(result, "character")
-  expect_match(result, "^#[0-9A-Fa-f]{6}$")
-})
-
-test_that("rgb2hex() accepts data.frame input (symmetric with hex2rgb)", {
-  df <- hex2rgb(c("#FF0000", "#00FF00", "#0000FF"))
-  result <- rgb2hex(df)
-
-  expect_type(result, "character")
-  expect_length(result, 3L)
-  expect_equal(toupper(result), c("#FF0000", "#00FF00", "#0000FF"))
-})
-
-test_that("rgb2hex() roundtrip with hex2rgb()", {
-  original <- c("#E64B35", "#4DBBD5", "#00A087")
-  df       <- hex2rgb(original)
-  back     <- rgb2hex(df)
-  expect_equal(toupper(back), toupper(original))
-})
-
-test_that("rgb2hex() validates numeric triplet range", {
-  expect_error(rgb2hex(c(-1, 0, 0)),   "values must be in \\[0, 255\\]")
-  expect_error(rgb2hex(c(0, 256, 0)),  "values must be in \\[0, 255\\]")
-  expect_error(rgb2hex(c(1, 2)),       "numeric vector of length 3")
-  expect_error(rgb2hex(c(1, 2, 3, 4)), "numeric vector of length 3")
-  expect_error(rgb2hex(c(NA, 0, 0)),   "NA, Inf, or NaN")
-  expect_error(rgb2hex(c(Inf, 0, 0)),  "NA, Inf, or NaN")
-})
-
-test_that("rgb2hex() validates data.frame columns", {
-  bad_df <- data.frame(r = 255, g = 0)         # missing b
-  expect_error(rgb2hex(bad_df), "Missing")
-
-  bad_vals <- data.frame(r = 300, g = 0, b = 0) # out of range
-  expect_error(rgb2hex(bad_vals), "values in \\[0, 255\\]")
-})
 
 #==============================================================================
 # get_palette()
 #==============================================================================
 
 test_that("get_palette() returns full color vector with explicit type", {
-  skip_if_not(palette_data_available(), "Package palette dataset not available")
-
-  result <- get_palette("gene_red", type = "qualitative", palettes_path = .test_palettes_path())
+  result <- get_palette("gene_red", type = "qualitative")
   expect_type(result, "character")
   expect_true(length(result) >= 1L)
   expect_true(all(grepl("^#[0-9A-Fa-f]{6,8}$", result)))
 })
 
 test_that("get_palette() returns correct subset with n", {
-  skip_if_not(palette_data_available(), "Package palette dataset not available")
-
-  result <- get_palette("gene_red", type = "qualitative", n = 2, palettes_path = .test_palettes_path())
+  result <- get_palette("gene_red", type = "qualitative", n = 2)
   expect_length(result, 2L)
   expect_type(result, "character")
 })
 
 test_that("get_palette() auto-detects type when type = NULL", {
-  skip_if_not(palette_data_available(), "Package palette dataset not available")
-
-  result <- get_palette("walter_white", palettes_path = .test_palettes_path())
+  result <- get_palette("walter_white")
   expect_type(result, "character")
   expect_true(length(result) >= 1L)
 })
 
 test_that("get_palette() errors when name is found under a different type", {
-  skip_if_not(palette_data_available(), "Package palette dataset not available")
-
   # walter_white is diverging, not qualitative
   expect_error(
-    get_palette("walter_white", type = "qualitative", palettes_path = .test_palettes_path()),
-    "not found under"
+    get_palette("walter_white", type = "qualitative"),
+    "does not belong to type.*qualitative"
   )
 })
 
 test_that("get_palette() errors when name is not found anywhere", {
-  skip_if_not(palette_data_available(), "Package palette dataset not available")
-
   expect_error(
-    get_palette("nonexistent_palette_xyz", palettes_path = .test_palettes_path()),
+    get_palette("nonexistent_palette_xyz"),
     "not found in any type"
   )
 })
 
-test_that("get_palette() errors when n exceeds palette size", {
-  skip_if_not(palette_data_available(), "Package palette dataset not available")
+#==============================================================================
+# get_palette() — what `n` means, per type
+#==============================================================================
 
+test_that("n takes the first n colors of a qualitative palette", {
+  full <- get_palette("walter_white2", type = "qualitative")
+
+  expect_identical(get_palette("walter_white2", n = 2), full[1:2])
+  expect_identical(get_palette("walter_white2", n = 1), full[1])
+})
+
+test_that("n cannot exceed the size of a qualitative palette", {
+  # Reason: the colors are unordered categories. Interpolating between them
+  # would invent a category the palette does not contain.
   expect_error(
-    get_palette("walter_white2", type = "qualitative", n = 9999, palettes_path = .test_palettes_path()),
-    "only has .* colors, but requested"
+    get_palette("walter_white2", type = "qualitative", n = 9999),
+    "only has .* colors"
+  )
+  expect_error(
+    get_palette("walter_white2", type = "qualitative", n = 9999),
+    "cannot be interpolated"
+  )
+})
+
+test_that("n spans the whole ramp of a sequential palette", {
+  full <- get_palette("mitonuclear_blue")
+  expect_length(full, 6L)
+
+  three <- get_palette("mitonuclear_blue", n = 3)
+
+  expect_length(three, 3L)
+  # The ends of the ramp are kept; the old truncation returned full[1:3],
+  # i.e. only the light half.
+  expect_identical(three[1], full[1])
+  expect_identical(three[3], full[6])
+  expect_false(identical(three, full[1:3]))
+})
+
+test_that("n can stretch a ramp beyond the stops it was drawn from", {
+  full <- get_palette("walter_white", type = "diverging")
+  expect_length(full, 5L)
+
+  nine <- get_palette("walter_white", type = "diverging", n = 9)
+
+  expect_length(nine, 9L)
+  expect_identical(nine[1], full[1])
+  expect_identical(nine[9], full[5])
+  expect_true(all(grepl("^#[0-9A-Fa-f]{6}$", nine)))
+})
+
+test_that("an odd n keeps the midpoint of a diverging palette", {
+  full <- get_palette("walter_white", type = "diverging")
+
+  expect_identical(get_palette("walter_white", n = 3)[2], full[3])
+})
+
+test_that("n equal to the palette size returns it untouched", {
+  # Reason: colorRampPalette() would rebuild the vector and upper-case the hex
+  # codes on the way, so this has to short-circuit to stay byte-identical.
+  for (nm in c("mitonuclear_blue", "walter_white", "walter_white2")) {
+    full <- get_palette(nm)
+    expect_identical(get_palette(nm, n = length(full)), full)
+  }
+})
+
+test_that(".ramp_colors() preserves an alpha channel", {
+  opaque <- biopalette:::.ramp_colors(c("#FF0000", "#0000FF"), 3)
+  expect_true(all(nchar(opaque) == 7L))
+
+  translucent <- biopalette:::.ramp_colors(c("#FF000080", "#0000FF80"), 3)
+  expect_true(all(nchar(translucent) == 9L))
+  expect_match(translucent[2], "80$")
+})
+
+
+#==============================================================================
+# palette_info()
+#==============================================================================
+
+test_that("palette_info() returns one row with the list_palettes() schema", {
+  result <- palette_info("walter_white")
+
+  expect_s3_class(result, "data.frame")
+  expect_equal(nrow(result), 1L)
+  expect_named(result, c("name", "type", "n_color", "colors"))
+  expect_identical(result$name, "walter_white")
+  expect_identical(result$type, "diverging")
+  expect_identical(result$n_color, length(get_palette("walter_white")))
+  expect_identical(result$colors[[1]], get_palette("walter_white"))
+})
+
+test_that("palette_info() matches the corresponding list_palettes() row", {
+  one <- palette_info("babel")
+  all <- list_palettes()
+  row <- all[all$name == "babel", , drop = FALSE]
+  row.names(row) <- NULL
+
+  expect_identical(one, row)
+})
+
+test_that("palette_info() shares resolver validation and custom collections", {
+  root <- file.path(tempdir(), paste0("palette_info_", Sys.getpid()))
+  on.exit(unlink(root, recursive = TRUE), add = TRUE)
+
+  suppressMessages(create_palette(
+    "custom_info", "sequential", c("#EEEEEE", "#111111"),
+    palettes_dir = root
+  ))
+
+  result <- palette_info("custom_info", palettes_dir = root)
+  expect_identical(result$type, "sequential")
+  expect_identical(result$n_color, 2L)
+  expect_error(
+    palette_info("custom_info", type = "qualitative", palettes_dir = root),
+    "does not belong to type"
+  )
+  expect_error(
+    palette_info("missing", palettes_dir = root),
+    "not found in any type"
+  )
+})
+
+test_that("ramp resampling uses the shared Lab interpolation space", {
+  colors <- get_palette("mitonuclear_blue")
+  positions <- seq(0, 1, length.out = 11)
+
+  expect_identical(
+    get_palette("mitonuclear_blue", n = 11),
+    scales::gradient_n_pal(colors, space = "Lab")(positions)
   )
 })
 
@@ -235,14 +181,10 @@ test_that("get_palette() validates name parameter", {
 })
 
 test_that("get_palette() validates type parameter", {
-  skip_if_not(palette_data_available(), "Package palette dataset not available")
-
   expect_error(get_palette("gene_red", type = "invalid"), "should be one of")
 })
 
 test_that("get_palette() validates n parameter", {
-  skip_if_not(palette_data_available(), "Package palette dataset not available")
-
   expect_error(get_palette("gene_red", type = "qualitative", n = 0),   "single positive integer")
   expect_error(get_palette("gene_red", type = "qualitative", n = -1),  "single positive integer")
   expect_error(get_palette("gene_red", type = "qualitative", n = 1.5), "single positive integer")
@@ -250,47 +192,85 @@ test_that("get_palette() validates n parameter", {
 })
 
 #==============================================================================
+# get_palette() — reverse
+#==============================================================================
+
+test_that("reverse flips a palette end to end", {
+  full <- get_palette("mitonuclear_blue")
+
+  expect_identical(get_palette("mitonuclear_blue", reverse = TRUE), rev(full))
+  expect_identical(get_palette("mitonuclear_blue", reverse = FALSE), full)
+})
+
+test_that("reverse is applied before n, for both kinds of palette", {
+  # Reason: the documented order is reverse-then-n, so on a qualitative
+  # palette n selects from the far end rather than re-ordering the near end.
+  q <- get_palette("walter_white2")
+  expect_identical(get_palette("walter_white2", reverse = TRUE, n = 2), rev(q)[1:2])
+
+  # On a ramp the two orders agree, which is what makes the choice safe.
+  s <- get_palette("mitonuclear_blue", reverse = TRUE, n = 3)
+  expect_identical(s, rev(get_palette("mitonuclear_blue", n = 3)))
+})
+
+test_that("reverse keeps the ends of a stretched ramp", {
+  full <- get_palette("walter_white", type = "diverging")
+  nine <- get_palette("walter_white", type = "diverging", reverse = TRUE, n = 9)
+
+  expect_length(nine, 9L)
+  expect_identical(nine[1], full[5])
+  expect_identical(nine[9], full[1])
+})
+
+test_that("reverse validates its input", {
+  expect_error(get_palette("gene_red", reverse = "yes"), "TRUE or FALSE")
+  expect_error(get_palette("gene_red", reverse = NA), "TRUE or FALSE")
+  expect_error(get_palette("gene_red", reverse = c(TRUE, FALSE)), "TRUE or FALSE")
+})
+
+test_that("preview_palette() forwards reverse to get_palette()", {
+  pdf(file = tempfile(fileext = ".pdf"))
+  on.exit(grDevices::dev.off(), add = TRUE)
+
+  # Reason: preview_palette() mirrors every retrieval argument, so a palette
+  # get_palette() can return must be previewable too.
+  expect_true("reverse" %in% names(formals(preview_palette)))
+  expect_no_error(preview_palette("mitonuclear_blue", reverse = TRUE))
+  expect_no_error(preview_palette("walter_white2", reverse = TRUE, n = 2))
+})
+
+#==============================================================================
 # list_palettes()
 #==============================================================================
 
 test_that("list_palettes() returns data.frame with expected columns", {
-  skip_if_not(palette_data_available(), "Package palette dataset not available")
-
-  result <- list_palettes(palettes_path = .test_palettes_path())
+  result <- list_palettes()
   expect_s3_class(result, "data.frame")
   expect_true(all(c("name", "type", "n_color", "colors") %in% names(result)))
   expect_true(nrow(result) > 0L)
 })
 
 test_that("list_palettes() filters by single type", {
-  skip_if_not(palette_data_available(), "Package palette dataset not available")
-
-  result <- list_palettes(type = "qualitative", palettes_path = .test_palettes_path())
+  result <- list_palettes(type = "qualitative")
   expect_true(all(result$type == "qualitative"))
   expect_true(nrow(result) > 0L)
 })
 
 test_that("list_palettes() filters by multiple types", {
-  skip_if_not(palette_data_available(), "Package palette dataset not available")
-
-  result <- list_palettes(type = c("sequential", "diverging"), palettes_path = .test_palettes_path())
+  result <- list_palettes(type = c("sequential", "diverging"))
   expect_true(all(result$type %in% c("sequential", "diverging")))
   expect_false("qualitative" %in% result$type)
 })
 
 test_that("list_palettes() sort=TRUE produces ordered output", {
-  skip_if_not(palette_data_available(), "Package palette dataset not available")
-
-  result <- list_palettes(sort = TRUE, palettes_path = .test_palettes_path())
+  result <- list_palettes(sort = TRUE)
   sorted <- result[order(result$type, result$n_color, result$name), ]
   expect_equal(result$name, sorted$name)
 })
 
 test_that("list_palettes() sort=FALSE preserves original order", {
-  skip_if_not(palette_data_available(), "Package palette dataset not available")
-
-  sorted   <- list_palettes(sort = TRUE,  palettes_path = .test_palettes_path())
-  unsorted <- list_palettes(sort = FALSE, palettes_path = .test_palettes_path())
+  sorted   <- list_palettes(sort = TRUE)
+  unsorted <- list_palettes(sort = FALSE)
   expect_setequal(sorted$name, unsorted$name)
 })
 
@@ -300,26 +280,28 @@ test_that("list_palettes() validates sort parameter", {
 })
 
 test_that("list_palettes() row names are a clean sequence after sorting", {
-  skip_if_not(palette_data_available(), "Package palette dataset not available")
-
-  result <- list_palettes(palettes_path = .test_palettes_path())
+  result <- list_palettes()
   expect_identical(row.names(result), as.character(seq_len(nrow(result))))
 })
 
-test_that("list_palettes() reports and returns empty when no type matches", {
-  # A dataset that carries only one type, so asking for another finds nothing.
-  palettes <- list(qualitative = list(only_one = c("#000000", "#FFFFFF")))
-  rda <- file.path(tempdir(), "lp_no_match.rda")
-  save(palettes, file = rda)
-  on.exit(unlink(rda), add = TRUE)
-
-  expect_message(
-    result <- list_palettes(type = "diverging", palettes_path = rda),
-    "No matching types"
+test_that("list_palettes() returns an empty data.frame when a type holds nothing", {
+  # A collection carrying only one type, so asking for another finds nothing.
+  root <- file.path(tempdir(), paste0("lp_empty_", Sys.getpid()))
+  dir.create(file.path(root, "qualitative"), recursive = TRUE, showWarnings = FALSE)
+  on.exit(unlink(root, recursive = TRUE), add = TRUE)
+  jsonlite::write_json(
+    list(name = "only_one", type = "qualitative", colors = c("#000000", "#FFFFFF")),
+    path = file.path(root, "qualitative", "only_one.json"),
+    pretty = TRUE, auto_unbox = TRUE
   )
+
+  result <- list_palettes(type = "diverging", palettes_dir = root)
+
   expect_s3_class(result, "data.frame")
   expect_equal(nrow(result), 0L)
   expect_true(all(c("name", "type", "n_color", "colors") %in% names(result)))
+  # The columns keep their types even when empty, so rbind-ing stays safe.
+  expect_type(result$n_color, "integer")
 })
 
 #==============================================================================
@@ -330,11 +312,11 @@ test_that("create_palette() creates JSON file in correct directory", {
   tmp <- file.path(tempdir(), paste0("cp_test_", Sys.getpid()))
   on.exit(unlink(tmp, recursive = TRUE), add = TRUE)
 
-  result <- create_palette(
+  result <- suppressMessages(create_palette(
     "my_blues", "sequential",
     c("#deebf7", "#9ecae1", "#3182bd"),
-    color_dir = tmp
-  )
+    palettes_dir = tmp
+  ))
 
   expect_type(result, "list")
   expect_true(file.exists(result$path))
@@ -347,7 +329,7 @@ test_that("create_palette() JSON content is correct", {
   on.exit(unlink(tmp, recursive = TRUE), add = TRUE)
 
   colors <- c("#E64B35", "#4DBBD5", "#00A087")
-  result <- create_palette("qual_trio", "qualitative", colors, color_dir = tmp)
+  result <- suppressMessages(create_palette("qual_trio", "qualitative", colors, palettes_dir = tmp))
 
   parsed <- jsonlite::fromJSON(result$path)
   expect_equal(parsed$name,   "qual_trio")
@@ -359,9 +341,9 @@ test_that("create_palette() errors when palette already exists without overwrite
   tmp <- file.path(tempdir(), paste0("cp_ow_", Sys.getpid()))
   on.exit(unlink(tmp, recursive = TRUE), add = TRUE)
 
-  create_palette("blues", "sequential", c("#deebf7", "#9ecae1", "#3182bd"), color_dir = tmp)
+  suppressMessages(create_palette("blues", "sequential", c("#deebf7", "#9ecae1", "#3182bd"), palettes_dir = tmp))
   expect_error(
-    create_palette("blues", "sequential", c("#c6dbef", "#6baed6", "#2171b5"), color_dir = tmp),
+    create_palette("blues", "sequential", c("#c6dbef", "#6baed6", "#2171b5"), palettes_dir = tmp),
     "already exists"
   )
 })
@@ -370,29 +352,96 @@ test_that("create_palette() overwrites when overwrite = TRUE", {
   tmp <- file.path(tempdir(), paste0("cp_owt_", Sys.getpid()))
   on.exit(unlink(tmp, recursive = TRUE), add = TRUE)
 
-  create_palette("blues", "sequential", c("#deebf7", "#9ecae1", "#3182bd"), color_dir = tmp)
+  suppressMessages(create_palette("blues", "sequential", c("#deebf7", "#9ecae1", "#3182bd"), palettes_dir = tmp))
   new_colors <- c("#c6dbef", "#6baed6", "#2171b5")
-  result <- create_palette("blues", "sequential", new_colors, color_dir = tmp, overwrite = TRUE)
+  result <- suppressMessages(create_palette("blues", "sequential", new_colors, palettes_dir = tmp, overwrite = TRUE))
 
   parsed <- jsonlite::fromJSON(result$path)
   expect_equal(parsed$colors, new_colors)
+})
+
+test_that("create_palette() validates before replacing an existing file", {
+  tmp <- file.path(tempdir(), paste0("atomic_validate_", Sys.getpid()))
+  on.exit(unlink(tmp, recursive = TRUE), add = TRUE)
+
+  suppressMessages(create_palette(
+    "stable", "qualitative", c("#111111", "#222222"),
+    palettes_dir = tmp
+  ))
+  target <- file.path(tmp, "qualitative", "stable.json")
+  before <- readLines(target, warn = FALSE)
+
+  local_mocked_bindings(
+    .read_palette_json = function(...) {
+      list(ok = FALSE, problem = "simulated validation failure")
+    }
+  )
+
+  expect_error(
+    suppressMessages(create_palette(
+      "stable", "qualitative", c("#AAAAAA", "#BBBBBB"),
+      palettes_dir = tmp, overwrite = TRUE
+    )),
+    "failed validation.*simulated validation failure"
+  )
+  expect_identical(readLines(target, warn = FALSE), before)
+})
+
+test_that("failed fallback commit restores the previous file", {
+  root <- file.path(tempdir(), paste0("atomic_commit_", Sys.getpid()))
+  dir.create(root, recursive = TRUE, showWarnings = FALSE)
+  on.exit(unlink(root, recursive = TRUE), add = TRUE)
+
+  source <- file.path(root, "new.json")
+  target <- file.path(root, "palette.json")
+  writeLines("new", source)
+  writeLines("old", target)
+
+  attempt <- 0L
+  local_mocked_bindings(
+    .rename_file = function(from, to) {
+      attempt <<- attempt + 1L
+      if (attempt %in% c(1L, 3L)) return(FALSE)
+      file.rename(from, to)
+    }
+  )
+
+  expect_error(
+    biopalette:::.commit_palette_file(source, target),
+    "previous file was restored"
+  )
+  expect_identical(readLines(target, warn = FALSE), "old")
+  expect_true(file.exists(source))
+})
+
+test_that("atomic palette writes leave no temporary sibling files", {
+  tmp <- file.path(tempdir(), paste0("atomic_clean_", Sys.getpid()))
+  on.exit(unlink(tmp, recursive = TRUE), add = TRUE)
+
+  suppressMessages(create_palette(
+    "clean", "sequential", c("#111111", "#EEEEEE"),
+    palettes_dir = tmp
+  ))
+
+  files <- list.files(file.path(tmp, "sequential"), all.files = TRUE)
+  expect_identical(files, c(".", "..", "clean.json"))
 })
 
 test_that("create_palette() validates name parameter", {
   tmp <- file.path(tempdir(), paste0("cp_val_", Sys.getpid()))
   on.exit(unlink(tmp, recursive = TRUE), add = TRUE)
 
-  expect_error(create_palette(123, "sequential", c("#FF0000"), color_dir = tmp),
+  expect_error(create_palette(123, "sequential", c("#FF0000"), palettes_dir = tmp),
                "single non-empty string")
-  expect_error(create_palette("", "sequential",  c("#FF0000"), color_dir = tmp),
+  expect_error(create_palette("", "sequential",  c("#FF0000"), palettes_dir = tmp),
                "single non-empty string")
-  expect_error(create_palette("GeneRed", "sequential", c("#FF0000"), color_dir = tmp),
+  expect_error(create_palette("GeneRed", "sequential", c("#FF0000"), palettes_dir = tmp),
                "snake_case palette name")
-  expect_error(create_palette("gene-red", "sequential", c("#FF0000"), color_dir = tmp),
+  expect_error(create_palette("gene-red", "sequential", c("#FF0000"), palettes_dir = tmp),
                "snake_case palette name")
-  expect_error(create_palette("gene_red.json", "sequential", c("#FF0000"), color_dir = tmp),
+  expect_error(create_palette("gene_red.json", "sequential", c("#FF0000"), palettes_dir = tmp),
                "snake_case palette name")
-  expect_error(create_palette("../gene_red", "sequential", c("#FF0000"), color_dir = tmp),
+  expect_error(create_palette("../gene_red", "sequential", c("#FF0000"), palettes_dir = tmp),
                "snake_case palette name")
 })
 
@@ -401,7 +450,7 @@ test_that("create_palette() validates colors are valid HEX", {
   on.exit(unlink(tmp, recursive = TRUE), add = TRUE)
 
   expect_error(
-    create_palette("bad", "sequential", c("notahex"), color_dir = tmp),
+    create_palette("bad", "sequential", c("notahex"), palettes_dir = tmp),
     "invalid HEX codes"
   )
 })
@@ -414,11 +463,11 @@ test_that("remove_palette() removes existing palette file and returns TRUE", {
   tmp <- file.path(tempdir(), paste0("rm_test_", Sys.getpid()))
   on.exit(unlink(tmp, recursive = TRUE), add = TRUE)
 
-  create_palette("to_remove", "sequential", c("#deebf7", "#9ecae1"), color_dir = tmp)
+  suppressMessages(create_palette("to_remove", "sequential", c("#deebf7", "#9ecae1"), palettes_dir = tmp))
   json_path <- file.path(tmp, "sequential", "to_remove.json")
   expect_true(file.exists(json_path))
 
-  result <- remove_palette("to_remove", type = "sequential", color_dir = tmp)
+  result <- suppressMessages(remove_palette("to_remove", type = "sequential", palettes_dir = tmp))
   expect_true(isTRUE(result))
   expect_false(file.exists(json_path))
 })
@@ -428,7 +477,7 @@ test_that("remove_palette() returns FALSE when palette not found", {
   dir.create(tmp, recursive = TRUE, showWarnings = FALSE)
   on.exit(unlink(tmp, recursive = TRUE), add = TRUE)
 
-  result <- suppressMessages(remove_palette("ghost_palette", color_dir = tmp))
+  result <- suppressMessages(remove_palette("ghost_palette", palettes_dir = tmp))
   expect_false(isTRUE(result))
 })
 
@@ -436,11 +485,11 @@ test_that("remove_palette() finds palette without specifying type", {
   tmp <- file.path(tempdir(), paste0("rm_auto_", Sys.getpid()))
   on.exit(unlink(tmp, recursive = TRUE), add = TRUE)
 
-  create_palette("find_me", "diverging", c("#d73027", "#f7f7f7", "#4575b4"), color_dir = tmp)
+  suppressMessages(create_palette("find_me", "diverging", c("#d73027", "#f7f7f7", "#4575b4"), palettes_dir = tmp))
   json_path <- file.path(tmp, "diverging", "find_me.json")
   expect_true(file.exists(json_path))
 
-  result <- remove_palette("find_me", color_dir = tmp)
+  result <- suppressMessages(remove_palette("find_me", palettes_dir = tmp))
   expect_true(isTRUE(result))
   expect_false(file.exists(json_path))
 })
@@ -449,11 +498,11 @@ test_that("remove_palette() does not search other types when type is specified",
   tmp <- file.path(tempdir(), paste0("rm_type_", Sys.getpid()))
   on.exit(unlink(tmp, recursive = TRUE), add = TRUE)
 
-  create_palette("typed_only", "diverging", c("#d73027", "#f7f7f7", "#4575b4"), color_dir = tmp)
+  suppressMessages(create_palette("typed_only", "diverging", c("#d73027", "#f7f7f7", "#4575b4"), palettes_dir = tmp))
   json_path <- file.path(tmp, "diverging", "typed_only.json")
   expect_true(file.exists(json_path))
 
-  result <- suppressMessages(remove_palette("typed_only", type = "qualitative", color_dir = tmp))
+  result <- suppressMessages(remove_palette("typed_only", type = "qualitative", palettes_dir = tmp))
   expect_false(isTRUE(result))
   expect_true(file.exists(json_path))
 })
@@ -463,199 +512,12 @@ test_that("remove_palette() validates name parameter", {
   dir.create(tmp, recursive = TRUE, showWarnings = FALSE)
   on.exit(unlink(tmp, recursive = TRUE), add = TRUE)
 
-  expect_error(remove_palette(123, color_dir = tmp),       "single non-empty string")
-  expect_error(remove_palette("",  color_dir = tmp),       "single non-empty string")
-  expect_error(remove_palette("GeneRed", color_dir = tmp), "snake_case palette name")
-  expect_error(remove_palette("gene-red", color_dir = tmp), "snake_case palette name")
-  expect_error(remove_palette("gene_red.json", color_dir = tmp), "snake_case palette name")
-  expect_error(remove_palette("../gene_red", color_dir = tmp), "snake_case palette name")
-})
-
-#==============================================================================
-# compile_palettes()
-#==============================================================================
-
-test_that("compile_palettes() returns a named list with all three types", {
-  src <- make_temp_palette_dir()
-  on.exit(unlink(src, recursive = TRUE), add = TRUE)
-
-  result <- compile_palettes(palettes_dir = src)
-
-  expect_type(result, "list")
-  expect_true(all(c("sequential", "diverging", "qualitative") %in% names(result)))
-  expect_true("seq_test"  %in% names(result$sequential))
-  expect_true("div_test"  %in% names(result$diverging))
-  expect_true("qual_test" %in% names(result$qualitative))
-})
-
-test_that("compile_palettes() stores correct colors in returned list", {
-  src <- make_temp_palette_dir()
-  on.exit(unlink(src, recursive = TRUE), add = TRUE)
-
-  result <- compile_palettes(palettes_dir = src)
-
-  expect_equal(result$sequential$seq_test,  c("#deebf7", "#9ecae1", "#3182bd"))
-  expect_equal(result$qualitative$qual_test, c("#E64B35", "#4DBBD5", "#00A087"))
-})
-
-test_that("compile_palettes() returns invisibly", {
-  src <- make_temp_palette_dir()
-  on.exit(unlink(src, recursive = TRUE), add = TRUE)
-
-  expect_invisible(compile_palettes(palettes_dir = src))
-})
-
-test_that("compile_palettes() aborts on invalid JSON files", {
-  src <- make_temp_palette_dir()
-  on.exit(unlink(src, recursive = TRUE), add = TRUE)
-
-  writeLines("{not valid json", file.path(src, "sequential", "broken.json"))
-
-  expect_error(
-    compile_palettes(palettes_dir = src),
-    "Failed to parse JSON"
-  )
-})
-
-test_that("compile_palettes() errors when palettes_dir does not exist", {
-  expect_error(
-    compile_palettes(palettes_dir = file.path(tempdir(), "nonexistent_xyz")),
-    "does not exist"
-  )
-})
-
-test_that("compile_palettes() errors when palettes_dir is invalid string", {
-  expect_error(compile_palettes(""), "single non-empty string")
-})
-
-test_that("compile_palettes() warns on duplicate names and keeps the last", {
-  dir <- file.path(tempdir(), paste0("cp_dup_", Sys.getpid()))
-  qual <- file.path(dir, "qualitative")
-  dir.create(qual, recursive = TRUE, showWarnings = FALSE)
-  on.exit(unlink(dir, recursive = TRUE), add = TRUE)
-
-  # Two files, one name: the palette name lives inside the JSON, so a copied
-  # file under a new stem is enough to collide.
-  writeLines(
-    '{"name": "twin", "type": "qualitative", "colors": ["#000000"]}',
-    file.path(qual, "a.json")
-  )
-  writeLines(
-    '{"name": "twin", "type": "qualitative", "colors": ["#FFFFFF"]}',
-    file.path(qual, "b.json")
-  )
-
-  expect_message(
-    compiled <- compile_palettes(dir),
-    "Duplicate palette"
-  )
-  # Files are read in sorted order, so b.json wins.
-  expect_identical(compiled$qualitative$twin, "#FFFFFF")
-  expect_length(compiled$qualitative, 1L)
-})
-
-#==============================================================================
-# preview_palette()
-#==============================================================================
-
-test_that("preview_palette() returns NULL invisibly", {
-  skip_if_not(palette_data_available(), "Package palette dataset not available")
-
-  pdf(file = tempfile(fileext = ".pdf"))
-  on.exit(grDevices::dev.off(), add = TRUE)
-
-  result <- preview_palette("walter_white", type = "diverging", plot_type = "bar",
-                            palettes_path = .test_palettes_path())
-  expect_null(result)
-})
-
-test_that("preview_palette() works with all plot_type options", {
-  skip_if_not(palette_data_available(), "Package palette dataset not available")
-
-  for (pt in c("bar", "pie", "point", "rect", "circle")) {
-    pdf(file = tempfile(fileext = ".pdf"))
-    expect_no_error(
-      preview_palette("gene_red", type = "qualitative", plot_type = pt,
-                      palettes_path = .test_palettes_path())
-    )
-    grDevices::dev.off()
-  }
-})
-
-test_that("preview_palette() respects n argument", {
-  skip_if_not(palette_data_available(), "Package palette dataset not available")
-
-  pdf(file = tempfile(fileext = ".pdf"))
-  on.exit(grDevices::dev.off(), add = TRUE)
-
-  expect_no_error(
-    preview_palette("gene_red", type = "qualitative", n = 2, plot_type = "bar",
-                    palettes_path = .test_palettes_path())
-  )
-})
-
-test_that("preview_palette() accepts custom title", {
-  skip_if_not(palette_data_available(), "Package palette dataset not available")
-
-  pdf(file = tempfile(fileext = ".pdf"))
-  on.exit(grDevices::dev.off(), add = TRUE)
-
-  expect_no_error(
-    preview_palette("walter_white", type = "diverging", title = "My Custom Title",
-                    palettes_path = .test_palettes_path())
-  )
-})
-
-test_that("preview_palette() errors on invalid palette name", {
-  skip_if_not(palette_data_available(), "Package palette dataset not available")
-
-  expect_error(
-    preview_palette("does_not_exist", palettes_path = .test_palettes_path()),
-    "not found in any type"
-  )
-})
-
-#==============================================================================
-# palette_gallery()
-#==============================================================================
-
-test_that("palette_gallery() returns named list of ggplot objects", {
-  skip_if_not(palette_data_available(), "Package palette dataset not available")
-  skip_if_not_installed("ggplot2")
-
-  result <- palette_gallery(type = "qualitative", verbose = FALSE,
-                            palettes_path = .test_palettes_path())
-  expect_type(result, "list")
-  expect_true(length(result) >= 1L)
-  expect_true(all(sapply(result, inherits, "gg")))
-  expect_true(all(grepl("^qualitative_page", names(result))))
-})
-
-test_that("palette_gallery() paginates correctly", {
-  skip_if_not(palette_data_available(), "Package palette dataset not available")
-  skip_if_not_installed("ggplot2")
-
-  result <- palette_gallery(type = "qualitative", max_palettes = 1, verbose = FALSE,
-                            palettes_path = .test_palettes_path())
-  expect_true(length(result) > 1L)
-})
-
-test_that("palette_gallery() errors on invalid type argument", {
-  skip_if_not(palette_data_available(), "Package palette dataset not available")
-
-  # match.arg rejects strings not in the allowed set
-  expect_error(
-    palette_gallery(type = "rainbow", palettes_path = .test_palettes_path()),
-    "should be one of"
-  )
-})
-
-test_that("palette_gallery() validates max_palettes and max_row", {
-  skip_if_not(palette_data_available(), "Package palette dataset not available")
-
-  expect_error(palette_gallery(max_palettes = 0),  "single positive integer")
-  expect_error(palette_gallery(max_row = -1),       "single positive integer")
-  expect_error(palette_gallery(verbose = "yes"),    "TRUE or FALSE")
+  expect_error(remove_palette(123, palettes_dir = tmp),       "single non-empty string")
+  expect_error(remove_palette("",  palettes_dir = tmp),       "single non-empty string")
+  expect_error(remove_palette("GeneRed", palettes_dir = tmp), "snake_case palette name")
+  expect_error(remove_palette("gene-red", palettes_dir = tmp), "snake_case palette name")
+  expect_error(remove_palette("gene_red.json", palettes_dir = tmp), "snake_case palette name")
+  expect_error(remove_palette("../gene_red", palettes_dir = tmp), "snake_case palette name")
 })
 
 #===============================================================================
