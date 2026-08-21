@@ -22,3 +22,4 @@ vignettes/*_files/
 # Default graphics device output. R CMD check's example runs and any plotting
 # done from the package root drop this here.
 Rplots.pdf
+builds/
