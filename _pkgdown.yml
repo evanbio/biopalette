@@ -196,7 +196,7 @@ navbar:
 
   components:
     version:
-      text: "0.1.0"
+      text: "0.2.0"
       href: news/index.html
 
     install:
@@ -289,6 +289,8 @@ reference:
 
 news:
   releases:
+  - text: "Version 0.2.0 — Palette engine and B-cell atlas release (August 2026)"
+    href: https://github.com/evanbio/biopalette/releases/tag/v0.2.0
   - text: "Version 0.1.0 — Initial Release (April 2026)"
     href: https://github.com/evanbio/biopalette/releases/tag/v0.1.0
   - text: "View All Releases"
@@ -306,8 +308,8 @@ footer:
   components:
     package_info: |
       <div class="text-muted">
-        <strong>biopalette v0.1.0</strong><br>
-        <small>Last updated: April 2026</small>
+        <strong>biopalette v0.2.0</strong><br>
+        <small>Last updated: August 2026</small>
       </div>
 
     social_links: |
