@@ -36,6 +36,9 @@ get_palette("walter_white", type = "diverging")
 
 preview_palette("gene_red")
 palette_gallery()
+
+scale_color_biopalette("three_body")
+scale_fill_biopalette_gradient("mitonuclear_blue")
 ```
 
 ## Palettes
@@ -52,13 +55,16 @@ palette_gallery()
 | `tam_pastel` | Qualitative | 6 | Pan-cancer myeloid atlas (Cell, 2021) |
 | `cancer_mosaic` | Qualitative | 15 | Pan-cancer myeloid atlas (Cell, 2021) |
 | `lactate_steps` | Qualitative | 5 | Lactate metabolism and immunotherapy (JECCR, 2024) |
+| `mitonuclear_blue` | Sequential | 6 | Mito-nuclear communication in aging (TIBS, 2022) — young blue |
+| `mitonuclear_orange` | Sequential | 6 | Mito-nuclear communication in aging (TIBS, 2022) — aged orange |
 
 ## Function Areas
 
 | Area | Functions |
 |----|----|
-| Palette access | [`get_palette()`](https://evanbio.github.io/biopalette/reference/get_palette.md), [`list_palettes()`](https://evanbio.github.io/biopalette/reference/list_palettes.md), [`palette_gallery()`](https://evanbio.github.io/biopalette/reference/palette_gallery.md) |
-| Palette management | [`create_palette()`](https://evanbio.github.io/biopalette/reference/create_palette.md), [`compile_palettes()`](https://evanbio.github.io/biopalette/reference/compile_palettes.md), [`remove_palette()`](https://evanbio.github.io/biopalette/reference/remove_palette.md), [`preview_palette()`](https://evanbio.github.io/biopalette/reference/preview_palette.md) |
+| Palette access | [`get_palette()`](https://evanbio.github.io/biopalette/reference/get_palette.md), [`palette_info()`](https://evanbio.github.io/biopalette/reference/palette_info.md), [`list_palettes()`](https://evanbio.github.io/biopalette/reference/list_palettes.md), [`palette_gallery()`](https://evanbio.github.io/biopalette/reference/palette_gallery.md) |
+| Palette management | [`create_palette()`](https://evanbio.github.io/biopalette/reference/create_palette.md), [`remove_palette()`](https://evanbio.github.io/biopalette/reference/remove_palette.md), [`preview_palette()`](https://evanbio.github.io/biopalette/reference/preview_palette.md) |
+| ggplot2 scales | [`scale_color_biopalette()`](https://evanbio.github.io/biopalette/reference/scale_color_biopalette.md), [`scale_fill_biopalette()`](https://evanbio.github.io/biopalette/reference/scale_color_biopalette.md), and gradient variants |
 | Color utilities | [`hex2rgb()`](https://evanbio.github.io/biopalette/reference/hex2rgb.md), [`rgb2hex()`](https://evanbio.github.io/biopalette/reference/rgb2hex.md) |
 
 ## Documentation

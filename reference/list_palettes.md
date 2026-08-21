@@ -6,7 +6,7 @@ filtered by type.
 ## Usage
 
 ``` r
-list_palettes(type = NULL, sort = TRUE, palettes_path = NULL)
+list_palettes(type = NULL, sort = TRUE, palettes_dir = NULL)
 ```
 
 ## Arguments
@@ -20,10 +20,11 @@ list_palettes(type = NULL, sort = TRUE, palettes_path = NULL)
 
   Whether to sort by type, n_color, name. Default: TRUE.
 
-- palettes_path:
+- palettes_dir:
 
-  Character. Path to a `palettes.rda` file. If NULL, uses the installed
-  package dataset.
+  Character. Directory holding a palette collection (`sequential/`,
+  `diverging/`, `qualitative/` subdirectories of JSON files). If NULL,
+  the palettes bundled with the package are used.
 
 ## Value
 

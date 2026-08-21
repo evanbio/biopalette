@@ -11,7 +11,7 @@ palette_gallery(
   max_palettes = 30,
   max_row = 12,
   verbose = TRUE,
-  palettes_path = NULL
+  palettes_dir = NULL
 )
 ```
 
@@ -34,10 +34,11 @@ palette_gallery(
 
   Whether to print progress info. Default: TRUE.
 
-- palettes_path:
+- palettes_dir:
 
-  Character. Path to a `palettes.rda` file. If NULL, uses the installed
-  package dataset.
+  Character. Directory holding a palette collection (`sequential/`,
+  `diverging/`, `qualitative/` subdirectories of JSON files). If NULL,
+  the palettes bundled with the package are used.
 
 ## Value
 

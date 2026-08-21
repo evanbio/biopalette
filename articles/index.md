@@ -2,9 +2,11 @@
 
 ### All vignettes
 
-- [Get Started with
+- [Get started with
   biopalette](https://evanbio.github.io/biopalette/articles/get-started.md):
-- [Installation
-  Guide](https://evanbio.github.io/biopalette/articles/install.md):
-- [Color Palette
-  Management](https://evanbio.github.io/biopalette/articles/palette.md):
+- [Installing
+  biopalette](https://evanbio.github.io/biopalette/articles/install.md):
+- [Managing custom palette
+  collections](https://evanbio.github.io/biopalette/articles/palette.md):
+- [Choosing palettes with
+  Tessera](https://evanbio.github.io/biopalette/articles/tessera.md):

@@ -5,7 +5,7 @@ Remove a palette JSON file by name, searching across types if needed.
 ## Usage
 
 ``` r
-remove_palette(name, type = NULL, color_dir)
+remove_palette(name, type = NULL, palettes_dir)
 ```
 
 ## Arguments
@@ -19,9 +19,11 @@ remove_palette(name, type = NULL, color_dir)
   Character. One of "sequential", "diverging", "qualitative". If NULL,
   searches all types.
 
-- color_dir:
+- palettes_dir:
 
-  Character. Root folder where palettes are stored.
+  Character. Directory holding the palette collection. Required: there
+  is deliberately no default, so the collection that ships with the
+  package can never be removed from.
 
 ## Value
 
@@ -30,8 +32,16 @@ Invisibly TRUE if removed successfully, FALSE otherwise.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-remove_palette("walter_white", color_dir = "path/to/palettes")
-remove_palette("gene_red", type = "qualitative", color_dir = "path/to/palettes")
-} # }
+temp_dir <- tempfile("biopalette-palettes-")
+create_palette(
+  "example_palette",
+  "qualitative",
+  c("#E64B35", "#4DBBD5", "#00A087"),
+  palettes_dir = temp_dir
+)
+#> ✔ Palette saved: /tmp/RtmpdLFEND/biopalette-palettes-194a467d31fb/qualitative/example_palette.json
+
+remove_palette("example_palette", palettes_dir = temp_dir)
+#> ✔ Removed "example_palette" from qualitative
+unlink(temp_dir, recursive = TRUE)
 ```

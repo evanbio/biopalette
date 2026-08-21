@@ -1,162 +1,258 @@
-# Get Started with biopalette
+# Get started with biopalette
 
-## Overview
+biopalette provides image-inspired color palettes for biomedical
+visualization. Each palette has a documented source and one of three
+types:
 
-**biopalette** provides color palettes for biomedical visualization,
-each sourced from a real image. This guide covers the core workflow:
-browsing, retrieving, previewing, and using palettes in plots.
+- **qualitative** palettes distinguish unordered groups;
+- **sequential** palettes represent values progressing from low to high;
+- **diverging** palettes show variation around a meaningful center.
 
-## Installation
+This guide follows the usual workflow: find a palette, inspect it,
+retrieve the colors, and apply it directly to a plot. See
+[`vignette("install", package = "biopalette")`](https://evanbio.github.io/biopalette/articles/install.md)
+if the package is not yet installed.
 
-``` r
+## Find a palette
 
-pak::pkg_install("evanbio/biopalette")
-```
-
-## Browse Available Palettes
+Load biopalette and inspect the bundled collection:
 
 ``` r
 
 library(biopalette)
 
-list_palettes()
-#>                  name        type n_color       colors
-#> 1        walter_white   diverging       5 #1991A9,....
-#> 2       walter_white3   diverging       5 #B15F63,....
-#> 3            gene_red qualitative       2 #000000,....
-#> 4          heat_light qualitative       2 #DD6866,....
-#> 5          three_body qualitative       3 #6495ED,....
-#> 6       lactate_steps qualitative       5 #3973BC,....
-#> 7       walter_white2 qualitative       5 #5AB5BF,....
-#> 8          tam_pastel qualitative       6 #4FA85F,....
-#> 9       cancer_mosaic qualitative      15 #3E6186,....
-#> 10              babel qualitative      21 #1688A7,....
-#> 11   mitonuclear_blue  sequential       6 #EEF4FB,....
-#> 12 mitonuclear_orange  sequential       6 #F8E7E3,....
+list_palettes()[c("name", "type", "n_color")]
+#>                  name        type n_color
+#> 1        walter_white   diverging       5
+#> 2       walter_white3   diverging       5
+#> 3            gene_red qualitative       2
+#> 4          heat_light qualitative       2
+#> 5          three_body qualitative       3
+#> 6       lactate_steps qualitative       5
+#> 7       walter_white2 qualitative       5
+#> 8          tam_pastel qualitative       6
+#> 9       cancer_mosaic qualitative      15
+#> 10              babel qualitative      21
+#> 11   mitonuclear_blue  sequential       6
+#> 12 mitonuclear_orange  sequential       6
 ```
 
-[`list_palettes()`](https://evanbio.github.io/biopalette/reference/list_palettes.md)
-returns a data frame of all available palettes with their name, type,
-and number of colors.
+Filter by type when the visual role is already known:
 
+``` r
+
+list_palettes(type = "sequential")[c("name", "n_color")]
+#>                 name n_color
+#> 1   mitonuclear_blue       6
+#> 2 mitonuclear_orange       6
+```
+
+[`palette_info()`](https://evanbio.github.io/biopalette/reference/palette_info.md)
+returns the complete metadata for one palette without drawing it:
+
+``` r
+
+palette_info("mitonuclear_blue")
+#>               name       type n_color       colors
+#> 1 mitonuclear_blue sequential       6 #EEF4FB,....
+```
+
+For visual browsing, call
 [`palette_gallery()`](https://evanbio.github.io/biopalette/reference/palette_gallery.md)
-renders a visual overview and returns one ggplot per page, so you can
-display the page you want:
+in an interactive R session. It builds one gallery page per palette type
+and reports each page as it is ready.
 
 ``` r
 
-pages <- palette_gallery(verbose = FALSE)
-names(pages)
-#> [1] "sequential_page1"  "diverging_page1"   "qualitative_page1"
-
-pages[["qualitative_page1"]]
+palette_gallery()
 ```
 
-![](get-started_files/figure-html/gallery-1.png)
+## Retrieve colors
 
-## Retrieve Colors
+[`get_palette()`](https://evanbio.github.io/biopalette/reference/get_palette.md)
+returns a character vector of HEX colors. Palette names are unique
+across the bundled collection, so `type` is normally unnecessary:
 
 ``` r
 
-# Full palette
 get_palette("three_body")
 #> [1] "#6495ED" "#339933" "#FF4500"
+get_palette("mitonuclear_blue")
+#> [1] "#EEF4FB" "#DDF1F5" "#B9DBF4" "#95AAD3" "#3A68AE" "#155289"
+```
 
-# First n colors
+The meaning of `n` follows the palette type. For a qualitative palette,
+it selects the first `n` category colors and cannot exceed the palette
+size:
+
+``` r
+
 get_palette("babel", n = 5)
 #> [1] "#1688A7" "#7673AE" "#B3DE69" "#D195F6" "#7E285E"
-
-# Specify type for disambiguation
-get_palette("walter_white", type = "diverging")
-#> [1] "#1991A9" "#A3C5C4" "#E7E9E4" "#A9B688" "#495A2E"
 ```
 
-The returned value is a character vector of HEX codes, ready to pass to
-any plotting function.
-
-## Preview a Palette
+For sequential and diverging palettes, the stored colors are stops along
+a ramp. Asking for `n` colors samples the whole ramp in Lab color space
+rather than taking colors from only one end:
 
 ``` r
 
-preview_palette("gene_red", plot_type = "rect")
+get_palette("mitonuclear_blue", n = 3)
+#> [1] "#EEF4FB" "#A7C2E3" "#155289"
+get_palette("walter_white", n = 7)
+#> [1] "#1991A9" "#80B3BB" "#BAD1CF" "#E7E9E4" "#BEC7A6" "#889669" "#495A2E"
 ```
 
-![](get-started_files/figure-html/preview-rect-1.png)
+Use `reverse = TRUE` when the direction of a palette should be flipped:
 
 ``` r
 
-preview_palette("babel", plot_type = "rect")
+get_palette("mitonuclear_blue", n = 3, reverse = TRUE)
+#> [1] "#155289" "#A7C2E3" "#EEF4FB"
 ```
 
-![](get-started_files/figure-html/preview-babel-1.png)
+The returned vector can be used anywhere that accepts R color values.
+For ggplot2, the scale functions provide a shorter and safer route.
 
-``` r
+## Use a discrete scale
 
-preview_palette("three_body", plot_type = "circle")
-```
-
-![](get-started_files/figure-html/preview-circle-1.png)
-
-## Use in ggplot2
+Map a qualitative palette to unordered groups with
+[`scale_color_biopalette()`](https://evanbio.github.io/biopalette/reference/scale_color_biopalette.md):
 
 ``` r
 
 library(ggplot2)
 
 ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
-  geom_point(size = 2) +
-  scale_color_manual(values = get_palette("three_body")) +
+  geom_point(size = 2.5) +
+  scale_color_biopalette("three_body") +
   theme_minimal()
 ```
 
-![](get-started_files/figure-html/ggplot-1.png)
+![](get-started_files/figure-html/discrete-color-1.png)
 
-For continuous scales, pass the colors to
-[`scale_fill_gradientn()`](https://ggplot2.tidyverse.org/reference/scale_gradient.html)
-or
-[`scale_color_gradientn()`](https://ggplot2.tidyverse.org/reference/scale_gradient.html).
-Diverging palettes are the natural fit here:
+Use a `color` scale when the mapped aesthetic is `color` (or `colour`),
+and a `fill` scale when the mapped aesthetic is `fill`. This distinction
+belongs to the geometry, not to the palette itself:
+
+``` r
+
+ggplot(iris, aes(Species, Sepal.Length, fill = Species)) +
+  geom_boxplot() +
+  scale_fill_biopalette("three_body", guide = "none") +
+  theme_minimal()
+```
+
+![](get-started_files/figure-html/discrete-fill-1.png)
+
+Discrete scales request exactly as many colors as the trained data has
+levels. Qualitative palettes use their first `n` colors; sequential and
+diverging palettes sample `n` colors across the complete ramp. A
+qualitative palette raises an informative error when it does not contain
+enough colors.
+
+## Use a continuous gradient
+
+Continuous data requires a sequential or diverging palette and one of
+the gradient functions. A sequential fill gradient is appropriate for
+density:
 
 ``` r
 
 ggplot(faithfuld, aes(waiting, eruptions, fill = density)) +
-  geom_tile() +
-  scale_fill_gradientn(colors = get_palette("walter_white")) +
+  geom_raster() +
+  scale_fill_biopalette_gradient("mitonuclear_blue") +
   theme_minimal()
 ```
 
-![](get-started_files/figure-html/ggplot-continuous-1.png)
+![](get-started_files/figure-html/sequential-gradient-1.png)
 
-## Color Utilities
+For values interpreted relative to a reference point, use a diverging
+palette and set `midpoint`. Here zero means no deviation from the mean:
 
 ``` r
 
-hex2rgb("#1688A7")
-#>       hex  r   g   b
-#> 1 #1688A7 22 136 167
-rgb2hex(c(22, 136, 167))
-#> [1] "#1688A7"
+plot_data <- transform(
+  mtcars,
+  cylinders = factor(cyl),
+  gears = factor(gear),
+  mpg_difference = mpg - mean(mpg)
+)
+
+ggplot(plot_data, aes(cylinders, gears, fill = mpg_difference)) +
+  geom_tile(color = "white", linewidth = 0.5) +
+  scale_fill_biopalette_gradient("walter_white", midpoint = 0) +
+  labs(x = "Cylinders", y = "Gears", fill = "MPG difference") +
+  theme_minimal()
 ```
 
-## Function Reference
+![](get-started_files/figure-html/diverging-gradient-1.png)
 
-| Function | Purpose |
-|----|----|
-| [`list_palettes()`](https://evanbio.github.io/biopalette/reference/list_palettes.md) | Data frame of all available palettes |
-| [`palette_gallery()`](https://evanbio.github.io/biopalette/reference/palette_gallery.md) | Visual gallery of all palettes |
-| [`get_palette()`](https://evanbio.github.io/biopalette/reference/get_palette.md) | Retrieve colors by name, type, and size |
-| [`preview_palette()`](https://evanbio.github.io/biopalette/reference/preview_palette.md) | Render color swatches |
-| [`create_palette()`](https://evanbio.github.io/biopalette/reference/create_palette.md) | Add a new palette |
-| [`compile_palettes()`](https://evanbio.github.io/biopalette/reference/compile_palettes.md) | Compile all JSONs into a named list |
-| [`remove_palette()`](https://evanbio.github.io/biopalette/reference/remove_palette.md) | Remove a palette by name |
-| [`hex2rgb()`](https://evanbio.github.io/biopalette/reference/hex2rgb.md) | HEX to RGB |
-| [`rgb2hex()`](https://evanbio.github.io/biopalette/reference/rgb2hex.md) | RGB to HEX |
+Qualitative palettes cannot define continuous gradients because
+interpolating unordered category colors has no stable meaning.
 
-## Getting Help
+## Preview one palette
 
-- **Documentation**: <https://evanbio.github.io/biopalette/>
-- **Issues**: [GitHub
-  Issues](https://github.com/evanbio/biopalette/issues)
-- **Function help**:
-  [`?get_palette`](https://evanbio.github.io/biopalette/reference/get_palette.md),
-  [`?preview_palette`](https://evanbio.github.io/biopalette/reference/preview_palette.md)
+[`preview_palette()`](https://evanbio.github.io/biopalette/reference/preview_palette.md)
+draws directly to the active graphics device. Its five styles are
+`"bar"`, `"pie"`, `"point"`, `"rect"`, and `"circle"`:
+
+``` r
+
+preview_palette("walter_white", plot_type = "rect")
+```
+
+![](get-started_files/figure-html/preview-1.png)
+
+The same `n` and `reverse` rules used by
+[`get_palette()`](https://evanbio.github.io/biopalette/reference/get_palette.md)
+also apply to previews:
+
+``` r
+
+preview_palette(
+  "mitonuclear_orange",
+  n = 4,
+  reverse = TRUE,
+  plot_type = "circle"
+)
+```
+
+![](get-started_files/figure-html/preview-options-1.png)
+
+## Convert color formats
+
+[`hex2rgb()`](https://evanbio.github.io/biopalette/reference/hex2rgb.md)
+and
+[`rgb2hex()`](https://evanbio.github.io/biopalette/reference/rgb2hex.md)
+convert between HEX and RGB or RGBA values. Alpha is preserved when
+present:
+
+``` r
+
+rgba <- hex2rgb(c("#1688A7", "#FF450080"))
+rgba
+#>         hex   r   g   b alpha
+#> 1   #1688A7  22 136 167    NA
+#> 2 #FF450080 255  69   0   128
+rgb2hex(rgba)
+#> [1] "#1688A7"   "#FF450080"
+```
+
+## Next steps
+
+- Read
+  [`vignette("palette", package = "biopalette")`](https://evanbio.github.io/biopalette/articles/palette.md)
+  to create and manage a custom JSON palette collection.
+- Open
+  [`?scale_color_biopalette`](https://evanbio.github.io/biopalette/reference/scale_color_biopalette.md)
+  for discrete scale options.
+- Open
+  [`?scale_color_biopalette_gradient`](https://evanbio.github.io/biopalette/reference/scale_color_biopalette_gradient.md)
+  for continuous gradients, transformations, custom stop positions, and
+  diverging midpoints.
+- Browse the [palette
+  stories](https://github.com/evanbio/biopalette/tree/main/palettes) for
+  the source and intended use of every bundled palette.
+- Report reproducible problems in [GitHub
+  Issues](https://github.com/evanbio/biopalette/issues).

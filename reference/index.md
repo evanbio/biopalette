@@ -6,6 +6,8 @@ Retrieve and browse available palettes.
 
 - [`get_palette()`](https://evanbio.github.io/biopalette/reference/get_palette.md)
   : Get a Color Palette
+- [`palette_info()`](https://evanbio.github.io/biopalette/reference/palette_info.md)
+  : Get Metadata for One Color Palette
 - [`list_palettes()`](https://evanbio.github.io/biopalette/reference/list_palettes.md)
   : List Available Color Palettes
 - [`palette_gallery()`](https://evanbio.github.io/biopalette/reference/palette_gallery.md)
@@ -13,12 +15,10 @@ Retrieve and browse available palettes.
 
 ## Palette Management
 
-Create, compile, preview, and remove palettes.
+Create, preview, and remove palettes.
 
 - [`create_palette()`](https://evanbio.github.io/biopalette/reference/create_palette.md)
   : Create and Save a Custom Color Palette
-- [`compile_palettes()`](https://evanbio.github.io/biopalette/reference/compile_palettes.md)
-  : Compile JSON Palettes into a Palette List
 - [`preview_palette()`](https://evanbio.github.io/biopalette/reference/preview_palette.md)
   : Preview a Color Palette
 - [`remove_palette()`](https://evanbio.github.io/biopalette/reference/remove_palette.md)
@@ -33,12 +33,18 @@ Convert between HEX and RGB color formats.
 - [`rgb2hex()`](https://evanbio.github.io/biopalette/reference/rgb2hex.md)
   : Convert RGB Values to HEX Color Codes
 
-## Data
+## ggplot2 Scales
 
-Built-in palette dataset.
+Apply biopalette palettes to discrete mappings and continuous gradients.
 
-- [`palettes`](https://evanbio.github.io/biopalette/reference/palettes.md)
-  : Built-in color palettes
+- [`scale_color_biopalette()`](https://evanbio.github.io/biopalette/reference/scale_color_biopalette.md)
+  [`scale_colour_biopalette()`](https://evanbio.github.io/biopalette/reference/scale_color_biopalette.md)
+  [`scale_fill_biopalette()`](https://evanbio.github.io/biopalette/reference/scale_color_biopalette.md)
+  : Discrete ggplot2 Scales from a biopalette Palette
+- [`scale_color_biopalette_gradient()`](https://evanbio.github.io/biopalette/reference/scale_color_biopalette_gradient.md)
+  [`scale_colour_biopalette_gradient()`](https://evanbio.github.io/biopalette/reference/scale_color_biopalette_gradient.md)
+  [`scale_fill_biopalette_gradient()`](https://evanbio.github.io/biopalette/reference/scale_color_biopalette_gradient.md)
+  : Continuous ggplot2 Gradients from a biopalette Palette
 
 ## Package
 

@@ -1,33 +1,45 @@
-# Installation Guide
+# Installing biopalette
 
-## Quick Install
+## Requirements
+
+biopalette requires R 4.1 or later. It works on Windows, macOS, and
+Linux and does not contain compiled code.
+
+The package uses four runtime dependencies:
+
+- **cli** for user-facing messages;
+- **ggplot2** for previews, galleries, and scales;
+- **jsonlite** for reading and writing palette collections;
+- **scales** for continuous color interpolation.
+
+R installs these dependencies automatically when biopalette is
+installed.
+
+## Install from GitHub
+
+The development version is available from GitHub. We recommend
+[pak](https://pak.r-lib.org/) because it resolves dependencies and
+reports installation problems clearly.
 
 ``` r
 
-# Using pak (recommended)
 install.packages("pak")
 pak::pkg_install("evanbio/biopalette")
+```
 
-# Using remotes
+Alternatively, install with remotes:
+
+``` r
+
 install.packages("remotes")
 remotes::install_github("evanbio/biopalette")
 ```
 
-**Requires:** R ≥ 4.1.0
+You only need to install `pak` or `remotes` once.
 
-------------------------------------------------------------------------
+## Verify the installation
 
-## Dependencies
-
-All dependencies are installed automatically with the package.
-
-- **cli** — User-facing messages and warnings
-- **ggplot2** — Palette preview rendering
-- **jsonlite** — JSON read/write for palette storage
-
-------------------------------------------------------------------------
-
-## Verify Installation
+Load the package, inspect its version, and list a few bundled palettes:
 
 ``` r
 
@@ -35,49 +47,80 @@ library(biopalette)
 
 packageVersion("biopalette")
 #> [1] '0.1.0'
-list_palettes()
-#>                  name        type n_color       colors
-#> 1        walter_white   diverging       5 #1991A9,....
-#> 2       walter_white3   diverging       5 #B15F63,....
-#> 3            gene_red qualitative       2 #000000,....
-#> 4          heat_light qualitative       2 #DD6866,....
-#> 5          three_body qualitative       3 #6495ED,....
-#> 6       lactate_steps qualitative       5 #3973BC,....
-#> 7       walter_white2 qualitative       5 #5AB5BF,....
-#> 8          tam_pastel qualitative       6 #4FA85F,....
-#> 9       cancer_mosaic qualitative      15 #3E6186,....
-#> 10              babel qualitative      21 #1688A7,....
-#> 11   mitonuclear_blue  sequential       6 #EEF4FB,....
-#> 12 mitonuclear_orange  sequential       6 #F8E7E3,....
+head(list_palettes()[c("name", "type", "n_color")])
+#>            name        type n_color
+#> 1  walter_white   diverging       5
+#> 2 walter_white3   diverging       5
+#> 3      gene_red qualitative       2
+#> 4    heat_light qualitative       2
+#> 5    three_body qualitative       3
+#> 6 lactate_steps qualitative       5
 ```
 
-------------------------------------------------------------------------
+For a visual check, open the palette gallery in an interactive R
+session:
+
+``` r
+
+palette_gallery()
+```
 
 ## Update
+
+Run the same GitHub installation command to update to the latest
+development version:
 
 ``` r
 
 pak::pkg_install("evanbio/biopalette")
 ```
 
-------------------------------------------------------------------------
+Restart R after updating if biopalette was loaded in the current
+session. This ensures that R uses the newly installed namespace and
+package files.
 
 ## Troubleshooting
 
-### Installation fails on Windows
+### R cannot install a dependency
 
-Install [Rtools](https://cran.r-project.org/bin/windows/Rtools/) for
-packages that require compilation, then retry.
-
-### Network / Firewall issues
+Start a fresh R session and retry the installation. If the error
+identifies a specific dependency, install that package directly to
+expose its complete error message:
 
 ``` r
 
-Sys.setenv(http_proxy  = "http://your-proxy:port")
-Sys.setenv(https_proxy = "https://your-proxy:port")
+install.packages("packageName")
 ```
 
-------------------------------------------------------------------------
+biopalette itself does not require compilation. On Windows, Rtools is
+needed only when R must install a dependency from source and that
+dependency contains compiled code. Install the version of
+[Rtools](https://cran.r-project.org/bin/windows/Rtools/) that matches
+your R version if the error explicitly says that build tools are
+required.
+
+### GitHub cannot be reached
+
+Confirm that the repository is accessible in a web browser and that R
+can connect to GitHub. On managed institutional networks, use the proxy
+or certificate settings supplied by your system administrator; do not
+place credentials in scripts committed to version control.
+
+### R loads an older version
+
+Check the installed version and library location:
+
+``` r
+
+packageVersion("biopalette")
+find.package("biopalette")
+.libPaths()
+```
+
+Multiple R libraries can contain different copies of the package. Remove
+the older copy from the library reported by
+[`find.package()`](https://rdrr.io/r/base/find.package.html) or install
+the update into that library.
 
 ## Uninstall
 
@@ -86,10 +129,19 @@ Sys.setenv(https_proxy = "https://your-proxy:port")
 remove.packages("biopalette")
 ```
 
-------------------------------------------------------------------------
+If more than one library contains biopalette, pass the relevant library
+path through the `lib` argument of
+[`remove.packages()`](https://rdrr.io/r/utils/remove.packages.html).
 
-## Getting Help
+## Getting help
 
-- **Documentation**: <https://evanbio.github.io/biopalette/>
-- **Issues**: [GitHub
-  Issues](https://github.com/evanbio/biopalette/issues)
+- Read the [package
+  documentation](https://evanbio.github.io/biopalette/).
+- Report reproducible problems in [GitHub
+  Issues](https://github.com/evanbio/biopalette/issues).
+
+When reporting an installation problem, include the complete error
+message and the output of
+[`sessionInfo()`](https://rdrr.io/r/utils/sessionInfo.html). Remove
+tokens, passwords, user names, and other sensitive paths before posting
+the output publicly.

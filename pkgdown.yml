@@ -5,7 +5,8 @@ articles:
   get-started: get-started.html
   install: install.html
   palette: palette.html
-last_built: 2026-08-17T05:39Z
+  tessera: tessera.html
+last_built: 2026-08-21T06:49Z
 urls:
   reference: https://evanbio.github.io/biopalette/reference
   article: https://evanbio.github.io/biopalette/articles

@@ -35,6 +35,10 @@ get_palette("walter_white", type = "diverging")
 
 preview_palette("gene_red")
 palette_gallery()
+
+# ggplot2 离散与连续尺度
+scale_color_biopalette("three_body")
+scale_fill_biopalette_gradient("mitonuclear_blue")
 ```
 
 ------------------------------------------------------------------------
@@ -74,25 +78,40 @@ devtools::install_github("evanbio/biopalette")
 
 ## 函数列表
 
-**🎨 配色获取**（3 个）
+**🎨 配色获取**（4 个）
 
 - [`get_palette()`](https://evanbio.github.io/biopalette/reference/get_palette.md)
   — 按名称、类型和数量获取颜色
+- [`palette_info()`](https://evanbio.github.io/biopalette/reference/palette_info.md)
+  — 获取单个配色的元数据
 - [`list_palettes()`](https://evanbio.github.io/biopalette/reference/list_palettes.md)
   — 以数据框形式列出所有配色
 - [`palette_gallery()`](https://evanbio.github.io/biopalette/reference/palette_gallery.md)
   — 分页浏览全部配色预览
 
-**🔧 配色管理**（4 个）
+**🔧 配色管理**（3 个）
 
 - [`create_palette()`](https://evanbio.github.io/biopalette/reference/create_palette.md)
   — 将新配色写入 JSON
-- [`compile_palettes()`](https://evanbio.github.io/biopalette/reference/compile_palettes.md)
-  — 将所有 JSON 编译为命名列表
 - [`remove_palette()`](https://evanbio.github.io/biopalette/reference/remove_palette.md)
   — 按名称删除配色
 - [`preview_palette()`](https://evanbio.github.io/biopalette/reference/preview_palette.md)
   — 渲染色块预览图
+
+**📊 ggplot2 尺度**（6 个）
+
+- [`scale_color_biopalette()`](https://evanbio.github.io/biopalette/reference/scale_color_biopalette.md)
+  /
+  [`scale_colour_biopalette()`](https://evanbio.github.io/biopalette/reference/scale_color_biopalette.md)
+  — 离散颜色尺度
+- [`scale_fill_biopalette()`](https://evanbio.github.io/biopalette/reference/scale_color_biopalette.md)
+  — 离散填充尺度
+- [`scale_color_biopalette_gradient()`](https://evanbio.github.io/biopalette/reference/scale_color_biopalette_gradient.md)
+  /
+  [`scale_colour_biopalette_gradient()`](https://evanbio.github.io/biopalette/reference/scale_color_biopalette_gradient.md)
+  — 连续颜色渐变
+- [`scale_fill_biopalette_gradient()`](https://evanbio.github.io/biopalette/reference/scale_color_biopalette_gradient.md)
+  — 连续填充渐变
 
 **🔵 颜色工具**（2 个）
 
