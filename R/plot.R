@@ -67,6 +67,12 @@
 #' @noRd
 .gallery_page_plot <- function(plot_data, label_data) {
   max_x <- max(plot_data$x)
+  # Reason: palette names vary substantially in length. A fixed left limit
+  # clips long labels such as `cancer_mosaic` on narrow vignette devices.
+  # Reserve data-space and device-space from the longest label on this page.
+  max_label_chars <- max(nchar(label_data$name), 1L)
+  label_pad <- max(2, max_label_chars * 0.30)
+  left_margin <- max(20, min(90, max_label_chars * 3))
 
   ggplot2::ggplot(plot_data, ggplot2::aes(x = .data$x, y = .data$y, fill = .data$color)) +
     ggplot2::geom_tile(width = 1.8, height = 0.7) +
@@ -77,9 +83,9 @@
     ) +
     ggplot2::scale_fill_identity() +
     ggplot2::scale_x_continuous(expand = c(0, 0)) +
-    ggplot2::coord_fixed(xlim = c(-2, max_x + 2), clip = "off") +
+    ggplot2::coord_fixed(xlim = c(-label_pad, max_x + 2), clip = "off") +
     ggplot2::theme_void() +
-    ggplot2::theme(plot.margin = ggplot2::margin(20, 20, 20, 20))
+    ggplot2::theme(plot.margin = ggplot2::margin(20, 20, 20, left_margin))
 }
 
 
