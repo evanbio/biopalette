@@ -46,6 +46,7 @@ scale_fill_biopalette_gradient("mitonuclear_blue")
 | `babel` | Qualitative | 21 | Many categorical groups with labels or position support | Pan-cancer myeloid atlas (Cell, 2021) |
 | `bcell_atlas` | Qualitative | 7 | Four-to-seven categorical groups with direct labels or position support | Pan-cancer B-cell atlas (Cell, 2024) — graphical abstract |
 | `bcell_atlas2` | Diverging | 5 | Signed change between warm and cool biological states | Pan-cancer B-cell atlas (Cell, 2024) — IgA to IgG shift |
+| `bcell_clusters` | Qualitative | 20 | Many labeled categorical groups with position or faceting support | Pan-cancer B-cell atlas (Cell, 2024) — Figure 1B cluster legend |
 | `three_body` | Qualitative | 3 | Three groups, lineages, or trajectories | Pan-cancer myeloid atlas (Cell, 2021) |
 | `heat_light` | Qualitative | 2 | Paired categories or experimental conditions | Bond ampholysis (Nature, 2024) |
 | `tam_pastel` | Qualitative | 6 | Four-to-six categorical groups on light backgrounds | Pan-cancer myeloid atlas (Cell, 2021) |

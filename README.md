@@ -69,6 +69,7 @@ Each name links to its source page — source image, color table, and intended u
 | [`babel`](palettes/babel) | Qualitative | 21 | Many categorical groups with labels or position support | Pan-cancer myeloid atlas (Cell, 2021) — 22 cell types, 21 voices |
 | [`bcell_atlas`](palettes/bcell_atlas) | Qualitative | 7 | Four-to-seven categorical groups with direct labels or position support | Pan-cancer B-cell atlas (Cell, 2024) — graphical abstract |
 | [`bcell_atlas2`](palettes/bcell_atlas2) | Diverging | 5 | Signed change between warm and cool biological states | Pan-cancer B-cell atlas (Cell, 2024) — IgA to IgG shift |
+| [`bcell_clusters`](palettes/bcell_clusters) | Qualitative | 20 | Many labeled categorical groups with position or faceting support | Pan-cancer B-cell atlas (Cell, 2024) — Figure 1B cluster legend |
 | [`three_body`](palettes/three_body) | Qualitative | 3 | Three groups, lineages, or trajectories | Pan-cancer myeloid atlas (Cell, 2021) — three DC trajectories |
 | [`mitonuclear_blue`](palettes/mitonuclear_blue) | Sequential | 6 | Cool low-to-high continuous values | Mito-nuclear communication in aging (TIBS, 2022) — young blue |
 | [`mitonuclear_orange`](palettes/mitonuclear_orange) | Sequential | 6 | Warm low-to-high continuous values | Mito-nuclear communication in aging (TIBS, 2022) — aged orange |
