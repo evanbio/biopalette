@@ -1,8 +1,8 @@
 ---
-title: "Choosing palettes with Tessera"
+title: "From palette to plot with Tessera"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Choosing palettes with Tessera}
+  %\VignetteIndexEntry{From palette to plot with Tessera}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -17,205 +17,200 @@ knitr::opts_chunk$set(
 )
 ```
 
-A row of swatches can show which colors a palette contains. It cannot show
-whether small points remain distinct, thin lines can be followed, neighboring
-tiles separate cleanly, or a continuous ramp preserves the intended direction.
-Palette choice is therefore a decision about data semantics and graphical
-structure, not appearance in isolation.
+Choosing colors is only the beginning of a figure. A useful palette must match
+the data, remain clear in the intended graphical marks, and fit into code that
+another person can reproduce.
 
-[Tessera](https://folio.evanzhou.org/tessera) is the companion visual catalog
-for biopalette. It connects three kinds of material:
+[Tessera](https://folio.evanzhou.org/tessera) brings those steps together. It
+offers palettes to choose from, datasets to work with, and complete figure
+recipes to take into R. [Palette Lab](https://folio.evanzhou.org/apps/palette-lab)
+adds a quick visual way to switch palettes across familiar plot structures.
 
-- **palette stories** document the source image, extracted colors, ordering,
-  and intended use;
-- **toy datasets** provide stable data for trying a graphic;
-- **figure recipes** explain complete visualizations and their color decisions.
-
-The palette name shown in Tessera is the name used by `get_palette()` and the
-biopalette scale functions in R.
+This article follows the path a reader can take from discovering a palette to
+using it in a finished R figure.
 
 ```{r load}
 library(biopalette)
 library(ggplot2)
 ```
 
-## Start with meaning
+## Discover a palette
 
-Choose a palette type before choosing a particular set of colors:
+A Tessera palette page starts with the material needed to make a choice:
 
-| Data meaning | Palette type | Typical question |
-|---|---|---|
-| Unordered groups | Qualitative | Which sample, cell type, or treatment? |
-| Ordered magnitude | Sequential | How little or how much? |
-| Difference around a reference | Diverging | Below or above which center? |
+- the palette name used in R;
+- its qualitative, sequential, or diverging type;
+- the color swatches and HEX values;
+- the image from which the colors were drawn;
+- the source context and reference labels;
+- practical notes about suitable figures and known limitations.
 
-This classification is independent of the ggplot2 aesthetic. Both `color` and
-`fill` can encode categories or continuous values; they describe which part of
-a geometry receives the palette, not what the palette means.
+Explore the [Tessera palette collection](https://folio.evanzhou.org/tessera),
+or begin with a few contrasting examples:
 
-For example, species are unordered groups, so a qualitative palette is
-appropriate for either point outlines or box fills:
+- [`three_body`](https://folio.evanzhou.org/tessera/palettes/three_body) — three
+  qualitative colors for distinct groups;
+- [`mitonuclear_blue`](https://folio.evanzhou.org/tessera/palettes/mitonuclear_blue)
+  — a cool sequential ramp;
+- [`walter_white`](https://folio.evanzhou.org/tessera/palettes/walter_white) — a
+  diverging palette with a pale center;
+- [`babel`](https://folio.evanzhou.org/tessera/palettes/babel) — a large
+  qualitative palette for many groups.
 
-```{r meaning-qualitative}
-get_palette("three_body")
-```
+The displayed name is the handoff to biopalette:
 
-Density is ordered from low to high, so a sequential palette is appropriate:
-
-```{r meaning-sequential}
+```{r palette-name}
 get_palette("mitonuclear_blue", n = 5)
 ```
 
-A signed effect around zero calls for a diverging palette when negative and
-positive directions have distinct meaning:
+The complete English source records are also available in the
+[`palettes/`](https://github.com/evanbio/biopalette/tree/main/palettes) directory
+of the biopalette repository.
 
-```{r meaning-diverging}
-get_palette("walter_white", n = 7)
+## Compare it in Palette Lab
+
+A row of swatches does not reveal how colors behave as small points, thin
+lines, neighboring tiles, or large filled regions. Palette Lab provides a fast
+way to look beyond the swatch.
+
+Choose a palette and view it across a consistent set of displays, including
+grouped points, lines, bars, distributions, heatmaps, maps, survival curves,
+embeddings, volcano plots, and Manhattan plots. The data and graphical
+structure remain fixed while the colors change, making visual differences
+easy to inspect.
+
+Open a palette directly in the lab:
+
+- [`three_body` in Palette Lab](https://folio.evanzhou.org/apps/palette-lab?palette=three_body)
+- [`mitonuclear_blue` in Palette Lab](https://folio.evanzhou.org/apps/palette-lab?palette=mitonuclear_blue)
+- [`walter_white` in Palette Lab](https://folio.evanzhou.org/apps/palette-lab?palette=walter_white)
+- [`babel` in Palette Lab](https://folio.evanzhou.org/apps/palette-lab?palette=babel)
+
+When a qualitative palette has fewer colors than a display has groups, the
+remaining groups stay visible in a neutral color. This makes the palette's
+capacity visible without removing observations or recycling category colors.
+
+Palette Lab is a visual overview. When a plot is relevant to your work, follow
+it into the corresponding Tessera recipe for the R implementation and the
+reasoning behind it.
+
+## Learn from an R recipe
+
+Tessera recipes are complete, working figure examples. Each one is organized
+around the question the figure answers and the data shape it requires. A recipe
+typically provides:
+
+- the expected input variables;
+- the dataset used in the example;
+- suitable R packages and alternative methods;
+- the selected biopalette palette and why it fits;
+- complete R code;
+- rendered outputs;
+- common mistakes and interpretation notes;
+- the R and package versions used to produce the figures.
+
+Browse recipes by the figure you need:
+
+- [Grouped scatter](https://folio.evanzhou.org/tessera/figures/grouped_scatter)
+- [Correlation heatmap](https://folio.evanzhou.org/tessera/figures/correlation_heatmap)
+- [Choropleth map](https://folio.evanzhou.org/tessera/figures/choropleth_map)
+- [Survival curve](https://folio.evanzhou.org/tessera/figures/survival_curve)
+- [Expression heatmap](https://folio.evanzhou.org/tessera/figures/expression_heatmap)
+- [Manhattan plot](https://folio.evanzhou.org/tessera/figures/manhattan)
+
+The emphasis is practical: see the finished figure, understand the choices,
+and take the R implementation into your own analysis.
+
+## Work with the same data
+
+Tessera data pages make the recipe examples inspectable and reusable. Depending
+on the dataset, a page includes:
+
+- a downloadable CSV;
+- its origin and intended purpose;
+- dimensions, variable types, missingness, and a row preview;
+- notes for important variables;
+- the script used to generate or prepare the data.
+
+Examples range from familiar R datasets to biomedical, economic, weather, and
+reference data:
+
+- [`iris`](https://folio.evanzhou.org/tessera/data/iris) for grouped points and
+  distributions;
+- [`mtcars`](https://folio.evanzhou.org/tessera/data/mtcars) for correlation
+  and comparison examples;
+- [`lung_survival`](https://folio.evanzhou.org/tessera/data/lung_survival) for
+  Kaplan–Meier curves;
+- [`economy_countries`](https://folio.evanzhou.org/tessera/data/economy_countries)
+  for choropleth maps;
+- [`pbmc5k_donor4_embeddings`](https://folio.evanzhou.org/tessera/data/pbmc5k_donor4_embeddings)
+  for UMAP and t-SNE displays.
+
+Because the data page and recipe are linked, a reader can move from the figure
+to the exact example data instead of reconstructing an undocumented simulation.
+
+## Follow one complete path
+
+Suppose you need a sequential palette for a choropleth map.
+
+### 1. Read the palette
+
+Open [`mitonuclear_blue`](https://folio.evanzhou.org/tessera/palettes/mitonuclear_blue)
+to inspect its source image, six-color sequence, direction, and notes about the
+lightest classes.
+
+### 2. Look at the graphical behavior
+
+Open [`mitonuclear_blue` in Palette Lab](https://folio.evanzhou.org/apps/palette-lab?palette=mitonuclear_blue)
+and inspect the map, heatmap, and other continuous displays.
+
+### 3. Open the R recipe
+
+The [choropleth map recipe](https://folio.evanzhou.org/tessera/figures/choropleth_map)
+explains the input data, geographic join, missing-value treatment, continuous
+and binned versions, and the choice of a sequential palette.
+
+### 4. Inspect or download the data
+
+The [`economy_countries`](https://folio.evanzhou.org/tessera/data/economy_countries)
+page documents the example variables and provides the CSV used by the recipe.
+
+### 5. Use the palette in R
+
+The palette name carries directly into biopalette:
+
+```{r sequential-handoff, eval = FALSE}
+ggplot(map_data) +
+  geom_sf(aes(fill = value), color = "white", linewidth = 0.2) +
+  scale_fill_biopalette_gradient(
+    "mitonuclear_blue",
+    na.value = "grey85"
+  )
 ```
 
-## Test the palette in context
+The same path works for a diverging quantity. Read
+[`walter_white`](https://folio.evanzhou.org/tessera/palettes/walter_white), view
+it in Palette Lab, open a heatmap recipe, and place the scientific reference at
+the center in R:
 
-[Palette Lab](https://folio.evanzhou.org/apps/palette-lab) applies every Tessera
-palette to a broad set of preset graphics, including grouped points, lines,
-bars, distributions, heatmaps, maps, survival curves, embeddings, volcano
-plots, and Manhattan plots.
-
-The comparison follows a controlled design:
-
-1. the dataset remains fixed;
-2. the variable mapping remains fixed;
-3. the graphical structure remains fixed;
-4. only the palette changes;
-5. every observation remains present.
-
-When a palette does not have enough category colors, Palette Lab shows the
-unencoded groups with an explicit neutral color instead of dropping data or
-recycling colors. Sequential and diverging palettes can be interpolated for
-continuous displays; qualitative palettes remain discrete because a gradient
-between unordered category colors would imply structure that is not present.
-
-Open a particular palette directly by adding its name to the URL. For example:
-
-- [`three_body`](https://folio.evanzhou.org/apps/palette-lab?palette=three_body)
-- [`mitonuclear_blue`](https://folio.evanzhou.org/apps/palette-lab?palette=mitonuclear_blue)
-- [`walter_white`](https://folio.evanzhou.org/apps/palette-lab?palette=walter_white)
-
-Palette Lab runs in the browser and does not participate in package
-installation or vignette building. biopalette remains fully usable offline.
-
-## What to inspect
-
-Do not ask only whether a palette looks attractive. Inspect whether it still
-communicates correctly under the marks and layout of the intended figure.
-
-### Points and thin lines
-
-Small marks expose colors that are distinguishable as swatches but too similar
-at plotting size. In grouped scatterplots, inspect dense regions and isolated
-points. In multi-line plots, check whether one series can be followed across
-the full panel without repeatedly returning to the legend.
-
-```{r inspect-points}
-ggplot(iris, aes(Petal.Length, Petal.Width, color = Species)) +
-  geom_point(size = 2.4, alpha = 0.85) +
-  scale_color_biopalette("three_body") +
-  theme_minimal()
-```
-
-### Large fills and adjacent regions
-
-Bars, boxes, maps, and treemaps give colors much more area. A palette that is
-pleasant in small marks may become visually dominant when it fills half a
-page. Check boundaries between adjacent colors and whether labels remain
-readable over the fill.
-
-Transparency deserves separate attention. Overlapping fills create device-
-mixed colors that are not additional palette categories. A legend should
-explain the original groups, not assign new meanings to those overlap colors.
-
-### Continuous ramps
-
-For a sequential scale, confirm that the low and high ends appear in the
-intended order and that intermediate values do not collapse into a narrow
-lightness range:
-
-```{r inspect-sequential}
-ggplot(faithfuld, aes(waiting, eruptions, fill = density)) +
-  geom_raster() +
-  scale_fill_biopalette_gradient("mitonuclear_blue") +
-  theme_minimal()
-```
-
-For a diverging scale, identify the reference value explicitly. The visual
-center should represent that value rather than merely the midpoint of the
-observed range:
-
-```{r inspect-diverging}
-effect_data <- transform(
-  mtcars,
-  cylinders = factor(cyl),
-  gears = factor(gear),
-  mpg_difference = mpg - mean(mpg)
+```{r diverging-handoff, eval = FALSE}
+scale_fill_biopalette_gradient(
+  "walter_white",
+  midpoint = 0
 )
-
-ggplot(effect_data, aes(cylinders, gears, fill = mpg_difference)) +
-  geom_tile(color = "white", linewidth = 0.5) +
-  scale_fill_biopalette_gradient("walter_white", midpoint = 0) +
-  labs(x = "Cylinders", y = "Gears", fill = "MPG difference") +
-  theme_minimal()
 ```
 
-biopalette uses Lab color space for both palette resampling and ggplot2
-gradients. The colors requested with `get_palette(name, n = ...)` therefore
-follow the same interpolation convention as the corresponding continuous
-scale.
+## Choose where to begin
 
-## Move from Tessera to R
+- **I need colors:** browse [Tessera palettes](https://folio.evanzhou.org/tessera).
+- **I want a quick visual comparison:** open [Palette Lab](https://folio.evanzhou.org/apps/palette-lab).
+- **I need to make a particular figure in R:** browse the
+  [Tessera figure recipes](https://folio.evanzhou.org/tessera).
+- **I need example data:** browse the
+  [Tessera datasets](https://folio.evanzhou.org/tessera).
+- **I already know the palette name:** use `get_palette()` or a biopalette
+  scale directly.
 
-The handoff is intentionally small. After choosing a palette in Tessera or
-Palette Lab, use the displayed name directly:
-
-```{r tessera-to-r, eval = FALSE}
-# Unordered groups
-scale_color_biopalette("three_body")
-
-# Ordered continuous values
-scale_fill_biopalette_gradient("mitonuclear_blue")
-
-# Signed values around a meaningful reference
-scale_fill_biopalette_gradient("walter_white", midpoint = 0)
-```
-
-Use `reverse = TRUE` if the direction should be flipped. For discrete scales,
-biopalette requests the number of colors trained by the data: qualitative
-palettes supply the first category colors, while sequential and diverging
-palettes sample across the complete ramp.
-
-Each [Tessera palette story](https://folio.evanzhou.org/tessera) records more
-than the HEX vector. Read it when order, source context, or the meaning of an
-individual color matters. The package supplies a reproducible implementation;
-the story explains the design decision being reproduced.
-
-## What Palette Lab does not decide
-
-Palette Lab is a structured comparison environment, not an automatic approval
-test. A final figure still needs review in its actual context:
-
-- the palette must match the scientific meaning of the mapped variable;
-- labels, shapes, facets, and direct annotation may need to reinforce color;
-- accessibility should be checked under relevant color-vision conditions;
-- print, projection, and journal production can change apparent contrast;
-- a color inherited from a source image does not automatically acquire a
-  biological meaning in a new dataset.
-
-The goal is not to find one palette that wins every preset. It is to expose how
-a palette behaves before it becomes part of a real analysis.
-
-## Related documentation
-
-- `vignette("get-started", package = "biopalette")` covers the core R workflow.
-- `vignette("palette", package = "biopalette")` covers custom palette
-  collections.
-- `?scale_color_biopalette` documents discrete scales.
-- `?scale_color_biopalette_gradient` documents continuous gradients and
-  diverging midpoints.
+Tessera helps move from looking at colors to understanding a figure. Palette
+Lab makes comparison immediate, recipes provide the reproducible R work, and
+biopalette brings the selected colors into your own data.

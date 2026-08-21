@@ -126,6 +126,17 @@ remove.packages("biopalette")
 If more than one library contains biopalette, pass the relevant library path
 through the `lib` argument of `remove.packages()`.
 
+## Where to begin
+
+After installation:
+
+- open `vignette("get-started", package = "biopalette")` for the core R
+  workflow;
+- open `vignette("palette", package = "biopalette")` to browse the palettes
+  included with the package;
+- open `vignette("tessera", package = "biopalette")` to continue from palette
+  discovery to example data and complete R figure recipes.
+
 ## Getting help
 
 - Read the [package documentation](https://evanbio.github.io/biopalette/).

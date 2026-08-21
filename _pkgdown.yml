@@ -144,12 +144,12 @@ home:
   - text: "Installation Guide"
     href: articles/install.html
     desc: "Install biopalette and verify your setup"
-  - text: "Custom Palette Collections"
+  - text: "Palette Collection"
     href: articles/palette.html
-    desc: "Create, validate, share, update, and remove custom palettes"
+    desc: "Explore the curated palettes, their sources, and intended uses"
   - text: "Tessera & Palette Lab"
     href: articles/tessera.html
-    desc: "Evaluate palettes in realistic graphical structures"
+    desc: "Move from palettes to example data and reproducible R figure recipes"
   - text: "Function Reference"
     href: reference/
     desc: "Complete documentation for all functions"
@@ -208,9 +208,9 @@ navbar:
     vignettes:
       text: "Vignettes"
       menu:
-      - text: "Custom Palette Collections"
+      - text: "The Palette Collection"
         href: articles/palette.html
-      - text: "Choosing Palettes with Tessera"
+      - text: "From Palette to Plot with Tessera"
         href: articles/tessera.html
       - text: "--------"
       - text: "All Articles"
