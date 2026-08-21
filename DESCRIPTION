@@ -4,11 +4,12 @@ Version: 0.1.0
 Authors@R:
     person("Yibin", "Zhou", email = "evanzhou.bio@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0009-0009-4600-8175"))
-Description: Provides a curated collection of color palettes for biomedical
-    visualization, each inspired by a reference image such as a film still,
-    artwork, or scientific figure. The package includes tools to create,
-    retrieve, preview, organize, and apply palettes for more distinctive and
-    context-aware data graphics.
+Description: Provides a curated collection of image-inspired color palettes
+    for biomedical visualization. The palettes are organized as qualitative,
+    sequential, or diverging scales and include documented source context and
+    intended use. The package provides functions to retrieve, inspect,
+    preview, and apply these palettes in base R and ggplot2 graphics, together
+    with utilities for working with palette definitions.
 License: MIT + file LICENSE
 URL: https://github.com/evanbio/biopalette, https://evanbio.github.io/biopalette/
 BugReports: https://github.com/evanbio/biopalette/issues

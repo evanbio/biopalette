@@ -30,5 +30,13 @@ And yet — one red coat. The only signal in an otherwise black-and-white world.
 
 ## Use cases
 
-- Binary contrasts: up/down, positive/negative, treatment/control
-- Highlighting a single signal against a dark or neutral background
+- Two-level categorical comparisons in which one category is intentionally
+  emphasized against a dark or neutral counterpart
+- Highlighting a single signal, event, or selected group in points, bars, or
+  annotation marks
+- Small categorical displays where a strong red-versus-black contrast is useful
+
+This is an asymmetric two-color qualitative palette, not a diverging scale.
+Do not use it for continuous values, positive-versus-negative interpretation,
+or any mapping that requires a neutral midpoint. The black swatch can disappear
+on dark backgrounds; check the final figure background before using it.

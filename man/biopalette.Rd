@@ -6,9 +6,10 @@
 \alias{biopalette}
 \title{biopalette: Image-Inspired Color Palettes for Biomedical Visualization}
 \description{
-The \strong{biopalette} package provides story-driven color palettes for biomedical
-visualization, each sourced from a real image — a film still, a scientific
-figure, or an artwork — and translated into a reproducible color system.
+The \strong{biopalette} package provides image-inspired color palettes for
+biomedical visualization. Each palette is sourced from a real image — a film
+still, a scientific figure, or an artwork — and translated into a reproducible
+color system.
 }
 \details{
 Main features:

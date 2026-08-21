@@ -1,28 +1,31 @@
 ---
-# 色板名。snake_case，^[a-z][a-z0-9_]*$。
-# 三处必须一致：这里、文件夹名、inst/extdata/palettes/<type>/<name>.json。
-# 也就是 get_palette("<name>") 里的那个名字。
+# Palette name. Use snake_case: ^[a-z][a-z0-9_]*$.
+# Keep this value identical in the folder name and in
+# inst/extdata/palettes/<type>/<name>.json. This is the name used by
+# get_palette("<name>").
 name: palette_name
 
-# 收藏编号。整数，按收进集子的先后排。
-# 只是元数据，不进路径 —— 所以重新编号是零成本的。
+# Collection index. Use an integer reflecting the order in which palettes were
+# added to the collection. This is metadata only and is not part of any path.
 index: 0
 
-# 结构维度：这套色**能用来画什么**。
+# Structural type: what kind of data mapping the palette supports.
 # qualitative | sequential | diverging
-# 必须与 JSON 的 type 一致（它决定 JSON 放在哪个子目录）。
+# This must match the JSON type and determines its subdirectory.
 type: qualitative
 
-# 出处维度：色是从哪儿取的。与 type 正交，不混用。
+# Source category: where the reference image comes from. This is independent
+# of type.
 # paper | screen
 source: paper
 
-# 源图文件名，在 palettes/_source/ 下，不含路径、不含扩展名。与色板同名。
-# 一图出多套色时，用第一个用它的那个色板名 —— walter_white / 2 / 3 都写 walter_white。
-# 指向同一张图这件事本身就说明了同源，正文里不必再写一遍。
+# Source image stem in palettes/_source/, without a path or extension. When
+# several palettes use one image, use the stem of the first palette that uses
+# it. For example, walter_white, walter_white2, and walter_white3 all use
+# walter_white here. The shared image already records their common source.
 image: palette_name
 
-# 收进集子的日子，YYYY-MM-DD。
+# Date added to the collection, in YYYY-MM-DD format.
 date: 2026-01-01
 ---
 
@@ -32,27 +35,33 @@ date: 2026-01-01
 
 ![source](../_source/palette_name.jpg)
 
-为什么是这张图。它是什么、出自哪里、意味着什么。
+Explain why this image is the reference: what it is, where it comes from, and
+what visual structure it contributes to the palette.
 
-写故事，不写参数。这一段是这个色板存在的理由，也是它和一串十六进制的区别。
-
-如果取色时做了转译——比如纯黑纯白造成色阶断层，手工补了一档过渡——在这里说明。
-**没发生就不写，不留空栏。**
+Describe the sampling or reconstruction decisions that affect interpretation.
+If the colors were translated—for example, by adding a transition between
+extreme black and white—document that decision here. Do not add an empty
+section when no such decision was made.
 
 ## Palette
 
 ![preview](preview.png)
 
-<!-- HEX 照抄 JSON，顺序有意义。
-     第三列：影视取色写色名（Sky teal），论文取色写原图分组名（Macro_SPP1）——
-     后者要补一句说明，声明那只是出处记录，用的人可以自行映射。 -->
+<!-- Copy HEX values from the JSON; order is meaningful.
+     For screen sources, use color names (for example, Sky teal). For paper
+     sources, use the source figure's group labels (for example, Macro_SPP1),
+     and state that those labels document the source rather than prescribing
+     a mapping for users. -->
 
 | # | HEX | Color |
 |---|---|---|
-| 1 | `#000000` | 色名 or 原图分组名 |
+| 1 | `#000000` | Color name or source group label |
 
 ## Use cases
 
-<!-- 具体的图种或对比场景。不写"适合数据可视化"这种等于没说的话。 -->
+<!-- Name concrete plot types or comparison settings. Avoid vague statements
+     such as "suitable for data visualization." Include limitations when color
+     alone is insufficient, such as close hues, light swatches, or accessibility
+     concerns. -->
 
 - ...
