@@ -144,9 +144,12 @@ home:
   - text: "Installation Guide"
     href: articles/install.html
     desc: "Install biopalette and verify your setup"
-  - text: "Color Palette Management"
+  - text: "Custom Palette Collections"
     href: articles/palette.html
-    desc: "Full function reference with examples"
+    desc: "Create, validate, share, update, and remove custom palettes"
+  - text: "Tessera & Palette Lab"
+    href: articles/tessera.html
+    desc: "Evaluate palettes in realistic graphical structures"
   - text: "Function Reference"
     href: reference/
     desc: "Complete documentation for all functions"
@@ -205,8 +208,10 @@ navbar:
     vignettes:
       text: "Vignettes"
       menu:
-      - text: "Color Palette Management"
+      - text: "Custom Palette Collections"
         href: articles/palette.html
+      - text: "Choosing Palettes with Tessera"
+        href: articles/tessera.html
       - text: "--------"
       - text: "All Articles"
         href: articles/
@@ -234,15 +239,15 @@ reference:
     Retrieve and browse available palettes.
   contents:
   - get_palette
+  - palette_info
   - list_palettes
   - palette_gallery
 
 - title: "Palette Management"
   desc: >
-    Create, compile, preview, and remove palettes.
+    Create, preview, and remove palettes.
   contents:
   - create_palette
-  - compile_palettes
   - preview_palette
   - remove_palette
 
@@ -253,11 +258,12 @@ reference:
   - hex2rgb
   - rgb2hex
 
-- title: "Data"
+- title: "ggplot2 Scales"
   desc: >
-    Built-in palette dataset.
+    Apply biopalette palettes to discrete mappings and continuous gradients.
   contents:
-  - palettes
+  - scale_color_biopalette
+  - scale_color_biopalette_gradient
 
 - title: "Package"
   desc: >

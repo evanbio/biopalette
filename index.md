@@ -30,6 +30,9 @@ get_palette("walter_white", type = "diverging")
 
 preview_palette("gene_red")
 palette_gallery()
+
+scale_color_biopalette("three_body")
+scale_fill_biopalette_gradient("mitonuclear_blue")
 ```
 
 ## Palettes
@@ -46,13 +49,16 @@ palette_gallery()
 | `tam_pastel` | Qualitative | 6 | Pan-cancer myeloid atlas (Cell, 2021) |
 | `cancer_mosaic` | Qualitative | 15 | Pan-cancer myeloid atlas (Cell, 2021) |
 | `lactate_steps` | Qualitative | 5 | Lactate metabolism and immunotherapy (JECCR, 2024) |
+| `mitonuclear_blue` | Sequential | 6 | Mito-nuclear communication in aging (TIBS, 2022) — young blue |
+| `mitonuclear_orange` | Sequential | 6 | Mito-nuclear communication in aging (TIBS, 2022) — aged orange |
 
 ## Function Areas
 
 | Area | Functions |
 |---|---|
-| Palette access | `get_palette()`, `list_palettes()`, `palette_gallery()` |
-| Palette management | `create_palette()`, `compile_palettes()`, `remove_palette()`, `preview_palette()` |
+| Palette access | `get_palette()`, `palette_info()`, `list_palettes()`, `palette_gallery()` |
+| Palette management | `create_palette()`, `remove_palette()`, `preview_palette()` |
+| ggplot2 scales | `scale_color_biopalette()`, `scale_fill_biopalette()`, and gradient variants |
 | Color utilities | `hex2rgb()`, `rgb2hex()` |
 
 ## Documentation

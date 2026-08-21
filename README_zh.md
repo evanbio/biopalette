@@ -36,6 +36,10 @@ get_palette("walter_white", type = "diverging")
 
 preview_palette("gene_red")
 palette_gallery()
+
+# ggplot2 离散与连续尺度
+scale_color_biopalette("three_body")
+scale_fill_biopalette_gradient("mitonuclear_blue")
 ```
 
 ---
@@ -75,21 +79,31 @@ devtools::install_github("evanbio/biopalette")
 ## 函数列表
 
 <details>
-<summary><b>🎨 配色获取</b>（3 个）</summary>
+<summary><b>🎨 配色获取</b>（4 个）</summary>
 
 - `get_palette()` — 按名称、类型和数量获取颜色
+- `palette_info()` — 获取单个配色的元数据
 - `list_palettes()` — 以数据框形式列出所有配色
 - `palette_gallery()` — 分页浏览全部配色预览
 
 </details>
 
 <details>
-<summary><b>🔧 配色管理</b>（4 个）</summary>
+<summary><b>🔧 配色管理</b>（3 个）</summary>
 
 - `create_palette()` — 将新配色写入 JSON
-- `compile_palettes()` — 将所有 JSON 编译为命名列表
 - `remove_palette()` — 按名称删除配色
 - `preview_palette()` — 渲染色块预览图
+
+</details>
+
+<details>
+<summary><b>📊 ggplot2 尺度</b>（6 个）</summary>
+
+- `scale_color_biopalette()` / `scale_colour_biopalette()` — 离散颜色尺度
+- `scale_fill_biopalette()` — 离散填充尺度
+- `scale_color_biopalette_gradient()` / `scale_colour_biopalette_gradient()` — 连续颜色渐变
+- `scale_fill_biopalette_gradient()` — 连续填充渐变
 
 </details>
 

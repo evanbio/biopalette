@@ -36,6 +36,10 @@ get_palette("walter_white", type = "diverging")
 
 preview_palette("gene_red")
 palette_gallery()
+
+# Discrete and continuous ggplot2 scales
+scale_color_biopalette("three_body")
+scale_fill_biopalette_gradient("mitonuclear_blue")
 ```
 
 ---
@@ -75,21 +79,31 @@ Each name links to its story page — source image, color table, and when to use
 ## Function Reference
 
 <details>
-<summary><b>🎨 Palette Access</b> (3)</summary>
+<summary><b>🎨 Palette Access</b> (4)</summary>
 
 - `get_palette()` — retrieve colors by name, type, and size
+- `palette_info()` — metadata for one named palette
 - `list_palettes()` — data frame of all available palettes
 - `palette_gallery()` — paged visual gallery of all palettes
 
 </details>
 
 <details>
-<summary><b>🔧 Palette Management</b> (4)</summary>
+<summary><b>🔧 Palette Management</b> (3)</summary>
 
 - `create_palette()` — write a new palette to JSON
-- `compile_palettes()` — compile all JSONs into a named list
 - `remove_palette()` — remove a palette by name
 - `preview_palette()` — render color swatches to a plot
+
+</details>
+
+<details>
+<summary><b>📊 ggplot2 Scales</b> (6)</summary>
+
+- `scale_color_biopalette()` / `scale_colour_biopalette()` — discrete color scales
+- `scale_fill_biopalette()` — discrete fill scales
+- `scale_color_biopalette_gradient()` / `scale_colour_biopalette_gradient()` — continuous color gradients
+- `scale_fill_biopalette_gradient()` — continuous fill gradients
 
 </details>
 
@@ -109,6 +123,6 @@ MIT License © 2025–2026 [Yibin Zhou](mailto:evanzhou.bio@gmail.com)
 
 <div align="center">
 
-**Made with ❤️ by [Yibin Zhou](https://github.com/evanbio)**
+**Made with care by [Yibin Zhou](https://github.com/evanbio)**
 
 </div>

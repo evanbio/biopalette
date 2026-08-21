@@ -1,123 +1,200 @@
 ---
-title: "Get Started with biopalette"
+title: "Get started with biopalette"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Get Started with biopalette}
+  %\VignetteIndexEntry{Get started with biopalette}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
-  collapse   = TRUE,
-  comment    = "#>",
-  fig.width  = 7,
-  fig.height = 3,
-  fig.align  = "center"
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 3.5,
+  fig.align = "center"
 )
 ```
 
-## Overview
+biopalette provides image-inspired color palettes for biomedical
+visualization. Each palette has a documented source and one of three types:
 
-**biopalette** provides color palettes for biomedical visualization, each sourced from a real image. This guide covers the core workflow: browsing, retrieving, previewing, and using palettes in plots.
+- **qualitative** palettes distinguish unordered groups;
+- **sequential** palettes represent values progressing from low to high;
+- **diverging** palettes show variation around a meaningful center.
 
-## Installation
+This guide follows the usual workflow: find a palette, inspect it, retrieve the
+colors, and apply it directly to a plot. See
+`vignette("install", package = "biopalette")` if the package is not yet
+installed.
 
-```{r install, eval = FALSE}
-pak::pkg_install("evanbio/biopalette")
-```
+## Find a palette
 
-## Browse Available Palettes
+Load biopalette and inspect the bundled collection:
 
-```{r list}
+```{r list-palettes}
 library(biopalette)
 
-list_palettes()
+list_palettes()[c("name", "type", "n_color")]
 ```
 
-`list_palettes()` returns a data frame of all available palettes with their name, type, and number of colors.
+Filter by type when the visual role is already known:
 
-`palette_gallery()` renders a visual overview and returns one ggplot per page, so you can display the page you want:
-
-```{r gallery, fig.height = 4}
-pages <- palette_gallery(verbose = FALSE)
-names(pages)
-
-pages[["qualitative_page1"]]
+```{r filter-palettes}
+list_palettes(type = "sequential")[c("name", "n_color")]
 ```
 
-## Retrieve Colors
+`palette_info()` returns the complete metadata for one palette without drawing
+it:
 
-```{r get}
-# Full palette
+```{r palette-info}
+palette_info("mitonuclear_blue")
+```
+
+For visual browsing, call `palette_gallery()` in an interactive R session. It
+builds one gallery page per palette type and reports each page as it is ready.
+
+```{r gallery, eval = FALSE}
+palette_gallery()
+```
+
+## Retrieve colors
+
+`get_palette()` returns a character vector of HEX colors. Palette names are
+unique across the bundled collection, so `type` is normally unnecessary:
+
+```{r get-palette}
 get_palette("three_body")
+get_palette("mitonuclear_blue")
+```
 
-# First n colors
+The meaning of `n` follows the palette type. For a qualitative palette, it
+selects the first `n` category colors and cannot exceed the palette size:
+
+```{r qualitative-n}
 get_palette("babel", n = 5)
-
-# Specify type for disambiguation
-get_palette("walter_white", type = "diverging")
 ```
 
-The returned value is a character vector of HEX codes, ready to pass to any plotting function.
+For sequential and diverging palettes, the stored colors are stops along a
+ramp. Asking for `n` colors samples the whole ramp in Lab color space rather
+than taking colors from only one end:
 
-## Preview a Palette
-
-```{r preview-rect, fig.height = 2.2}
-preview_palette("gene_red", plot_type = "rect")
+```{r continuous-n}
+get_palette("mitonuclear_blue", n = 3)
+get_palette("walter_white", n = 7)
 ```
 
-```{r preview-babel, fig.height = 2.2}
-preview_palette("babel", plot_type = "rect")
+Use `reverse = TRUE` when the direction of a palette should be flipped:
+
+```{r reverse}
+get_palette("mitonuclear_blue", n = 3, reverse = TRUE)
 ```
 
-```{r preview-circle, fig.height = 2.5}
-preview_palette("three_body", plot_type = "circle")
-```
+The returned vector can be used anywhere that accepts R color values. For
+ggplot2, the scale functions provide a shorter and safer route.
 
-## Use in ggplot2
+## Use a discrete scale
 
-```{r ggplot, fig.height = 4}
+Map a qualitative palette to unordered groups with
+`scale_color_biopalette()`:
+
+```{r discrete-color, fig.height = 4}
 library(ggplot2)
 
 ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
-  geom_point(size = 2) +
-  scale_color_manual(values = get_palette("three_body")) +
+  geom_point(size = 2.5) +
+  scale_color_biopalette("three_body") +
   theme_minimal()
 ```
 
-For continuous scales, pass the colors to `scale_fill_gradientn()` or `scale_color_gradientn()`. Diverging palettes are the natural fit here:
+Use a `color` scale when the mapped aesthetic is `color` (or `colour`), and a
+`fill` scale when the mapped aesthetic is `fill`. This distinction belongs to
+the geometry, not to the palette itself:
 
-```{r ggplot-continuous, fig.height = 4}
+```{r discrete-fill, fig.height = 4}
+ggplot(iris, aes(Species, Sepal.Length, fill = Species)) +
+  geom_boxplot() +
+  scale_fill_biopalette("three_body", guide = "none") +
+  theme_minimal()
+```
+
+Discrete scales request exactly as many colors as the trained data has levels.
+Qualitative palettes use their first `n` colors; sequential and diverging
+palettes sample `n` colors across the complete ramp. A qualitative palette
+raises an informative error when it does not contain enough colors.
+
+## Use a continuous gradient
+
+Continuous data requires a sequential or diverging palette and one of the
+gradient functions. A sequential fill gradient is appropriate for density:
+
+```{r sequential-gradient, fig.height = 4}
 ggplot(faithfuld, aes(waiting, eruptions, fill = density)) +
-  geom_tile() +
-  scale_fill_gradientn(colors = get_palette("walter_white")) +
+  geom_raster() +
+  scale_fill_biopalette_gradient("mitonuclear_blue") +
   theme_minimal()
 ```
 
-## Color Utilities
+For values interpreted relative to a reference point, use a diverging palette
+and set `midpoint`. Here zero means no deviation from the mean:
 
-```{r utils}
-hex2rgb("#1688A7")
-rgb2hex(c(22, 136, 167))
+```{r diverging-gradient, fig.height = 4}
+plot_data <- transform(
+  mtcars,
+  cylinders = factor(cyl),
+  gears = factor(gear),
+  mpg_difference = mpg - mean(mpg)
+)
+
+ggplot(plot_data, aes(cylinders, gears, fill = mpg_difference)) +
+  geom_tile(color = "white", linewidth = 0.5) +
+  scale_fill_biopalette_gradient("walter_white", midpoint = 0) +
+  labs(x = "Cylinders", y = "Gears", fill = "MPG difference") +
+  theme_minimal()
 ```
 
-## Function Reference
+Qualitative palettes cannot define continuous gradients because interpolating
+unordered category colors has no stable meaning.
 
-| Function | Purpose |
-|---|---|
-| `list_palettes()` | Data frame of all available palettes |
-| `palette_gallery()` | Visual gallery of all palettes |
-| `get_palette()` | Retrieve colors by name, type, and size |
-| `preview_palette()` | Render color swatches |
-| `create_palette()` | Add a new palette |
-| `compile_palettes()` | Compile all JSONs into a named list |
-| `remove_palette()` | Remove a palette by name |
-| `hex2rgb()` | HEX to RGB |
-| `rgb2hex()` | RGB to HEX |
+## Preview one palette
 
-## Getting Help
+`preview_palette()` draws directly to the active graphics device. Its five
+styles are `"bar"`, `"pie"`, `"point"`, `"rect"`, and `"circle"`:
 
-- **Documentation**: <https://evanbio.github.io/biopalette/>
-- **Issues**: [GitHub Issues](https://github.com/evanbio/biopalette/issues)
-- **Function help**: `?get_palette`, `?preview_palette`
+```{r preview, fig.height = 2.5}
+preview_palette("walter_white", plot_type = "rect")
+```
+
+The same `n` and `reverse` rules used by `get_palette()` also apply to previews:
+
+```{r preview-options, fig.height = 2.5}
+preview_palette(
+  "mitonuclear_orange",
+  n = 4,
+  reverse = TRUE,
+  plot_type = "circle"
+)
+```
+
+## Convert color formats
+
+`hex2rgb()` and `rgb2hex()` convert between HEX and RGB or RGBA values. Alpha
+is preserved when present:
+
+```{r color-conversion}
+rgba <- hex2rgb(c("#1688A7", "#FF450080"))
+rgba
+rgb2hex(rgba)
+```
+
+## Next steps
+
+- Read `vignette("palette", package = "biopalette")` to create and manage a
+  custom JSON palette collection.
+- Open `?scale_color_biopalette` for discrete scale options.
+- Open `?scale_color_biopalette_gradient` for continuous gradients,
+  transformations, custom stop positions, and diverging midpoints.
+- Browse the [palette stories](https://github.com/evanbio/biopalette/tree/main/palettes)
+  for the source and intended use of every bundled palette.
+- Report reproducible problems in [GitHub Issues](https://github.com/evanbio/biopalette/issues).

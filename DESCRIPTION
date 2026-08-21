@@ -7,7 +7,7 @@ Authors@R:
 Description: Provides a curated collection of color palettes for biomedical
     visualization, each inspired by a reference image such as a film still,
     artwork, or scientific figure. The package includes tools to create,
-    compile, retrieve, preview, and organize palettes for more distinctive and
+    retrieve, preview, organize, and apply palettes for more distinctive and
     context-aware data graphics.
 License: MIT + file LICENSE
 URL: https://github.com/evanbio/biopalette, https://evanbio.github.io/biopalette/
