@@ -31,8 +31,6 @@ comment:
 ignore:
   - "tests/"
   - "man/"
-  - "data/"
-  - "data-raw/"
   - "inst/"
   - "docs/"
   - "vignettes/"

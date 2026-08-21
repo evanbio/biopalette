@@ -10,9 +10,9 @@
 ^cran-comments\.md$
 ^_pkgdown\.yml$
 ^\.gitignore$
+^\.gitattributes$
 ^CONTRIBUTING\.md$
 ^LICENSE\.md$
-^data-raw$
 ^BIOPALETTE\.md$
 ^AGENTS\.md$
 ^\.codex$
@@ -20,3 +20,4 @@
 ^\.agents$
 ^skills-lock\.json$
 ^PLANNING\.md$
+^Rplots\.pdf$
