@@ -63,7 +63,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">biopalette</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -97,60 +97,69 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.1.0" id="biopalette-010">biopalette 0.1.0<a class="anchor" aria-label="anchor" href="#biopalette-010"></a></h2>
-<p><em>Released: April 2026</em></p>
-<p>Initial release of <strong>biopalette</strong> — image-inspired color palettes for biomedical visualization.</p>
+<h2 class="pkg-version" data-toc-text="0.2.0" id="biopalette-020">biopalette 0.2.0<a class="anchor" aria-label="anchor" href="#biopalette-020"></a></h2>
+<p><em>Current release: August 2026</em></p>
 <div class="section level3">
-<h3 id="new-features-0-1-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-1-0"></a></h3>
-<ul><li>
-<code><a href="../reference/get_palette.html">get_palette()</a></code> — retrieve colors by name, type, and size</li>
-<li>
-<code><a href="../reference/palette_info.html">palette_info()</a></code> — metadata for one named palette</li>
-<li>
-<code><a href="../reference/list_palettes.html">list_palettes()</a></code> — data frame of all available palettes</li>
-<li>
-<code><a href="../reference/palette_gallery.html">palette_gallery()</a></code> — paged visual gallery of all palettes</li>
-<li>
-<code><a href="../reference/preview_palette.html">preview_palette()</a></code> — render color swatches to a plot</li>
-<li>
-<code><a href="../reference/create_palette.html">create_palette()</a></code> — write a new palette to JSON</li>
-<li>
-<code><a href="../reference/remove_palette.html">remove_palette()</a></code> — remove a palette by name</li>
-<li>
-<code><a href="../reference/hex2rgb.html">hex2rgb()</a></code> — convert HEX to RGB</li>
-<li>
-<code><a href="../reference/rgb2hex.html">rgb2hex()</a></code> — convert RGB to HEX</li>
-<li>
-<code><a href="../reference/scale_color_biopalette.html">scale_color_biopalette()</a></code> / <code><a href="../reference/scale_color_biopalette.html">scale_fill_biopalette()</a></code> — discrete ggplot2 scales</li>
-<li>
-<code><a href="../reference/scale_color_biopalette_gradient.html">scale_color_biopalette_gradient()</a></code> / <code><a href="../reference/scale_color_biopalette_gradient.html">scale_fill_biopalette_gradient()</a></code> — continuous ggplot2 gradients</li>
+<h3 id="new-features-0-2-0">New features<a class="anchor" aria-label="anchor" href="#new-features-0-2-0"></a></h3>
+<ul><li>Redesigned palette storage and validation around the JSON palette contract.</li>
+<li>Added <code><a href="../reference/palette_info.html">palette_info()</a></code> for inspecting one palette’s metadata and colors.</li>
+<li>Added <code><a href="../reference/scale_color_biopalette.html">scale_color_biopalette()</a></code> and <code><a href="../reference/scale_color_biopalette.html">scale_fill_biopalette()</a></code> for discrete ggplot2 scales.</li>
+<li>Added <code><a href="../reference/scale_color_biopalette_gradient.html">scale_color_biopalette_gradient()</a></code> and <code><a href="../reference/scale_color_biopalette_gradient.html">scale_fill_biopalette_gradient()</a></code> for sequential and diverging gradients.</li>
+<li>Expanded the test suite across palette storage, color conversion, plotting, scales, and startup behavior.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="palettes-0-1-0">Palettes<a class="anchor" aria-label="anchor" href="#palettes-0-1-0"></a></h3>
+<h3 id="palettes-0-2-0">Palettes<a class="anchor" aria-label="anchor" href="#palettes-0-2-0"></a></h3>
+<ul><li>Added <code>mitonuclear_blue</code> and <code>mitonuclear_orange</code> — sequential palettes inspired by mito-nuclear communication research (TIBS, 2022).</li>
+<li>Added <code>heat_light</code> — qualitative, 2 colors, from a bond ampholysis illustration (Nature, 2024).</li>
+<li>Added <code>tam_pastel</code> — qualitative, 6 colors, from the pan-cancer myeloid atlas (Cell, 2021).</li>
+<li>Added <code>cancer_mosaic</code> — qualitative, 15 colors, from the pan-cancer myeloid atlas (Cell, 2021).</li>
+<li>Added <code>lactate_steps</code> — qualitative, 5 colors, from lactate metabolism and immunotherapy research (JECCR, 2024).</li>
+<li>Added <code>bcell_atlas</code> — qualitative, 7 colors, from a pan-cancer B-cell atlas graphical abstract (Cell, 2024).</li>
+<li>Added <code>bcell_atlas2</code> — diverging, 5 colors, encoding the IgA-to-IgG shift in the same source article.</li>
+<li>Added <code>bcell_clusters</code> — qualitative, 20 colors, reconstructed from Figure 1B of the same pan-cancer B-cell atlas; the published order puts broadly useful major-group colors first.</li>
+<li>Added source images, curation records, previews, and showcase figures for the new palettes.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="documentation-and-integrations-0-2-0">Documentation and integrations<a class="anchor" aria-label="anchor" href="#documentation-and-integrations-0-2-0"></a></h3>
+<ul><li>Reworked the English and Chinese guides around qualitative, sequential, and diverging use cases.</li>
+<li>Added a Tessera workflow vignette and linked biopalette to Tessera and Palette Lab.</li>
+<li>Expanded README and pkgdown palette tables with recommended use cases and figure showcases.</li>
+<li>Updated palette curation templates and source records for the image-inspired collection.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="maintenance-0-2-0">Maintenance<a class="anchor" aria-label="anchor" href="#maintenance-0-2-0"></a></h3>
+<ul><li>Aligned package, coverage, and build configuration with the redesigned palette storage model.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.1.0" id="biopalette-010">biopalette 0.1.0<a class="anchor" aria-label="anchor" href="#biopalette-010"></a></h2>
+<p><em>Initial release: April 2026</em></p>
+<p>The initial release established the package API for retrieving, previewing, organizing, and applying image-inspired color palettes in biomedical visualization.</p>
+<div class="section level3">
+<h3 id="core-functionality-0-1-0">Core functionality<a class="anchor" aria-label="anchor" href="#core-functionality-0-1-0"></a></h3>
 <ul><li>
-<code>gene_red</code> — qualitative, 2 colors. <em>Better Call Saul</em> — Gene Takavic’s red coat</li>
+<code><a href="../reference/get_palette.html">get_palette()</a></code> — retrieve colors by name, type, and size.</li>
 <li>
-<code>walter_white</code> — diverging, 5 colors. <em>Breaking Bad</em> — desert to sky</li>
+<code><a href="../reference/list_palettes.html">list_palettes()</a></code> — inspect the bundled palette collection.</li>
 <li>
-<code>walter_white2</code> — qualitative, 5 colors. <em>Breaking Bad</em> — muted earth tones</li>
+<code><a href="../reference/palette_gallery.html">palette_gallery()</a></code> — render a paged visual gallery.</li>
 <li>
-<code>walter_white3</code> — diverging, 5 colors. <em>Breaking Bad</em> — warm counterpart</li>
+<code><a href="../reference/preview_palette.html">preview_palette()</a></code> — draw palette swatches in several styles.</li>
 <li>
-<code>babel</code> — qualitative, 21 colors. Pan-cancer myeloid atlas (Cell, 2021)</li>
+<code><a href="../reference/create_palette.html">create_palette()</a></code> and <code><a href="../reference/remove_palette.html">remove_palette()</a></code> — manage palette JSON files.</li>
 <li>
-<code>three_body</code> — qualitative, 3 colors. Pan-cancer myeloid atlas (Cell, 2021)</li>
+<code><a href="../reference/hex2rgb.html">hex2rgb()</a></code> and <code><a href="../reference/rgb2hex.html">rgb2hex()</a></code> — convert HEX and RGB color values.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="initial-palette-collection-0-1-0">Initial palette collection<a class="anchor" aria-label="anchor" href="#initial-palette-collection-0-1-0"></a></h3>
+<ul><li>
+<code>gene_red</code> — qualitative, 2 colors, inspired by <em>Better Call Saul</em>.</li>
 <li>
-<code>heat_light</code> — qualitative, 2 colors. Bond ampholysis (Nature, 2024)</li>
+<code>walter_white</code>, <code>walter_white2</code>, and <code>walter_white3</code> — qualitative and diverging palettes inspired by <em>Breaking Bad</em>.</li>
 <li>
-<code>tam_pastel</code> — qualitative, 6 colors. Pan-cancer myeloid atlas (Cell, 2021)</li>
+<code>babel</code> — qualitative, 21 colors, from a pan-cancer myeloid atlas (Cell, 2021).</li>
 <li>
-<code>cancer_mosaic</code> — qualitative, 15 colors. Pan-cancer myeloid atlas (Cell, 2021)</li>
-<li>
-<code>lactate_steps</code> — qualitative, 5 colors. Lactate metabolism and immunotherapy (JECCR, 2024)</li>
-<li>
-<code>mitonuclear_blue</code> — sequential, 6 colors. Mito-nuclear communication in aging (TIBS, 2022)</li>
-<li>
-<code>mitonuclear_orange</code> — sequential, 6 colors. Mito-nuclear communication in aging (TIBS, 2022)</li>
+<code>three_body</code> — qualitative, 3 colors, from the same myeloid atlas.</li>
 </ul></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -167,7 +176,7 @@
 
 <div class="pkgdown-footer-right">
   <div class="text-muted">
-<p><strong>biopalette v0.1.0</strong><br><small>Last updated: April 2026</small></p>
+<p><strong>biopalette v0.2.0</strong><br><small>Last updated: August 2026</small></p>
 </div><div class="footer-links">
 <p><a href="https://github.com/evanbio/biopalette" class="external-link text-muted me-3" aria-label="GitHub"> <i class="fab fa-github fa-lg"></i> </a> <a href="https://blog.evanzhou.org" class="external-link text-muted" aria-label="Blog"> <i class="fas fa-blog fa-lg"></i> </a></p>
 </div>

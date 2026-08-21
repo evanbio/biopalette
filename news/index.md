@@ -1,62 +1,99 @@
 # Changelog
 
-## biopalette 0.1.0
+## biopalette 0.2.0
 
-*Released: April 2026*
+*Current release: August 2026*
 
-Initial release of **biopalette** — image-inspired color palettes for
-biomedical visualization.
+### New features
 
-### New Features
-
-- [`get_palette()`](https://evanbio.github.io/biopalette/reference/get_palette.md)
-  — retrieve colors by name, type, and size
-- [`palette_info()`](https://evanbio.github.io/biopalette/reference/palette_info.md)
-  — metadata for one named palette
-- [`list_palettes()`](https://evanbio.github.io/biopalette/reference/list_palettes.md)
-  — data frame of all available palettes
-- [`palette_gallery()`](https://evanbio.github.io/biopalette/reference/palette_gallery.md)
-  — paged visual gallery of all palettes
-- [`preview_palette()`](https://evanbio.github.io/biopalette/reference/preview_palette.md)
-  — render color swatches to a plot
-- [`create_palette()`](https://evanbio.github.io/biopalette/reference/create_palette.md)
-  — write a new palette to JSON
-- [`remove_palette()`](https://evanbio.github.io/biopalette/reference/remove_palette.md)
-  — remove a palette by name
-- [`hex2rgb()`](https://evanbio.github.io/biopalette/reference/hex2rgb.md)
-  — convert HEX to RGB
-- [`rgb2hex()`](https://evanbio.github.io/biopalette/reference/rgb2hex.md)
-  — convert RGB to HEX
-- [`scale_color_biopalette()`](https://evanbio.github.io/biopalette/reference/scale_color_biopalette.md)
-  /
+- Redesigned palette storage and validation around the JSON palette
+  contract.
+- Added
+  [`palette_info()`](https://evanbio.github.io/biopalette/reference/palette_info.md)
+  for inspecting one palette’s metadata and colors.
+- Added
+  [`scale_color_biopalette()`](https://evanbio.github.io/biopalette/reference/scale_color_biopalette.md)
+  and
   [`scale_fill_biopalette()`](https://evanbio.github.io/biopalette/reference/scale_color_biopalette.md)
-  — discrete ggplot2 scales
-- [`scale_color_biopalette_gradient()`](https://evanbio.github.io/biopalette/reference/scale_color_biopalette_gradient.md)
-  /
+  for discrete ggplot2 scales.
+- Added
+  [`scale_color_biopalette_gradient()`](https://evanbio.github.io/biopalette/reference/scale_color_biopalette_gradient.md)
+  and
   [`scale_fill_biopalette_gradient()`](https://evanbio.github.io/biopalette/reference/scale_color_biopalette_gradient.md)
-  — continuous ggplot2 gradients
+  for sequential and diverging gradients.
+- Expanded the test suite across palette storage, color conversion,
+  plotting, scales, and startup behavior.
 
 ### Palettes
 
-- `gene_red` — qualitative, 2 colors. *Better Call Saul* — Gene
-  Takavic’s red coat
-- `walter_white` — diverging, 5 colors. *Breaking Bad* — desert to sky
-- `walter_white2` — qualitative, 5 colors. *Breaking Bad* — muted earth
-  tones
-- `walter_white3` — diverging, 5 colors. *Breaking Bad* — warm
-  counterpart
-- `babel` — qualitative, 21 colors. Pan-cancer myeloid atlas (Cell,
-  2021)
-- `three_body` — qualitative, 3 colors. Pan-cancer myeloid atlas (Cell,
-  2021)
-- `heat_light` — qualitative, 2 colors. Bond ampholysis (Nature, 2024)
-- `tam_pastel` — qualitative, 6 colors. Pan-cancer myeloid atlas (Cell,
-  2021)
-- `cancer_mosaic` — qualitative, 15 colors. Pan-cancer myeloid atlas
-  (Cell, 2021)
-- `lactate_steps` — qualitative, 5 colors. Lactate metabolism and
-  immunotherapy (JECCR, 2024)
-- `mitonuclear_blue` — sequential, 6 colors. Mito-nuclear communication
-  in aging (TIBS, 2022)
-- `mitonuclear_orange` — sequential, 6 colors. Mito-nuclear
-  communication in aging (TIBS, 2022)
+- Added `mitonuclear_blue` and `mitonuclear_orange` — sequential
+  palettes inspired by mito-nuclear communication research (TIBS, 2022).
+- Added `heat_light` — qualitative, 2 colors, from a bond ampholysis
+  illustration (Nature, 2024).
+- Added `tam_pastel` — qualitative, 6 colors, from the pan-cancer
+  myeloid atlas (Cell, 2021).
+- Added `cancer_mosaic` — qualitative, 15 colors, from the pan-cancer
+  myeloid atlas (Cell, 2021).
+- Added `lactate_steps` — qualitative, 5 colors, from lactate metabolism
+  and immunotherapy research (JECCR, 2024).
+- Added `bcell_atlas` — qualitative, 7 colors, from a pan-cancer B-cell
+  atlas graphical abstract (Cell, 2024).
+- Added `bcell_atlas2` — diverging, 5 colors, encoding the IgA-to-IgG
+  shift in the same source article.
+- Added `bcell_clusters` — qualitative, 20 colors, reconstructed from
+  Figure 1B of the same pan-cancer B-cell atlas; the published order
+  puts broadly useful major-group colors first.
+- Added source images, curation records, previews, and showcase figures
+  for the new palettes.
+
+### Documentation and integrations
+
+- Reworked the English and Chinese guides around qualitative,
+  sequential, and diverging use cases.
+- Added a Tessera workflow vignette and linked biopalette to Tessera and
+  Palette Lab.
+- Expanded README and pkgdown palette tables with recommended use cases
+  and figure showcases.
+- Updated palette curation templates and source records for the
+  image-inspired collection.
+
+### Maintenance
+
+- Aligned package, coverage, and build configuration with the redesigned
+  palette storage model.
+
+## biopalette 0.1.0
+
+*Initial release: April 2026*
+
+The initial release established the package API for retrieving,
+previewing, organizing, and applying image-inspired color palettes in
+biomedical visualization.
+
+### Core functionality
+
+- [`get_palette()`](https://evanbio.github.io/biopalette/reference/get_palette.md)
+  — retrieve colors by name, type, and size.
+- [`list_palettes()`](https://evanbio.github.io/biopalette/reference/list_palettes.md)
+  — inspect the bundled palette collection.
+- [`palette_gallery()`](https://evanbio.github.io/biopalette/reference/palette_gallery.md)
+  — render a paged visual gallery.
+- [`preview_palette()`](https://evanbio.github.io/biopalette/reference/preview_palette.md)
+  — draw palette swatches in several styles.
+- [`create_palette()`](https://evanbio.github.io/biopalette/reference/create_palette.md)
+  and
+  [`remove_palette()`](https://evanbio.github.io/biopalette/reference/remove_palette.md)
+  — manage palette JSON files.
+- [`hex2rgb()`](https://evanbio.github.io/biopalette/reference/hex2rgb.md)
+  and
+  [`rgb2hex()`](https://evanbio.github.io/biopalette/reference/rgb2hex.md)
+  — convert HEX and RGB color values.
+
+### Initial palette collection
+
+- `gene_red` — qualitative, 2 colors, inspired by *Better Call Saul*.
+- `walter_white`, `walter_white2`, and `walter_white3` — qualitative and
+  diverging palettes inspired by *Breaking Bad*.
+- `babel` — qualitative, 21 colors, from a pan-cancer myeloid atlas
+  (Cell, 2021).
+- `three_body` — qualitative, 3 colors, from the same myeloid atlas.

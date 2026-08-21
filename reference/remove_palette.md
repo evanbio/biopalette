@@ -39,7 +39,7 @@ create_palette(
   c("#E64B35", "#4DBBD5", "#00A087"),
   palettes_dir = temp_dir
 )
-#> ✔ Palette saved: /tmp/RtmpFos6cc/biopalette-palettes-18ed2e223897/qualitative/example_palette.json
+#> ✔ Palette saved: /tmp/Rtmpt2rHJD/biopalette-palettes-19bede0994d/qualitative/example_palette.json
 
 remove_palette("example_palette", palettes_dir = temp_dir)
 #> ✔ Removed "example_palette" from qualitative

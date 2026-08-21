@@ -46,7 +46,7 @@ Load the package, inspect its version, and list a few bundled palettes:
 library(biopalette)
 
 packageVersion("biopalette")
-#> [1] '0.1.0'
+#> [1] '0.2.0'
 head(list_palettes()[c("name", "type", "n_color")])
 #>            name        type n_color
 #> 1  bcell_atlas2   diverging       5
