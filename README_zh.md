@@ -14,8 +14,9 @@ Lab](https://folio.evanzhou.org/apps/palette-lab)
 
 ------------------------------------------------------------------------
 
-**语言版本:** [English](https://evanbio.github.io/biopalette/README.md)
-\| 简体中文
+**语言版本:**
+[English](https://github.com/evanbio/biopalette/blob/main/README.md) \|
+简体中文
 
 ------------------------------------------------------------------------
 
@@ -62,21 +63,21 @@ devtools::install_github("evanbio/biopalette")
 
 | 名称 | 类型 | 颜色数 | 推荐用途 | 来源 |
 |----|----|---:|----|----|
-| [`gene_red`](https://evanbio.github.io/biopalette/palettes/gene_red) | 定性 | 2 | 重点信号与深色或中性色的对比 | *风骚律师* — Gene Takavic 的红色外套 |
-| [`walter_white`](https://evanbio.github.io/biopalette/palettes/walter_white) | 发散 | 5 | 围绕中性中心的有符号连续数值 | *绝命毒师* — 荒漠到天空 |
-| [`walter_white2`](https://evanbio.github.io/biopalette/palettes/walter_white2) | 定性 | 5 | 不超过五个无序类别 | *绝命毒师* — 低饱和大地色调 |
-| [`walter_white3`](https://evanbio.github.io/biopalette/palettes/walter_white3) | 发散 | 5 | 暖色调的有符号连续数值 | *绝命毒师* — 暖色对应版本 |
-| [`babel`](https://evanbio.github.io/biopalette/palettes/babel) | 定性 | 21 | 需要标签或位置辅助的多类别图形 | 泛癌骨髓细胞图谱（Cell, 2021）— 22 种细胞类型，21 种声音 |
-| [`bcell_atlas`](https://evanbio.github.io/biopalette/palettes/bcell_atlas) | 定性 | 7 | 四到七个需要标签或位置辅助的类别 | 泛癌 B 细胞图谱（Cell, 2024）— 图形摘要 |
-| [`bcell_atlas2`](https://evanbio.github.io/biopalette/palettes/bcell_atlas2) | 发散 | 5 | 暖色与冷色生物学状态之间的有符号变化 | 泛癌 B 细胞图谱（Cell, 2024）— IgA 到 IgG 的转变 |
-| [`bcell_clusters`](https://evanbio.github.io/biopalette/palettes/bcell_clusters) | 定性 | 20 | 需要标签、位置或分面的多类别图形 | 泛癌 B 细胞图谱（Cell, 2024）— Figure 1B cluster 图例 |
-| [`three_body`](https://evanbio.github.io/biopalette/palettes/three_body) | 定性 | 3 | 三个群组、谱系或轨迹 | 泛癌骨髓细胞图谱（Cell, 2021）— 三条树突状细胞分化轨迹 |
-| [`mitonuclear_blue`](https://evanbio.github.io/biopalette/palettes/mitonuclear_blue) | 渐进 | 6 | 冷色调的低到高连续数值 | 衰老中的线粒体—细胞核通信（TIBS, 2022）— 年轻状态蓝 |
-| [`mitonuclear_orange`](https://evanbio.github.io/biopalette/palettes/mitonuclear_orange) | 渐进 | 6 | 暖色调的低到高连续数值 | 衰老中的线粒体—细胞核通信（TIBS, 2022）— 衰老状态橙 |
-| [`heat_light`](https://evanbio.github.io/biopalette/palettes/heat_light) | 定性 | 2 | 成对类别或实验条件 | 键两性解离（Nature, 2024）— 热与光将自由基对转为离子对 |
-| [`tam_pastel`](https://evanbio.github.io/biopalette/palettes/tam_pastel) | 定性 | 6 | 浅色背景上的四到六个类别 | 泛癌骨髓细胞图谱（Cell, 2021）— 柔和的 TAM 状态色 |
-| [`cancer_mosaic`](https://evanbio.github.io/biopalette/palettes/cancer_mosaic) | 定性 | 15 | 需要标签或位置辅助的十到十五个类别 | 泛癌骨髓细胞图谱（Cell, 2021）— 癌种马赛克 |
-| [`lactate_steps`](https://evanbio.github.io/biopalette/palettes/lactate_steps) | 定性 | 5 | 五个离散流程阶段或研究组别 | 乳酸代谢与免疫治疗（JECCR, 2024）— 五个研究阶段 |
+| [`gene_red`](https://github.com/evanbio/biopalette/tree/main/palettes/gene_red) | 定性 | 2 | 重点信号与深色或中性色的对比 | *风骚律师* — Gene Takavic 的红色外套 |
+| [`walter_white`](https://github.com/evanbio/biopalette/tree/main/palettes/walter_white) | 发散 | 5 | 围绕中性中心的有符号连续数值 | *绝命毒师* — 荒漠到天空 |
+| [`walter_white2`](https://github.com/evanbio/biopalette/tree/main/palettes/walter_white2) | 定性 | 5 | 不超过五个无序类别 | *绝命毒师* — 低饱和大地色调 |
+| [`walter_white3`](https://github.com/evanbio/biopalette/tree/main/palettes/walter_white3) | 发散 | 5 | 暖色调的有符号连续数值 | *绝命毒师* — 暖色对应版本 |
+| [`babel`](https://github.com/evanbio/biopalette/tree/main/palettes/babel) | 定性 | 21 | 需要标签或位置辅助的多类别图形 | 泛癌骨髓细胞图谱（Cell, 2021）— 22 种细胞类型，21 种声音 |
+| [`bcell_atlas`](https://github.com/evanbio/biopalette/tree/main/palettes/bcell_atlas) | 定性 | 7 | 四到七个需要标签或位置辅助的类别 | 泛癌 B 细胞图谱（Cell, 2024）— 图形摘要 |
+| [`bcell_atlas2`](https://github.com/evanbio/biopalette/tree/main/palettes/bcell_atlas2) | 发散 | 5 | 暖色与冷色生物学状态之间的有符号变化 | 泛癌 B 细胞图谱（Cell, 2024）— IgA 到 IgG 的转变 |
+| [`bcell_clusters`](https://github.com/evanbio/biopalette/tree/main/palettes/bcell_clusters) | 定性 | 20 | 需要标签、位置或分面的多类别图形 | 泛癌 B 细胞图谱（Cell, 2024）— Figure 1B cluster 图例 |
+| [`three_body`](https://github.com/evanbio/biopalette/tree/main/palettes/three_body) | 定性 | 3 | 三个群组、谱系或轨迹 | 泛癌骨髓细胞图谱（Cell, 2021）— 三条树突状细胞分化轨迹 |
+| [`mitonuclear_blue`](https://github.com/evanbio/biopalette/tree/main/palettes/mitonuclear_blue) | 渐进 | 6 | 冷色调的低到高连续数值 | 衰老中的线粒体—细胞核通信（TIBS, 2022）— 年轻状态蓝 |
+| [`mitonuclear_orange`](https://github.com/evanbio/biopalette/tree/main/palettes/mitonuclear_orange) | 渐进 | 6 | 暖色调的低到高连续数值 | 衰老中的线粒体—细胞核通信（TIBS, 2022）— 衰老状态橙 |
+| [`heat_light`](https://github.com/evanbio/biopalette/tree/main/palettes/heat_light) | 定性 | 2 | 成对类别或实验条件 | 键两性解离（Nature, 2024）— 热与光将自由基对转为离子对 |
+| [`tam_pastel`](https://github.com/evanbio/biopalette/tree/main/palettes/tam_pastel) | 定性 | 6 | 浅色背景上的四到六个类别 | 泛癌骨髓细胞图谱（Cell, 2021）— 柔和的 TAM 状态色 |
+| [`cancer_mosaic`](https://github.com/evanbio/biopalette/tree/main/palettes/cancer_mosaic) | 定性 | 15 | 需要标签或位置辅助的十到十五个类别 | 泛癌骨髓细胞图谱（Cell, 2021）— 癌种马赛克 |
+| [`lactate_steps`](https://github.com/evanbio/biopalette/tree/main/palettes/lactate_steps) | 定性 | 5 | 五个离散流程阶段或研究组别 | 乳酸代谢与免疫治疗（JECCR, 2024）— 五个研究阶段 |
 
 ------------------------------------------------------------------------
 

@@ -9,16 +9,16 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/evanbio/biopalette/blob/v0.2.1/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/evanbio/biopalette/blob/main/DESCRIPTION)
 
 Zhou Y (2026). *biopalette: Image-Inspired Color Palettes for Biomedical
-Visualization*. R package version 0.2.1,
+Visualization*. R package version 0.2.2,
 <https://github.com/evanbio/biopalette>.
 
     @Manual{,
       title = {biopalette: Image-Inspired Color Palettes for Biomedical Visualization},
       author = {Yibin Zhou},
       year = {2026},
-      note = {R package version 0.2.1},
+      note = {R package version 0.2.2},
       url = {https://github.com/evanbio/biopalette},
     }
