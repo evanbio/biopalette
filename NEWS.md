@@ -1,3 +1,12 @@
+# biopalette 0.2.1
+
+*Current release: August 2026*
+
+## Maintenance
+
+- Fixed CRAN DESCRIPTION wording by quoting the software name `'ggplot2'`.
+- Compressed the package logo without changing its dimensions.
+
 # biopalette 0.2.0
 
 *Current release: August 2026*

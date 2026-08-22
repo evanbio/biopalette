@@ -1,11 +1,11 @@
-## CRAN Comments for biopalette 0.2.0
+## CRAN Comments for biopalette 0.2.1
 
-# biopalette 0.2.0
+# biopalette 0.2.1
 
-This submission packages the 0.2.0 release. Version 0.1.0 is retained as the
-historical baseline in NEWS.md; this release redesigns palette storage and
-adds ggplot2 scales, expanded tests, Tessera/Palette Lab documentation, and
-three B-cell atlas palettes.
+This submission packages the 0.2.1 patch release. Version 0.1.0 and 0.2.0 are
+retained as historical releases in NEWS.md. This patch quotes the software
+name 'ggplot2' in DESCRIPTION and compresses the package logo without changing
+its dimensions.
 
 ## Test environments
 
@@ -18,9 +18,14 @@ three B-cell atlas palettes.
 
 ## Changes in this version
 
-- Added `palette_info()` and discrete/continuous ggplot2 scale helpers.
-- Added `bcell_atlas`, `bcell_atlas2`, and `bcell_clusters`.
-- Updated package documentation, curation records, and visual showcases.
+- Fixed CRAN DESCRIPTION wording by quoting the software name 'ggplot2'.
+- Compressed the package logo without changing its dimensions.
+
+# Historical 0.2.0 release
+
+The 0.2.0 release redesigned palette storage, added ggplot2 scales, expanded
+tests and Tessera/Palette Lab documentation, and introduced three B-cell atlas
+palettes.
 
 # Historical 0.1.0 release
 
