@@ -1,11 +1,10 @@
-## CRAN Comments for biopalette 0.2.1
+## CRAN Comments for biopalette 0.2.2
 
-# biopalette 0.2.1
+# biopalette 0.2.2
 
-This submission packages the 0.2.1 patch release. Version 0.1.0 and 0.2.0 are
-retained as historical releases in NEWS.md. This patch quotes the software
-name 'ggplot2' in DESCRIPTION and compresses the package logo without changing
-its dimensions.
+This submission packages the 0.2.2 patch release. Versions 0.1.0, 0.2.0, and
+0.2.1 are retained as historical releases in NEWS.md. This patch replaces
+relative README links with stable GitHub URLs for CRAN checks.
 
 ## Test environments
 
@@ -18,8 +17,12 @@ its dimensions.
 
 ## Changes in this version
 
-- Fixed CRAN DESCRIPTION wording by quoting the software name 'ggplot2'.
-- Compressed the package logo without changing its dimensions.
+- Replaced relative README links with stable GitHub URLs for CRAN checks.
+
+# Historical 0.2.1 release
+
+The 0.2.1 release fixed CRAN DESCRIPTION wording by quoting the software name
+'ggplot2' and compressed the package logo without changing its dimensions.
 
 # Historical 0.2.0 release
 

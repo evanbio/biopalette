@@ -1,3 +1,11 @@
+# biopalette 0.2.2
+
+*Current release: August 2026*
+
+## Maintenance
+
+- Replaced relative README links with stable GitHub URLs for CRAN checks.
+
 # biopalette 0.2.1
 
 *Current release: August 2026*
