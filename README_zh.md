@@ -22,13 +22,13 @@ Lab](https://folio.evanzhou.org/apps/palette-lab)
 
 ------------------------------------------------------------------------
 
+> \[!NOTE\] 🎉 **biopalette 已上架 CRAN。**
+> `install.packages("biopalette")` 安装的是 当前发布版 0.2.2。
+
 ## 项目简介
 
 **biopalette** 是一个 R
 包，提供图像启发的配色方案，专为生物医学可视化设计。
-
-> 🎉 **biopalette 现已上架 CRAN。** 使用
-> `install.packages("biopalette")` 即可安装当前发布版。
 
 每一套配色都源自一张真实的图像——电影剧照、科研图表或艺术作品——并转化为可复现的色彩系统。来源始终有据可查：颜色从哪里来、代表什么、适合用在哪里。
 
