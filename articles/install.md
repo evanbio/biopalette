@@ -15,9 +15,19 @@ The package uses four runtime dependencies:
 R installs these dependencies automatically when biopalette is
 installed.
 
+## Install from CRAN
+
+Install the current release from CRAN:
+
+``` r
+
+install.packages("biopalette")
+```
+
 ## Install from GitHub
 
-The development version is available from GitHub. We recommend
+The development version is available from GitHub. Install it when you
+need a feature or fix that has not yet reached CRAN. We recommend
 [pak](https://pak.r-lib.org/) because it resolves dependencies and
 reports installation problems clearly.
 

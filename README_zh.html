@@ -93,7 +93,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="logo.png" class="logo" alt=""><h1>biopalette</h1>
-      <small class="dont-index">Source: <a href="https://github.com/evanbio/biopalette/blob/v0.2.2/README_zh.md" class="external-link"><code>README_zh.md</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/evanbio/biopalette/blob/main/README_zh.md" class="external-link"><code>README_zh.md</code></a></small>
     </div>
 
 
@@ -103,7 +103,7 @@
 
 <div class="section level3">
 <h3 id="面向生物医学可视化的图像驱动配色方案"><em>面向生物医学可视化的图像驱动配色方案</em><a class="anchor" aria-label="anchor" href="#%E9%9D%A2%E5%90%91%E7%94%9F%E7%89%A9%E5%8C%BB%E5%AD%A6%E5%8F%AF%E8%A7%86%E5%8C%96%E7%9A%84%E5%9B%BE%E5%83%8F%E9%A9%B1%E5%8A%A8%E9%85%8D%E8%89%B2%E6%96%B9%E6%A1%88"></a></h3>
-<p><a href="https://github.com/evanbio/biopalette/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/evanbio/biopalette/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a> <a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle"></a></p>
+<p><a href="https://CRAN.R-project.org/package=biopalette" class="external-link"><img src="https://www.r-pkg.org/badges/version/biopalette" alt="CRAN status"></a> <a href="https://github.com/evanbio/biopalette/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/evanbio/biopalette/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a> <a href="https://lifecycle.r-lib.org/articles/stages.html#stable" class="external-link"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle"></a></p>
 <p><a href="https://evanbio.github.io/biopalette/">📚 文档</a> • <a href="https://github.com/evanbio/biopalette/issues" class="external-link">💬 问题反馈</a> • <a href="https://folio.evanzhou.org/tessera" class="external-link">🎨 Tessera</a> • <a href="https://folio.evanzhou.org/apps/palette-lab" class="external-link">🧪 Palette Lab</a></p>
 <hr><p><strong>语言版本:</strong> <a href="https://github.com/evanbio/biopalette/blob/main/README.md" class="external-link">English</a> | 简体中文</p>
 </div>
@@ -112,6 +112,9 @@
 <hr><div class="section level2">
 <h2 id="项目简介">项目简介<a class="anchor" aria-label="anchor" href="#%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B"></a></h2>
 <p><strong>biopalette</strong> 是一个 R 包，提供图像启发的配色方案，专为生物医学可视化设计。</p>
+<blockquote>
+<p>🎉 <strong>biopalette 现已上架 CRAN。</strong> 使用 <code>install.packages("biopalette")</code> 即可安装当前发布版。</p>
+</blockquote>
 <p>每一套配色都源自一张真实的图像——电影剧照、科研图表或艺术作品——并转化为可复现的色彩系统。来源始终有据可查：颜色从哪里来、代表什么、适合用在哪里。</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/evanbio/biopalette" class="external-link">biopalette</a></span><span class="op">)</span></span>
@@ -130,8 +133,11 @@
 <div class="section level2">
 <h2 id="安装">安装<a class="anchor" aria-label="anchor" href="#%E5%AE%89%E8%A3%85"></a></h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># 开发版</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"evanbio/biopalette"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># 当前 CRAN 发布版</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"biopalette"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># 开发版</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"evanbio/biopalette"</span><span class="op">)</span></span></code></pre></div>
 <p><strong>系统要求：</strong> R ≥ 4.1.0</p>
 <hr></div>
 <div class="section level2">

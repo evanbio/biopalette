@@ -9,7 +9,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/evanbio/biopalette/blob/v0.2.2/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/evanbio/biopalette/blob/main/DESCRIPTION)
 
 Zhou Y (2026). *biopalette: Image-Inspired Color Palettes for Biomedical
 Visualization*. R package version 0.2.2,

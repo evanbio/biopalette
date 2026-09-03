@@ -127,7 +127,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Installing biopalette</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/evanbio/biopalette/blob/v0.2.2/vignettes/install.Rmd" class="external-link"><code>vignettes/install.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/evanbio/biopalette/blob/main/vignettes/install.Rmd" class="external-link"><code>vignettes/install.Rmd</code></a></small>
       <div class="d-none name"><code>install.Rmd</code></div>
     </div>
 
@@ -154,15 +154,23 @@ collections;</li>
 installed.</p>
 </div>
 <div class="section level2">
+<h2 id="install-from-cran">Install from CRAN<a class="anchor" aria-label="anchor" href="#install-from-cran"></a>
+</h2>
+<p>Install the current release from CRAN:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"biopalette"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
 <h2 id="install-from-github">Install from GitHub<a class="anchor" aria-label="anchor" href="#install-from-github"></a>
 </h2>
-<p>The development version is available from GitHub. We recommend <a href="https://pak.r-lib.org/" class="external-link">pak</a> because it resolves dependencies
+<p>The development version is available from GitHub. Install it when you
+need a feature or fix that has not yet reached CRAN. We recommend <a href="https://pak.r-lib.org/" class="external-link">pak</a> because it resolves dependencies
 and reports installation problems clearly.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pak"</span><span class="op">)</span></span>
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"evanbio/biopalette"</span><span class="op">)</span></span></code></pre></div>
 <p>Alternatively, install with remotes:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"evanbio/biopalette"</span><span class="op">)</span></span></code></pre></div>
 <p>You only need to install <code>pak</code> or <code>remotes</code>
@@ -173,7 +181,7 @@ once.</p>
 </h2>
 <p>Load the package, inspect its version, and list a few bundled
 palettes:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/evanbio/biopalette" class="external-link">biopalette</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageVersion</a></span><span class="op">(</span><span class="st">"biopalette"</span><span class="op">)</span></span>
@@ -188,7 +196,7 @@ palettes:</p>
 <span><span class="co">#&gt; 6    three_body qualitative       3</span></span></code></pre></div>
 <p>For a visual check, open the palette gallery in an interactive R
 session:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/palette_gallery.html">palette_gallery</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -196,7 +204,7 @@ session:</p>
 </h2>
 <p>Run the same GitHub installation command to update to the latest
 development version:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"evanbio/biopalette"</span><span class="op">)</span></span></code></pre></div>
 <p>Restart R after updating if biopalette was loaded in the current
 session. This ensures that R uses the newly installed namespace and
@@ -211,7 +219,7 @@ package files.</p>
 <p>Start a fresh R session and retry the installation. If the error
 identifies a specific dependency, install that package directly to
 expose its complete error message:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"packageName"</span><span class="op">)</span></span></code></pre></div>
 <p>biopalette itself does not require compilation. On Windows, Rtools is
 needed only when R must install a dependency from source and that
@@ -231,7 +239,7 @@ place credentials in scripts committed to version control.</p>
 <h3 id="r-loads-an-older-version">R loads an older version<a class="anchor" aria-label="anchor" href="#r-loads-an-older-version"></a>
 </h3>
 <p>Check the installed version and library location:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageVersion</a></span><span class="op">(</span><span class="st">"biopalette"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/find.package.html" class="external-link">find.package</a></span><span class="op">(</span><span class="st">"biopalette"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/libPaths.html" class="external-link">.libPaths</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -243,7 +251,7 @@ Remove the older copy from the library reported by
 <div class="section level2">
 <h2 id="uninstall">Uninstall<a class="anchor" aria-label="anchor" href="#uninstall"></a>
 </h2>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/remove.packages.html" class="external-link">remove.packages</a></span><span class="op">(</span><span class="st">"biopalette"</span><span class="op">)</span></span></code></pre></div>
 <p>If more than one library contains biopalette, pass the relevant
 library path through the <code>lib</code> argument of

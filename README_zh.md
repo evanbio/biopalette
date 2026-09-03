@@ -4,8 +4,10 @@
 
 ### *面向生物医学可视化的图像驱动配色方案*
 
+[![CRAN
+status](https://www.r-pkg.org/badges/version/biopalette)](https://CRAN.R-project.org/package=biopalette)
 [![R-CMD-check](https://github.com/evanbio/biopalette/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/evanbio/biopalette/actions/workflows/R-CMD-check.yaml)
-[![Lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![Lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 
 [📚 文档](https://evanbio.github.io/biopalette/) • [💬
 问题反馈](https://github.com/evanbio/biopalette/issues) • [🎨
@@ -24,6 +26,9 @@ Lab](https://folio.evanzhou.org/apps/palette-lab)
 
 **biopalette** 是一个 R
 包，提供图像启发的配色方案，专为生物医学可视化设计。
+
+> 🎉 **biopalette 现已上架 CRAN。** 使用
+> `install.packages("biopalette")` 即可安装当前发布版。
 
 每一套配色都源自一张真实的图像——电影剧照、科研图表或艺术作品——并转化为可复现的色彩系统。来源始终有据可查：颜色从哪里来、代表什么、适合用在哪里。
 
@@ -49,8 +54,11 @@ scale_fill_biopalette_gradient("mitonuclear_blue")
 
 ``` r
 
+# 当前 CRAN 发布版
+install.packages("biopalette")
+
 # 开发版
-devtools::install_github("evanbio/biopalette")
+remotes::install_github("evanbio/biopalette")
 ```
 
 **系统要求：** R ≥ 4.1.0
