@@ -23,12 +23,13 @@
 
 ---
 
+> [!NOTE]
+> 🎉 **biopalette is on CRAN.** `install.packages("biopalette")` installs the
+> current release, 0.2.2.
+
 ## Overview
 
 **biopalette** is an R package providing image-inspired color palettes for biomedical visualization.
-
-> 🎉 **biopalette is now on CRAN.** Install the current release with
-> `install.packages("biopalette")`.
 
 Every palette begins with a real image — a film still, a scientific figure, an artwork — and is translated into a reproducible color system. The source is always documented: where the colors came from, what they mean, and when to use them.
 
