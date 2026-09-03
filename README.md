@@ -6,8 +6,9 @@
 
 ### *Image-Inspired Color Palettes for Biomedical Visualization*
 
+[![CRAN status](https://www.r-pkg.org/badges/version/biopalette)](https://CRAN.R-project.org/package=biopalette)
 [![R-CMD-check](https://github.com/evanbio/biopalette/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/evanbio/biopalette/actions/workflows/R-CMD-check.yaml)
-[![Lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![Lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 
 [📚 Documentation](https://evanbio.github.io/biopalette/) •
 [💬 Issues](https://github.com/evanbio/biopalette/issues) •
@@ -25,6 +26,9 @@
 ## Overview
 
 **biopalette** is an R package providing image-inspired color palettes for biomedical visualization.
+
+> 🎉 **biopalette is now on CRAN.** Install the current release with
+> `install.packages("biopalette")`.
 
 Every palette begins with a real image — a film still, a scientific figure, an artwork — and is translated into a reproducible color system. The source is always documented: where the colors came from, what they mean, and when to use them.
 
@@ -48,8 +52,11 @@ scale_fill_biopalette_gradient("mitonuclear_blue")
 ## Installation
 
 ```r
+# Current CRAN release
+install.packages("biopalette")
+
 # Development version
-devtools::install_github("evanbio/biopalette")
+remotes::install_github("evanbio/biopalette")
 ```
 
 **Requires:** R ≥ 4.1.0
