@@ -1,0 +1,5 @@
+{
+  "name": "immune_circuit_red",
+  "type": "sequential",
+  "colors": ["#FBE5E3", "#F6C8C7", "#F0ACAC", "#E88F92", "#DE757C", "#CE5D66", "#B94751"]
+}

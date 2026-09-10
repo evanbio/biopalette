@@ -1,0 +1,5 @@
+{
+  "name": "immune_circuit_green",
+  "type": "sequential",
+  "colors": ["#E1F2E7", "#C7E4D2", "#ACD5BC", "#8EC6A5", "#72B28E", "#55966F", "#37835E"]
+}
