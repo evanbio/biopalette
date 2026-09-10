@@ -95,6 +95,7 @@ remotes::install_github("evanbio/biopalette")
 | [`lipid_budding_rose`](https://github.com/evanbio/biopalette/tree/main/palettes/lipid_budding_rose) | 渐进 | 5 | 灰调玫红色的低到高连续数值 | 肝脏内质网脂滴出芽 — DGAT1 玫红 |
 | [`lipid_budding_orange`](https://github.com/evanbio/biopalette/tree/main/palettes/lipid_budding_orange) | 渐进 | 5 | 鲑橙色的低到高连续数值 | 肝脏内质网脂滴出芽 — Seipin 橙 |
 | [`lipid_budding_indigo`](https://github.com/evanbio/biopalette/tree/main/palettes/lipid_budding_indigo) | 渐进 | 5 | 石板靛蓝色的低到高连续数值 | 肝脏内质网脂滴出芽 — FIT2 靛蓝 |
+| [`cytokine_sensors`](https://github.com/evanbio/biopalette/tree/main/palettes/cytokine_sensors) | 定性 | 7 | 六类神经免疫结局与一个中性细胞因子锚点 | 中枢神经系统的神经元细胞因子感知（Trends Immunology, 2026） |
 
 ------------------------------------------------------------------------
 

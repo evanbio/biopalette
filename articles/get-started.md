@@ -35,18 +35,19 @@ list_palettes()[c("name", "type", "n_color")]
 #> 10        walter_white2 qualitative       5
 #> 11           tam_pastel qualitative       6
 #> 12          bcell_atlas qualitative       7
-#> 13       immune_circuit qualitative       8
-#> 14        cancer_mosaic qualitative      15
-#> 15       bcell_clusters qualitative      20
-#> 16                babel qualitative      21
-#> 17   lipid_budding_blue  sequential       5
-#> 18 lipid_budding_indigo  sequential       5
-#> 19 lipid_budding_orange  sequential       5
-#> 20   lipid_budding_rose  sequential       5
-#> 21     mitonuclear_blue  sequential       6
-#> 22   mitonuclear_orange  sequential       6
-#> 23 immune_circuit_green  sequential       7
-#> 24   immune_circuit_red  sequential       7
+#> 13     cytokine_sensors qualitative       7
+#> 14       immune_circuit qualitative       8
+#> 15        cancer_mosaic qualitative      15
+#> 16       bcell_clusters qualitative      20
+#> 17                babel qualitative      21
+#> 18   lipid_budding_blue  sequential       5
+#> 19 lipid_budding_indigo  sequential       5
+#> 20 lipid_budding_orange  sequential       5
+#> 21   lipid_budding_rose  sequential       5
+#> 22     mitonuclear_blue  sequential       6
+#> 23   mitonuclear_orange  sequential       6
+#> 24 immune_circuit_green  sequential       7
+#> 25   immune_circuit_red  sequential       7
 ```
 
 Filter by type when the visual role is already known:
