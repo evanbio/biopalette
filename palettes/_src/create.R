@@ -11,10 +11,25 @@
 devtools::load_all(quiet = TRUE)
 
 create_palette(
-  name         = "cytokine_sensors",
+  name         = "ppi_obligate",
   type         = "qualitative",
-  colors       = c("#4778A8", "#F17B43", "#4F8750", "#D85668",
-                   "#754B82", "#4FA69A", "#626262"),
+  colors       = c("#626EAE", "#9672AC", "#87BE42", "#DDB657"),
+  palettes_dir = "inst/extdata/palettes",
+  overwrite    = FALSE
+)
+
+create_palette(
+  name         = "ppi_nonspecific",
+  type         = "qualitative",
+  colors       = c("#9B6DA9", "#84B83F"),
+  palettes_dir = "inst/extdata/palettes",
+  overwrite    = FALSE
+)
+
+create_palette(
+  name         = "ppi_transient",
+  type         = "diverging",
+  colors       = c("#DE5360", "#E78F96", "#E5E4E1", "#A9BED4", "#6D94BC"),
   palettes_dir = "inst/extdata/palettes",
   overwrite    = FALSE
 )

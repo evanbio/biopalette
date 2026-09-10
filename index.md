@@ -73,6 +73,11 @@ scale_fill_biopalette_gradient("mitonuclear_blue")
 | `lipid_budding_orange` | Sequential | 5 | Low-to-high continuous values in salmon orange | Hepatic ER lipid-droplet budding — Seipin orange |
 | `lipid_budding_indigo` | Sequential | 5 | Low-to-high continuous values in slate indigo | Hepatic ER lipid-droplet budding — FIT2 indigo |
 | `cytokine_sensors` | Qualitative | 7 | Six neuroimmune outcomes with a neutral cytokine anchor | Neuronal cytokine sensing in the CNS (Trends Immunology, 2026) |
+| `clone_age` | Diverging | 5 | Age- and state-related change around a neutral center | Clonal hematopoiesis — mutant-clone yellow to HSC purple |
+| `clone_memory` | Diverging | 5 | Stimulation, recovery, and clone-state contrasts | Epigenetic HSC memory — activated purple to pre-existing cyan |
+| `ppi_obligate` | Qualitative | 4 | Four members of one assembled complex or system | Obligate protein interactions — blue-violet, purple, green, and yellow |
+| `ppi_nonspecific` | Qualitative | 2 | Two interaction partners, conditions, or cohorts | Non-specific protein interactions — purple and green |
+| `ppi_transient` | Diverging | 5 | Centered interaction scores and signed effects | Transient protein interactions — red through neutral to blue |
 
 ## Function Areas
 
