@@ -86,6 +86,15 @@ remotes::install_github("evanbio/biopalette")
 | [`tam_pastel`](https://github.com/evanbio/biopalette/tree/main/palettes/tam_pastel) | 定性 | 6 | 浅色背景上的四到六个类别 | 泛癌骨髓细胞图谱（Cell, 2021）— 柔和的 TAM 状态色 |
 | [`cancer_mosaic`](https://github.com/evanbio/biopalette/tree/main/palettes/cancer_mosaic) | 定性 | 15 | 需要标签或位置辅助的十到十五个类别 | 泛癌骨髓细胞图谱（Cell, 2021）— 癌种马赛克 |
 | [`lactate_steps`](https://github.com/evanbio/biopalette/tree/main/palettes/lactate_steps) | 定性 | 5 | 五个离散流程阶段或研究组别 | 乳酸代谢与免疫治疗（JECCR, 2024）— 五个研究阶段 |
+| [`fargo`](https://github.com/evanbio/biopalette/tree/main/palettes/fargo) | 定性 | 3 | 带深色锚点和克制暖色强调的三组比较 | *冰血暴* — 海军蓝、旅馆招牌蓝绿与行李箱酒红 |
+| [`immune_circuit`](https://github.com/evanbio/biopalette/tree/main/palettes/immune_circuit) | 定性 | 8 | 四个大类及各自成对状态 | 软骨肉瘤免疫电路图形摘要 — 成对红、蓝、绿、紫 |
+| [`immune_circuit_red`](https://github.com/evanbio/biopalette/tree/main/palettes/immune_circuit_red) | 渐进 | 7 | 肿瘤负荷、细胞毒性、风险或损伤递增 | 软骨肉瘤免疫电路图形摘要 — 肿瘤珊瑚红 |
+| [`immune_circuit_green`](https://github.com/evanbio/biopalette/tree/main/palettes/immune_circuit_green) | 渐进 | 7 | 免疫活化、浸润或恢复程度递增 | 软骨肉瘤免疫电路图形摘要 — T 细胞薄荷绿 |
+| [`lipid_budding`](https://github.com/evanbio/biopalette/tree/main/palettes/lipid_budding) | 定性 | 4 | 冷暖平衡的四组分类比较 | 肝脏内质网脂滴出芽 — DGAT2、DGAT1、Seipin 与 FIT2 |
+| [`lipid_budding_blue`](https://github.com/evanbio/biopalette/tree/main/palettes/lipid_budding_blue) | 渐进 | 5 | 柔和钢蓝色的低到高连续数值 | 肝脏内质网脂滴出芽 — DGAT2 蓝 |
+| [`lipid_budding_rose`](https://github.com/evanbio/biopalette/tree/main/palettes/lipid_budding_rose) | 渐进 | 5 | 灰调玫红色的低到高连续数值 | 肝脏内质网脂滴出芽 — DGAT1 玫红 |
+| [`lipid_budding_orange`](https://github.com/evanbio/biopalette/tree/main/palettes/lipid_budding_orange) | 渐进 | 5 | 鲑橙色的低到高连续数值 | 肝脏内质网脂滴出芽 — Seipin 橙 |
+| [`lipid_budding_indigo`](https://github.com/evanbio/biopalette/tree/main/palettes/lipid_budding_indigo) | 渐进 | 5 | 石板靛蓝色的低到高连续数值 | 肝脏内质网脂滴出芽 — FIT2 靛蓝 |
 
 ------------------------------------------------------------------------
 

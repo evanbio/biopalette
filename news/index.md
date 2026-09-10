@@ -2,6 +2,8 @@
 
 ## biopalette 0.2.2
 
+CRAN release: 2026-09-02
+
 *Current release: August 2026*
 
 ### Maintenance

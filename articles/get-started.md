@@ -22,22 +22,31 @@ Load biopalette and inspect the bundled collection:
 library(biopalette)
 
 list_palettes()[c("name", "type", "n_color")]
-#>                  name        type n_color
-#> 1        bcell_atlas2   diverging       5
-#> 2        walter_white   diverging       5
-#> 3       walter_white3   diverging       5
-#> 4            gene_red qualitative       2
-#> 5          heat_light qualitative       2
-#> 6          three_body qualitative       3
-#> 7       lactate_steps qualitative       5
-#> 8       walter_white2 qualitative       5
-#> 9          tam_pastel qualitative       6
-#> 10        bcell_atlas qualitative       7
-#> 11      cancer_mosaic qualitative      15
-#> 12     bcell_clusters qualitative      20
-#> 13              babel qualitative      21
-#> 14   mitonuclear_blue  sequential       6
-#> 15 mitonuclear_orange  sequential       6
+#>                    name        type n_color
+#> 1          bcell_atlas2   diverging       5
+#> 2          walter_white   diverging       5
+#> 3         walter_white3   diverging       5
+#> 4              gene_red qualitative       2
+#> 5            heat_light qualitative       2
+#> 6                 fargo qualitative       3
+#> 7            three_body qualitative       3
+#> 8         lipid_budding qualitative       4
+#> 9         lactate_steps qualitative       5
+#> 10        walter_white2 qualitative       5
+#> 11           tam_pastel qualitative       6
+#> 12          bcell_atlas qualitative       7
+#> 13       immune_circuit qualitative       8
+#> 14        cancer_mosaic qualitative      15
+#> 15       bcell_clusters qualitative      20
+#> 16                babel qualitative      21
+#> 17   lipid_budding_blue  sequential       5
+#> 18 lipid_budding_indigo  sequential       5
+#> 19 lipid_budding_orange  sequential       5
+#> 20   lipid_budding_rose  sequential       5
+#> 21     mitonuclear_blue  sequential       6
+#> 22   mitonuclear_orange  sequential       6
+#> 23 immune_circuit_green  sequential       7
+#> 24   immune_circuit_red  sequential       7
 ```
 
 Filter by type when the visual role is already known:
@@ -45,9 +54,15 @@ Filter by type when the visual role is already known:
 ``` r
 
 list_palettes(type = "sequential")[c("name", "n_color")]
-#>                 name n_color
-#> 1   mitonuclear_blue       6
-#> 2 mitonuclear_orange       6
+#>                   name n_color
+#> 1   lipid_budding_blue       5
+#> 2 lipid_budding_indigo       5
+#> 3 lipid_budding_orange       5
+#> 4   lipid_budding_rose       5
+#> 5     mitonuclear_blue       6
+#> 6   mitonuclear_orange       6
+#> 7 immune_circuit_green       7
+#> 8   immune_circuit_red       7
 ```
 
 [`palette_info()`](https://evanbio.github.io/biopalette/reference/palette_info.md)

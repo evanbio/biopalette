@@ -64,7 +64,7 @@ head(list_palettes()[c("name", "type", "n_color")])
 #> 3 walter_white3   diverging       5
 #> 4      gene_red qualitative       2
 #> 5    heat_light qualitative       2
-#> 6    three_body qualitative       3
+#> 6         fargo qualitative       3
 ```
 
 For a visual check, open the palette gallery in an interactive R
