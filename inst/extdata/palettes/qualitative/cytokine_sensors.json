@@ -1,0 +1,5 @@
+{
+  "name": "cytokine_sensors",
+  "type": "qualitative",
+  "colors": ["#4778A8", "#F17B43", "#4F8750", "#D85668", "#754B82", "#4FA69A", "#626262"]
+}

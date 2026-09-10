@@ -94,6 +94,7 @@ Each name links to its source page — source image, color table, and intended u
 | [`lipid_budding_rose`](https://github.com/evanbio/biopalette/tree/main/palettes/lipid_budding_rose) | Sequential | 5 | Low-to-high continuous values in dusty rose | Hepatic ER lipid-droplet budding — DGAT1 rose |
 | [`lipid_budding_orange`](https://github.com/evanbio/biopalette/tree/main/palettes/lipid_budding_orange) | Sequential | 5 | Low-to-high continuous values in salmon orange | Hepatic ER lipid-droplet budding — Seipin orange |
 | [`lipid_budding_indigo`](https://github.com/evanbio/biopalette/tree/main/palettes/lipid_budding_indigo) | Sequential | 5 | Low-to-high continuous values in slate indigo | Hepatic ER lipid-droplet budding — FIT2 indigo |
+| [`cytokine_sensors`](https://github.com/evanbio/biopalette/tree/main/palettes/cytokine_sensors) | Qualitative | 7 | Six neuroimmune outcomes with a neutral cytokine anchor | Neuronal cytokine sensing in the CNS (Trends Immunology, 2026) |
 
 ---
 

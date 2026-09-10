@@ -72,6 +72,7 @@ scale_fill_biopalette_gradient("mitonuclear_blue")
 | `lipid_budding_rose` | Sequential | 5 | Low-to-high continuous values in dusty rose | Hepatic ER lipid-droplet budding — DGAT1 rose |
 | `lipid_budding_orange` | Sequential | 5 | Low-to-high continuous values in salmon orange | Hepatic ER lipid-droplet budding — Seipin orange |
 | `lipid_budding_indigo` | Sequential | 5 | Low-to-high continuous values in slate indigo | Hepatic ER lipid-droplet budding — FIT2 indigo |
+| `cytokine_sensors` | Qualitative | 7 | Six neuroimmune outcomes with a neutral cytokine anchor | Neuronal cytokine sensing in the CNS (Trends Immunology, 2026) |
 
 ## Function Areas
 
