@@ -58,13 +58,13 @@ library(biopalette)
 packageVersion("biopalette")
 #> [1] '0.2.2'
 head(list_palettes()[c("name", "type", "n_color")])
-#>            name        type n_color
-#> 1  bcell_atlas2   diverging       5
-#> 2  walter_white   diverging       5
-#> 3 walter_white3   diverging       5
-#> 4      gene_red qualitative       2
-#> 5    heat_light qualitative       2
-#> 6         fargo qualitative       3
+#>            name      type n_color
+#> 1  bcell_atlas2 diverging       5
+#> 2     clone_age diverging       5
+#> 3  clone_memory diverging       5
+#> 4 ppi_transient diverging       5
+#> 5  walter_white diverging       5
+#> 6 walter_white3 diverging       5
 ```
 
 For a visual check, open the palette gallery in an interactive R

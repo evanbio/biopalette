@@ -27,30 +27,35 @@ for a compact inventory:
 list_palettes()[c("name", "type", "n_color")]
 #>                    name        type n_color
 #> 1          bcell_atlas2   diverging       5
-#> 2          walter_white   diverging       5
-#> 3         walter_white3   diverging       5
-#> 4              gene_red qualitative       2
-#> 5            heat_light qualitative       2
-#> 6                 fargo qualitative       3
-#> 7            three_body qualitative       3
-#> 8         lipid_budding qualitative       4
-#> 9         lactate_steps qualitative       5
-#> 10        walter_white2 qualitative       5
-#> 11           tam_pastel qualitative       6
-#> 12          bcell_atlas qualitative       7
-#> 13     cytokine_sensors qualitative       7
-#> 14       immune_circuit qualitative       8
-#> 15        cancer_mosaic qualitative      15
-#> 16       bcell_clusters qualitative      20
-#> 17                babel qualitative      21
-#> 18   lipid_budding_blue  sequential       5
-#> 19 lipid_budding_indigo  sequential       5
-#> 20 lipid_budding_orange  sequential       5
-#> 21   lipid_budding_rose  sequential       5
-#> 22     mitonuclear_blue  sequential       6
-#> 23   mitonuclear_orange  sequential       6
-#> 24 immune_circuit_green  sequential       7
-#> 25   immune_circuit_red  sequential       7
+#> 2             clone_age   diverging       5
+#> 3          clone_memory   diverging       5
+#> 4         ppi_transient   diverging       5
+#> 5          walter_white   diverging       5
+#> 6         walter_white3   diverging       5
+#> 7              gene_red qualitative       2
+#> 8            heat_light qualitative       2
+#> 9       ppi_nonspecific qualitative       2
+#> 10                fargo qualitative       3
+#> 11           three_body qualitative       3
+#> 12        lipid_budding qualitative       4
+#> 13         ppi_obligate qualitative       4
+#> 14        lactate_steps qualitative       5
+#> 15        walter_white2 qualitative       5
+#> 16           tam_pastel qualitative       6
+#> 17          bcell_atlas qualitative       7
+#> 18     cytokine_sensors qualitative       7
+#> 19       immune_circuit qualitative       8
+#> 20        cancer_mosaic qualitative      15
+#> 21       bcell_clusters qualitative      20
+#> 22                babel qualitative      21
+#> 23   lipid_budding_blue  sequential       5
+#> 24 lipid_budding_indigo  sequential       5
+#> 25 lipid_budding_orange  sequential       5
+#> 26   lipid_budding_rose  sequential       5
+#> 27     mitonuclear_blue  sequential       6
+#> 28   mitonuclear_orange  sequential       6
+#> 29 immune_circuit_green  sequential       7
+#> 30   immune_circuit_red  sequential       7
 ```
 
 Use

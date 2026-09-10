@@ -96,6 +96,11 @@ remotes::install_github("evanbio/biopalette")
 | [`lipid_budding_orange`](https://github.com/evanbio/biopalette/tree/main/palettes/lipid_budding_orange) | 渐进 | 5 | 鲑橙色的低到高连续数值 | 肝脏内质网脂滴出芽 — Seipin 橙 |
 | [`lipid_budding_indigo`](https://github.com/evanbio/biopalette/tree/main/palettes/lipid_budding_indigo) | 渐进 | 5 | 石板靛蓝色的低到高连续数值 | 肝脏内质网脂滴出芽 — FIT2 靛蓝 |
 | [`cytokine_sensors`](https://github.com/evanbio/biopalette/tree/main/palettes/cytokine_sensors) | 定性 | 7 | 六类神经免疫结局与一个中性细胞因子锚点 | 中枢神经系统的神经元细胞因子感知（Trends Immunology, 2026） |
+| [`clone_age`](https://github.com/evanbio/biopalette/tree/main/palettes/clone_age) | 发散 | 5 | 围绕中点的年龄与状态变化 | 克隆性造血 — 突变克隆黄至 HSC 紫 |
+| [`clone_memory`](https://github.com/evanbio/biopalette/tree/main/palettes/clone_memory) | 发散 | 5 | 刺激、恢复和克隆状态对比 | HSC 表观遗传记忆 — 活化紫至既有克隆青 |
+| [`ppi_obligate`](https://github.com/evanbio/biopalette/tree/main/palettes/ppi_obligate) | 定性 | 4 | 同一复合体或系统的四个成员 | 专性蛋白互作 — 蓝紫、紫、绿与黄 |
+| [`ppi_nonspecific`](https://github.com/evanbio/biopalette/tree/main/palettes/ppi_nonspecific) | 定性 | 2 | 两个互作对象、条件或队列 | 非特异性蛋白互作 — 紫与绿 |
+| [`ppi_transient`](https://github.com/evanbio/biopalette/tree/main/palettes/ppi_transient) | 发散 | 5 | 中心化互作分数与带符号效应 | 瞬时蛋白互作 — 红经中点至蓝 |
 
 ------------------------------------------------------------------------
 
