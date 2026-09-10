@@ -85,6 +85,15 @@ Each name links to its source page — source image, color table, and intended u
 | [`tam_pastel`](https://github.com/evanbio/biopalette/tree/main/palettes/tam_pastel) | Qualitative | 6 | Four-to-six categorical groups on light backgrounds | Pan-cancer myeloid atlas (Cell, 2021) — soft TAM states |
 | [`cancer_mosaic`](https://github.com/evanbio/biopalette/tree/main/palettes/cancer_mosaic) | Qualitative | 15 | Ten-to-fifteen categories with labels or position support | Pan-cancer myeloid atlas (Cell, 2021) — cancer-type mosaic |
 | [`lactate_steps`](https://github.com/evanbio/biopalette/tree/main/palettes/lactate_steps) | Qualitative | 5 | Five discrete workflow stages or study groups | Lactate metabolism and immunotherapy (JECCR, 2024) — five study stages |
+| [`fargo`](https://github.com/evanbio/biopalette/tree/main/palettes/fargo) | Qualitative | 3 | Three groups with a dark anchor and restrained warm accent | *Fargo* — navy, motel-sign teal, and suitcase wine |
+| [`immune_circuit`](https://github.com/evanbio/biopalette/tree/main/palettes/immune_circuit) | Qualitative | 8 | Four parent groups with paired states | Chondrosarcoma immune-circuit graphical abstract — paired red, blue, green, and purple |
+| [`immune_circuit_red`](https://github.com/evanbio/biopalette/tree/main/palettes/immune_circuit_red) | Sequential | 7 | Increasing tumor burden, cytotoxicity, risk, or damage | Chondrosarcoma immune-circuit graphical abstract — tumor coral |
+| [`immune_circuit_green`](https://github.com/evanbio/biopalette/tree/main/palettes/immune_circuit_green) | Sequential | 7 | Increasing immune activation, infiltration, or recovery | Chondrosarcoma immune-circuit graphical abstract — T-cell mint |
+| [`lipid_budding`](https://github.com/evanbio/biopalette/tree/main/palettes/lipid_budding) | Qualitative | 4 | Four categorical groups with a balanced cool–warm structure | Hepatic ER lipid-droplet budding — DGAT2, DGAT1, Seipin, and FIT2 |
+| [`lipid_budding_blue`](https://github.com/evanbio/biopalette/tree/main/palettes/lipid_budding_blue) | Sequential | 5 | Low-to-high continuous values in muted steel blue | Hepatic ER lipid-droplet budding — DGAT2 blue |
+| [`lipid_budding_rose`](https://github.com/evanbio/biopalette/tree/main/palettes/lipid_budding_rose) | Sequential | 5 | Low-to-high continuous values in dusty rose | Hepatic ER lipid-droplet budding — DGAT1 rose |
+| [`lipid_budding_orange`](https://github.com/evanbio/biopalette/tree/main/palettes/lipid_budding_orange) | Sequential | 5 | Low-to-high continuous values in salmon orange | Hepatic ER lipid-droplet budding — Seipin orange |
+| [`lipid_budding_indigo`](https://github.com/evanbio/biopalette/tree/main/palettes/lipid_budding_indigo) | Sequential | 5 | Low-to-high continuous values in slate indigo | Hepatic ER lipid-droplet budding — FIT2 indigo |
 
 ---
 

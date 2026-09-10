@@ -63,6 +63,15 @@ scale_fill_biopalette_gradient("mitonuclear_blue")
 | `lactate_steps` | Qualitative | 5 | Five discrete workflow stages or study groups | Lactate metabolism and immunotherapy (JECCR, 2024) |
 | `mitonuclear_blue` | Sequential | 6 | Cool low-to-high continuous values | Mito-nuclear communication in aging (TIBS, 2022) — young blue |
 | `mitonuclear_orange` | Sequential | 6 | Warm low-to-high continuous values | Mito-nuclear communication in aging (TIBS, 2022) — aged orange |
+| `fargo` | Qualitative | 3 | Three groups with a dark anchor and restrained warm accent | *Fargo* — navy, motel-sign teal, and suitcase wine |
+| `immune_circuit` | Qualitative | 8 | Four parent groups with paired states | Chondrosarcoma immune-circuit graphical abstract |
+| `immune_circuit_red` | Sequential | 7 | Increasing tumor burden, cytotoxicity, risk, or damage | Chondrosarcoma immune-circuit graphical abstract — tumor coral |
+| `immune_circuit_green` | Sequential | 7 | Increasing immune activation, infiltration, or recovery | Chondrosarcoma immune-circuit graphical abstract — T-cell mint |
+| `lipid_budding` | Qualitative | 4 | Four categorical groups with a balanced cool–warm structure | Hepatic ER lipid-droplet budding — DGAT2, DGAT1, Seipin, and FIT2 |
+| `lipid_budding_blue` | Sequential | 5 | Low-to-high continuous values in muted steel blue | Hepatic ER lipid-droplet budding — DGAT2 blue |
+| `lipid_budding_rose` | Sequential | 5 | Low-to-high continuous values in dusty rose | Hepatic ER lipid-droplet budding — DGAT1 rose |
+| `lipid_budding_orange` | Sequential | 5 | Low-to-high continuous values in salmon orange | Hepatic ER lipid-droplet budding — Seipin orange |
+| `lipid_budding_indigo` | Sequential | 5 | Low-to-high continuous values in slate indigo | Hepatic ER lipid-droplet budding — FIT2 indigo |
 
 ## Function Areas
 
